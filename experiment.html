@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!-- <<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -77,6 +77,122 @@
                 resultsContainer.appendChild(resultDiv);
             });
         }
+    </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=, initial-scale=" />
+    <title>Currency Converter</title>
+    <script src="app.js" defer></script>
+    <!-- <link rel="stylesheet" href="app.css" /> -->
+    <style>
+        * {
+            font-family: sans-serif;
+            box-sizing: border-box;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #currencyConverter {
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        #currencyConverter > .title{
+            display: flex;
+            align-items: center;
+        }
+
+        #currencyConverter > .title > h1 {
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        #convertForm > div {
+            display: flex;
+            flex-direction: column;
+            margin: 10px 0;
+        }
+
+        #convertForm > div > label {
+            font-weight: 900;
+            font-size: 12px;
+            margin: 6px 0;
+        }
+
+        #convertForm > div > input,
+        #convertForm > div > label{
+            border: 1px solid rgb(210, 207, 207);
+            box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            padding: 12px;
+        }
+
+        #convertForm > button {
+            width: 100%;
+            background-color: rgb(40, 40, 225);
+            color: white;
+            border: 0;
+            margin: 6px 0;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        #convertResult { 
+            width: 100%;
+            margin: 20px 0;
+            font-weight: 900;
+        }
+
+        #convertReslut.error {
+            background-color: red;
+            color: white;
+            padding: 20px;
+        }
+
+
+    </style>
+  </head>
+  <body>
+  <div id="currencyConverter">
+    <div class="title">
+        <h1>Converter</h1>
+    </div>
+    <form id="convertForm">
+        <div>
+            <label for="amount">Amount</label>
+            <input type="number" id="amount" value="0">
+        </div>
+        <div>
+            <label for="fromCurrency">Form</label>
+            <select id="fromCurrency"></select>
+        </div>
+        <div>
+            <label for="toCurrency">To</label>
+            <select id="toCurrency"></select>
+        </div>
+        <button>Convert</button>
+    </form>
+    <div id="convertResult"></div>
+  </div>
+
+    <script>
+      
     </script>
 </body>
 </html>
