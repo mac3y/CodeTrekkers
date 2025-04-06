@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -274,13 +274,13 @@
     </style>
 </head>
 <body>
-    <!-- Navbar -->
+     
     <div class="navbar">
         <h1>Country Flags</h1>
         <button id="authBtn">Login</button>
     </div>
     
-    <!-- Auth Container (always visible until logged in) -->
+    
     <div class="auth-container" id="authContainer">
         <div class="auth-content">
             <h2>Welcome</h2>
@@ -304,7 +304,7 @@
         </div>
     </div>
     
-    <!-- Main Content (hidden until logged in) -->
+    
     <div class="main-content" id="mainContent">
         <h1>Country Flags and Names</h1>
         <input type="text" id="searchBar" placeholder="Search for a country by name..." oninput="searchCountry()">
@@ -431,7 +431,7 @@
                     <img src="${country.flags.png}" alt="Flag of ${country.name.common}">
                     <h2>${country.name.common}</h2>
                     <h3>${country.continents}</h3>
-                    <h4>${capital || 'No capital'}</h4>
+                     <h4>${country.capital}</h4>
                     <a href="${country.maps.googleMaps}" target="_blank">View Map</a>`;
                 container.appendChild(card);
             });
@@ -465,5 +465,148 @@
         }
         checkAuthState();
     </script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Country Flags and Names</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+
+    .filters {
+      margin-bottom: 20px;
+    }
+
+    .filters button {
+      padding: 10px;
+      margin: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .country-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .country-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      width: 150px;
+      text-align: center;
+    }
+
+    .country-card img {
+      width: 100px;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    #searchBar {
+      padding: 10px;
+      width: 50%;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    nav {
+        background-color: #333;
+        padding: 10px;
+        text-align: center;
+     }
+        nav a {
+        color: white;
+        margin: 0 15px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+        nav a:hover {
+        text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Countries</a>
+        <a href="experiment.html">Currency Converter</a>
+      </nav>
+    
+  <h1>Country Flags and Names</h1>
+
+  <input type="text" id="searchBar" placeholder="Search for a country by name..." oninput="searchCountry()"/>
+
+  <div class="filters">
+    <button onclick="filterByContinent('Africa')">Africa</button>
+    <button onclick="filterByContinent('Asia')">Asia</button>
+    <button onclick="filterByContinent('Europe')">Europe</button>
+    <button onclick="filterByContinent('North America')">North America</button>
+    <button onclick="filterByContinent('South America')">South America</button>
+    <button onclick="filterByContinent('Oceania')">Oceania</button>
+    <button onclick="displayCountries(allCountries.slice(0, 15))">Reset</button>
+  </div>
+
+  <div class="country-container" id="countries"></div>
+
+  <script>
+    let allCountries = [];
+
+    async function fetchCountries() {
+      try {
+        const response = await fetch('https://restcountries.com/v3.1/all');
+        const countries = await response.json();
+        allCountries = countries;
+        displayCountries(allCountries.slice(0, 15));
+      } catch (error) {
+        console.error('Error fetching countries:', error);
+      }
+    }
+
+    function displayCountries(countries) {
+      const container = document.getElementById('countries');
+      container.innerHTML = '';
+
+      countries.forEach(country => {
+        const card = document.createElement('div');
+        card.className = 'country-card';
+        card.innerHTML = `
+          <img src="${country.flags.png}" alt="Flag of ${country.name.common}">
+          <h2>${country.name.common}</h2>
+          <h3>${country.continents}</h3>
+          <h4>${country.capital}</h4>
+          <a href="${country.maps.googleMaps}" target="_blank">Google Maps</a>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function searchCountry() {
+      const query = document.getElementById('searchBar').value.trim().toLowerCase();
+      const filteredCountries = allCountries.filter(country =>
+        country.name.common.toLowerCase().startsWith(query)
+      );
+      displayCountries(filteredCountries);
+    }
+
+    function filterByContinent(continent) {
+      const filteredCountries = allCountries.filter(country =>
+        country.continents.includes(continent)
+      );
+      displayCountries(filteredCountries);
+    }
+
+    fetchCountries();
+  </script>
 </body>
 </html>

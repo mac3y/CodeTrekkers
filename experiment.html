@@ -86,12 +86,8 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Currency Converter</title>
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Stylesheet-->
+    
+    
     <style>
       * {
         padding: 0;
@@ -103,35 +99,38 @@
       }
       body {
         background-color: #9873fe;
+        min-height: 100vh;
       }
       .wrapper {
         width: 90%;
         max-width: 25em;
         background-color: #ffffff;
-        position: absolute;
-        transform: translate(-50%, -50%);
-        left: 50%;
-        top: 50%;
+        margin: 5em auto; 
         padding: 2em;
         border-radius: 0.8em;
       }
+
       .app-details {
         display: flex;
         align-items: center;
         flex-direction: column;
       }
+
       .app-icon {
         width: 9.37em;
       }
+
       .app-title {
         font-size: 1.6em;
         text-transform: uppercase;
         margin-bottom: 1em;
       }
+
       label {
         display: block;
         font-weight: 600;
       }
+
       input#amount {
         font-weight: 400;
         font-size: 1.2em;
@@ -142,24 +141,25 @@
         margin-bottom: 2em;
         padding: 0.5em;
       }
+
       input#amount:focus {
         color: #9873fe;
         border-color: #9873fe;
       }
+
       .dropdowns {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 1em;
       }
+
       select {
         width: 100%;
         padding: 0.6em;
         font-size: 1em;
         border-radius: 0.2em;
         appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
         background-image: url("arrow-down.svg");
         background-repeat: no-repeat;
         background-position: right 15px top 50%, center;
@@ -189,12 +189,30 @@
         background-color: #e5dbff;
         padding: 0.8em 0;
       }
+
+      nav {
+        background-color: #333;
+        padding: 10px;
+        text-align: center;
+      }
+      nav a {
+        color: white;
+        margin: 0 15px;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      nav a:hover {
+        text-decoration: underline;
+      }
     </style>
   </head>
   <body>
+    <nav>
+      <a href="index.html">Countries</a>
+      <a href="experiment.html">Currency Converter</a>
+    </nav>
     <div class="wrapper">
       <div class="app-details">
-        <img src="app-icon.svg" class="app-icon" />
         <h1 class="app-title">Currency Converter</h1>
       </div>
       <label for="amount">Amount:</label>
@@ -207,7 +225,7 @@
       <p id="result"></p>
     </div>
 
-    <!-- Working Script -->
+   
     <script>
       const apiKey = "28498904bce6769134e2c0bd";
       const currencySelectFrom = document.getElementById("from-currency-select");
@@ -395,7 +413,7 @@
             currencySelectTo.innerHTML += option;
           });
 
-          // Default selections
+          
           
         } catch (error) {
           resultText.innerText = "Could not load currencies.";
