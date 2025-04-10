@@ -1,0 +1,72 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+  }
+  
+  .filters {
+    margin-bottom: 20px;
+  }
+  
+  .filters button {
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .country-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .country-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    width: 150px;
+    text-align: center;
+  }
+  
+  .country-card img {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  #searchBar {
+    padding: 10px;
+    width: 50%;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  
+  nav {
+    background-color: #333;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+  }
+  
+  nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+  }
+
+  #continent-select {
+    padding: 0.5em;
+    border-radius: 0.5em;
+    background-color: #ffffff;
+    color: #0F0E47;
+    font-weight: bold;
+    border: 2px solid #0F0E47;
+    margin: 1em 0;
+  }

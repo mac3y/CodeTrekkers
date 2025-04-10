@@ -475,67 +475,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Country Flags and Names</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin: 20px;
-    }
-
-    .filters {
-      margin-bottom: 20px;
-    }
-
-    .filters button {
-      padding: 10px;
-      margin: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .country-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
-
-    .country-card {
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 10px;
-      width: 150px;
-      text-align: center;
-    }
-
-    .country-card img {
-      width: 100px;
-      height: auto;
-      border-radius: 8px;
-    }
-
-    #searchBar {
-      padding: 10px;
-      width: 50%;
-      margin-bottom: 20px;
-      font-size: 16px;
-    }
-
-    nav {
-        background-color: #333;
-        padding: 10px;
-        text-align: center;
-     }
-        nav a {
-        color: white;
-        margin: 0 15px;
-        text-decoration: none;
-        font-weight: bold;
-    }
-        nav a:hover {
-        text-decoration: underline;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
     <nav>
@@ -547,7 +487,7 @@
 
   <input type="text" id="searchBar" placeholder="Search for a country by name..." oninput="searchCountry()"/>
 
-  <div class="filters">
+  <!-- <div class="filters">
     <button onclick="filterByContinent('Africa')">Africa</button>
     <button onclick="filterByContinent('Asia')">Asia</button>
     <button onclick="filterByContinent('Europe')">Europe</button>
@@ -555,58 +495,23 @@
     <button onclick="filterByContinent('South America')">South America</button>
     <button onclick="filterByContinent('Oceania')">Oceania</button>
     <button onclick="displayCountries(allCountries.slice(0, 15))">Reset</button>
-  </div>
+  </div> -->
+
+  <label for="continent-select">Filter by Continent:</label>
+        <select id="continent-select">
+        <option value="">-- All Continents --</option>
+        <option value="Africa">Africa</option>
+        <option value="Asia">Asia</option>
+        <option value="Europe">Europe</option>
+        <option value="North America">North America</option>
+        <option value="South America">South America</option>
+        <option value="Oceania">Oceania</option>
+        <option value="Antarctica">Antarctica</option>
+</select>
+
 
   <div class="country-container" id="countries"></div>
 
-  <script>
-    let allCountries = [];
-
-    async function fetchCountries() {
-      try {
-        const response = await fetch('https://restcountries.com/v3.1/all');
-        const countries = await response.json();
-        allCountries = countries;
-        displayCountries(allCountries.slice(0, 15));
-      } catch (error) {
-        console.error('Error fetching countries:', error);
-      }
-    }
-
-    function displayCountries(countries) {
-      const container = document.getElementById('countries');
-      container.innerHTML = '';
-
-      countries.forEach(country => {
-        const card = document.createElement('div');
-        card.className = 'country-card';
-        card.innerHTML = `
-          <img src="${country.flags.png}" alt="Flag of ${country.name.common}">
-          <h2>${country.name.common}</h2>
-          <h3>${country.continents}</h3>
-          <h4>${country.capital}</h4>
-          <a href="${country.maps.googleMaps}" target="_blank">Google Maps</a>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    function searchCountry() {
-      const query = document.getElementById('searchBar').value.trim().toLowerCase();
-      const filteredCountries = allCountries.filter(country =>
-        country.name.common.toLowerCase().startsWith(query)
-      );
-      displayCountries(filteredCountries);
-    }
-
-    function filterByContinent(continent) {
-      const filteredCountries = allCountries.filter(country =>
-        country.continents.includes(continent)
-      );
-      displayCountries(filteredCountries);
-    }
-
-    fetchCountries();
-  </script>
+  <script src="countries.js"></script>
 </body>
 </html>
