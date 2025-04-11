@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,12 +6,12 @@
     <title>Country Flags and Names</title>
 </head>
 <body>
-    <!-- Navbar -->
+   
     <div class="navbar">
         <h1>Country Flags</h1>
     </div>
     
-    <!-- Main Content -->
+    
     <div class="main-content" id="mainContent">
         <h1>Country Flags and Names</h1>
         <input type="text" id="searchBar" placeholder="Search for a country by name..." oninput="searchCountry()">
@@ -80,4 +80,216 @@
         window.onload = fetchCountries;
     </script>
 </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Country Viewer</title>
+  <style>
+    body {
+      
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: whitesmoke;
+    }
+
+    header {
+      background-color: #9999ff;
+      padding: 10px;
+      text-align: center;
+    }
+
+    #content {
+      display: flex;
+      height: 100vh;
+    }
+
+    aside {
+        width: 250px;
+        background-color: #c9c9c9;
+        overflow-y: auto;
+        padding: 10px;
+        box-sizing: border-box; /* Add this */
+    }
+
+    #filterControls {
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #999;
+    }
+
+    #filterControls label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    #continentFilter {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    aside button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 5px;
+        background-color: inherit;
+        border: none;
+        text-align: left;
+        cursor: pointer;
+        font-size: 1em;
+        border-bottom: 1px solid #999;
+        box-sizing: border-box; /* Also good for buttons */
+    }
+
+    aside button:hover {
+      background-color: #ddd;
+    }
+
+    main {
+      flex-grow: 1;
+      padding: 30px;
+    }
+
+    main img {
+        width: 50%;      /* Make the flag take up 50% of the main container's width */
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    main h2 {
+      margin-bottom: 10px;
+    }
+
+    main a {
+      color: #3333cc;
+      text-decoration: none;
+    }
+
+    main a:hover {
+      text-decoration: underline;
+    }
+
+    .info {
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Country Viewer</h1>
+  </header>
+
+  <div id="content">
+    <aside>
+      <div id="filterControls">
+        <label for="continentFilter">Filter by Continent:</label>
+        <select id="continentFilter">
+          <option value="">All Continents</option>
+          </select>
+      </div>
+      <div id="countryList">
+        </div>
+    </aside>
+
+    <main id="countryDetails">
+      </main>
+  </div>
+
+  <script>
+    let allCountries = [];
+    let uniqueContinents = [];
+    const continentFilter = document.getElementById('continentFilter');
+
+    async function fetchCountries() {
+      try {
+        const response = await fetch('https://restcountries.com/v3.1/all');
+        const data = await response.json();
+        allCountries = data.sort((a, b) =>
+          a.name.common.localeCompare(b.name.common)
+        );
+        populateContinentFilter();
+        filterCountries(); // Initial filtering to show all countries
+        if (allCountries.length > 0) {
+          showCountryDetails(allCountries[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching countries:', error);
+      }
+    }
+
+    function populateContinentFilter() {
+      uniqueContinents = [...new Set(allCountries.flatMap(country => country.continents))].sort();
+      uniqueContinents.forEach(continent => {
+        const option = document.createElement('option');
+        option.value = continent;
+        option.textContent = continent;
+        continentFilter.appendChild(option);
+      });
+
+      continentFilter.addEventListener('change', filterCountries);
+    }
+
+    function filterCountries() {
+      const selectedContinent = continentFilter.value;
+      const filteredCountries = selectedContinent
+        ? allCountries.filter(country => country.continents && country.continents.includes(selectedContinent))
+        : allCountries;
+      drawCountryList(filteredCountries);
+    }
+
+    function drawCountryList(countries) {
+      const list = document.getElementById('countryList');
+      list.innerHTML = '';
+      countries.forEach((country) => {
+        const btn = document.createElement('button');
+        btn.textContent = country.name.common;
+        btn.onclick = () => showCountryDetails(country);
+        list.appendChild(btn);
+      });
+    }
+
+    function showCountryDetails(country) {
+      const container = document.getElementById('countryDetails');
+      const capital = country.capital ? country.capital[0] : 'N/A';
+      const continent = country.continents ? country.continents.join(', ') : 'Unknown';
+      const population = country.population ? country.population.toLocaleString() : 'N/A';
+      const region = country.region || 'Unknown';
+      const subregion = country.subregion || 'Unknown';
+      const languages = country.languages ? Object.values(country.languages).join(', ') : 'N/A';
+
+      container.innerHTML = `
+        <img src="${country.flags.png}" alt="Flag of ${country.name.common}" />
+        <h2>${country.name.common}</h2>
+        <div class="info">
+          <p><strong>Capital:</strong> ${capital}</p>
+          <p><strong>Continent:</strong> ${continent}</p>
+          <p><strong>Region:</strong> ${region}</p>
+          <p><strong>Subregion:</strong> ${subregion}</p>
+          <p><strong>Population:</strong> ${population}</p>
+          <p><strong>Languages:</strong> ${languages}</p>
+          <p><strong>Google Maps:</strong> <a href="${country.maps.googleMaps}" target="_blank">View Location</a></p>
+        </div>
+      `;
+    }
+
+    window.onload = fetchCountries;
+  </script>
+</body>
 </html>
+
+
+
+
+
+
+
+
