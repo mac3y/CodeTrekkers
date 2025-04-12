@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Prevent password manager warnings -->
+  <meta name="google" content="nopasswordreuse">
+</head>
+<body>
+  <div class="auth-container">
+    <div class="auth-content">
+      <h2>Login</h2>
+        <form id="loginForm" class="auth-form">
+          <div class="form-group">
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" required autocomplete="username">
+          </div>
+                
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" required autocomplete="current-password">
+          </div>
+                
+          <button type="submit">Login</button>
+                
+          <div class="register-link">
+            Don't have an account? <a href="register.html">Register</a>
+          </div>
+        </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+            
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+            
+    const storedEmail = localStorage.getItem('userEmail');
+    const storedPassword = localStorage.getItem('userPassword');
+            
+    if (email === storedEmail && password === storedPassword) {
+        sessionStorage.setItem('isAuthenticated', 'true');
+        alert('Login successful!');
+        window.location.href = 'index.html';
+      } else {
+        alert('Invalid email or password!');
+      }
+    });
+  </script>
+</body>
+</html>
