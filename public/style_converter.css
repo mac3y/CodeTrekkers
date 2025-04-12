@@ -11,6 +11,39 @@
     background-color: #9873fe;
     min-height: 100vh;
   }
+
+  header {
+    background-color: #9999ff;
+    padding: 10px;
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Align items vertically */
+    justify-content: space-between; /* Space between h1 and nav */
+  }
+  
+  header h1 {
+    margin: 0;
+    font-size: 24px;
+    color: white;
+  }
+  
+  header nav {
+    display: flex; /* Use flexbox for buttons */
+    align-items: center; /* Align buttons vertically */
+    gap: 15px; /* Add spacing between buttons */
+  }
+  
+  header nav a {
+    text-decoration: none;
+    color: white;
+    background: #3333cc;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+  
+  header nav a:hover {
+    background: #5555ff;
+  }
   
   .wrapper {
     width: 90%;

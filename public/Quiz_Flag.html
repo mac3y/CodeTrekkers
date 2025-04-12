@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flag Quiz</title>
+  <link rel="stylesheet" href="quiz.css">
+</head>
+<nav class="navbar">
+  <div class="nav-left">
+    <strong>CodeTreckkers</strong>
+  </div>
+  <div class="nav-right">
+    <a href="homepage.html">Home</a>
+    <a href="index.html">Country Info</a>
+    <a href="experiment.html">Currency Converter</a>
+  </div>
+</nav>
+<body>
+  <div class="quiz-container">
+    <h1>Flag Quiz</h1>
+
+    <div id="continentSelect">
+      <p>Select a continent to begin:</p>
+      <select id="continentDropdown">
+        <option value="">-- Choose Continent --</option>
+        <option value="Africa">Africa</option>
+        <option value="Asia">Asia</option>
+        <option value="Europe">Europe</option>
+        <option value="Americas">Americas</option>
+        <option value="Oceania">Oceania</option>
+      </select>
+      <button id="startBtn">Start Quiz</button>
+    </div>
+
+    <div id="quizSection" style="display:none;">
+      <div id="progressBar">
+        <div id="questionNumber" class="left"></div>
+        <div id="currentScore" class="right"></div>
+      </div>
+      <div id="question"></div>
+      <img id="flag" src="" alt="Flag" style="display: none;">
+      <div id="options"></div>
+      <div id="feedback"></div>
+      <button id="nextBtn" disabled>Next</button>
+      <div id="scoreDisplay"></div>
+      <button id="restartBtn" style="display:none;">Restart</button>
+    </div>
+  </div>
+
+  <script src="quiz.js"></script>
+</body>
+</html>

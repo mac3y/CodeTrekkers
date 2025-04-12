@@ -1,0 +1,144 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #FDFBD4;
+    color: #0F0E47;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .quiz-container {
+    background-color: #8686AC;
+    padding: 20px;
+    border-radius: 20px;
+    max-width: 500px;
+    margin: auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  #flag {
+    max-width: 200px;
+    margin: 20px auto;
+    border: 1px solid #0F0E47;
+  }
+  
+  #options button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: #0F0E47;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    width: 80%;
+    cursor: pointer;
+  }
+  
+  #options button:hover {
+    background-color: #1d1c63;
+  }
+  
+  #nextBtn, #restartBtn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #0F0E47;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  #continentSelect {
+    margin-bottom: 20px;
+  }
+  
+  #continentSelect select, #continentSelect button {
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+  }
+  
+  #continentSelect button {
+    background-color: #0F0E47;
+    color: white;
+    cursor: pointer;
+  }
+
+  #continentSelect {
+    margin-bottom: 20px;
+  }
+  
+  #continentSelect select,
+  #continentSelect button {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+    margin-top: 10px;
+  }
+  
+  #continentSelect button {
+    background-color: #0F0E47;
+    color: white;
+    cursor: pointer;
+  }
+
+  table, th, td {
+    border: 1px solid #0F0E47;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  th {
+    background-color: #0F0E47;
+    color: white;
+  }
+
+  #progress {
+    font-size: 18px;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+
+  #progressBar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  #progressBar .left {
+    text-align: left;
+  }
+  
+  #progressBar .right {
+    text-align: right;
+  }
+
+  .navbar {
+    background-color: #0F0E47;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .nav-left {
+    font-size: 20px;
+  }
+  
+  .nav-right a {
+    color: white;
+    margin-left: 20px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .nav-right a:hover {
+    text-decoration: underline;
+  }

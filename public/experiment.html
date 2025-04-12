@@ -1,86 +1,3 @@
-<!-- <<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geoapify Country Search</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .result {
-            margin-bottom: 15px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-        }
-        .result a {
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .result p {
-            margin: 5px 0;
-        }
-        #searchBar {
-            padding: 10px;
-            width: 50%;
-            margin-bottom: 20px;
-            font-size: 16px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Search for Countries</h1>
-    <input type="text" id="searchBar" placeholder="Enter country name..." oninput="searchCountries()">
-    
-    <div id="results"></div>
-
-    <script>
-        const API_KEY = '8b9e580f07704b5aa65922aa446eeffa'; // Replace with your Geoapify API key
-
-        async function searchCountries() {
-            const query = document.getElementById('searchBar').value.trim();
-            if (!query) return; // Exit if the search input is empty
-
-            // Construct the URL with the query string (text is replaced by the user input)
-            const url = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(query)}&apiKey=8b9e580f07704b5aa65922aa446eeffa`;
-            
-            try {
-                // Make the fetch request
-                const response = await fetch(url, { method: 'GET' });
-                const data = await response.json();
-                displayResults(data.features);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        }
-
-        function displayResults(features) {
-            const resultsContainer = document.getElementById('results');
-            resultsContainer.innerHTML = ''; // Clear previous results
-            
-            if (features.length === 0) {
-                resultsContainer.innerHTML = '<p>No countries found.</p>';
-                return;
-            }
-
-            features.forEach((feature) => {
-                const resultDiv = document.createElement('div');
-                resultDiv.className = 'result';
-                resultDiv.innerHTML = `
-                    <h3><a href="https://www.google.com/maps?q=${feature.geometry.coordinates[1]},${feature.geometry.coordinates[0]}" target="_blank">${feature.properties.country}</a></h3>
-                    <p>Country: ${feature.properties.country}</p>
-                    <p>Location: ${feature.geometry.coordinates[1]}, ${feature.geometry.coordinates[0]}</p>
-                    <p>Address: ${feature.properties.formatted}</p>
-                `;
-                resultsContainer.appendChild(resultDiv);
-            });
-        }
-    </script>
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -89,10 +6,14 @@
     <link rel="stylesheet" href="style_converter.css" />
   </head>
   <body>
-    <nav>
-      <a href="index.html">Countries</a>
-      <a href="experiment.html">Currency Converter</a>
-    </nav>
+    <header>
+        <h1>CodeTreckkers</h1>
+        <nav>
+        <a href="homepage.html">Home</a>
+          <a href="index.html">Countries Info</a>
+          <a href="Quiz_Flag.html">Flag Quiz</a>
+        </nav>
+      </header>
     <div class="wrapper">
       <div class="app-details">
         <h1 class="app-title">Currency Converter</h1>
