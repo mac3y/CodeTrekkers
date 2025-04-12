@@ -181,6 +181,7 @@
     .info {
       line-height: 1.6;
     }
+
   </style>
 </head>
 <body>
@@ -201,6 +202,7 @@
     </aside>
 
     <main id="countryDetails">
+      
       </main>
   </div>
 
@@ -240,11 +242,22 @@
 
     function filterCountries() {
       const selectedContinent = continentFilter.value;
-      const filteredCountries = selectedContinent
-        ? allCountries.filter(country => country.continents && country.continents.includes(selectedContinent))
-        : allCountries;
+      const searchInput = document.getElementById('searchInput');
+      const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+
+      const filteredCountries = allCountries.filter(country => {
+        const matchesContinent = selectedContinent === '' || 
+          (country.continents && country.continents.includes(selectedContinent));
+
+        const matchesSearch = country.name.common.toLowerCase().includes(searchTerm);
+
+        return matchesContinent && matchesSearch;
+      });
+
       drawCountryList(filteredCountries);
-    }
+}
+
+    
 
     function drawCountryList(countries) {
       const list = document.getElementById('countryList');
@@ -281,15 +294,14 @@
       `;
     }
 
-    window.onload = fetchCountries;
+    window.onload = () => {
+  fetchCountries();
+  
+  // Now that DOM is loaded, this will work:
+  document.getElementById('searchInput').addEventListener('input', filterCountries);
+};
   </script>
 </body>
 </html>
-
-
-
-
-
-
 
 
