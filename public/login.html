@@ -18,6 +18,8 @@
     <div class="auth-content">
       <h2>Login</h2>
         <form id="loginForm" class="auth-form">
+          <div id="errorMessage" style="color: red; margin-bottom: 10px;"></div>
+          
           <div class="form-group">
             <label for="loginEmail">Email</label>
             <input type="email" id="loginEmail" required autocomplete="username">
@@ -39,20 +41,28 @@
 
   <script>
     document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-            
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
-            
-    const storedEmail = localStorage.getItem('userEmail');
-    const storedPassword = localStorage.getItem('userPassword');
-            
-    if (email === storedEmail && password === storedPassword) {
-        sessionStorage.setItem('isAuthenticated', 'true');
-        alert('Login successful!');
-        window.location.href = 'index.html';
+      e.preventDefault();
+      
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+      const errorMessage = document.getElementById('errorMessage');
+
+      errorMessage.textContent = "";
+
+      const storedEmail = localStorage.getItem('userEmail');
+      const storedPassword = localStorage.getItem('userPassword');
+
+      if (email === "" || password === "") {
+          errorMessage.textContent = "Email and password cannot be empty.";
+          return;
+      }
+
+      if (email.toLowerCase() === storedEmail?.toLowerCase() && password === storedPassword) {
+          sessionStorage.setItem('isAuthenticated', 'true');
+          alert('Login successful!');
+          window.location.href = 'homepage.html';
       } else {
-        alert('Invalid email or password!');
+          errorMessage.textContent = "Invalid email or password!";
       }
     });
   </script>

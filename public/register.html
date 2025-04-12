@@ -7,11 +7,19 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- Floating decoration elements -->
+    <div class="floating"></div>
+    <div class="floating"></div>
+    <div class="floating"></div>
+
     <div class="auth-container">
         <div class="auth-content">
             <h2>Create Account</h2>
             
             <form id="registerForm" class="auth-form">
+                <div id="errorMessage" style="color: red; margin-bottom: 10px;"></div>
+                
                 <div class="form-group">
                     <label for="regEmail">Email</label>
                     <input type="email" id="regEmail" required>
@@ -26,7 +34,7 @@
                     <label for="confirmPassword">Confirm Password</label>
                     <input type="password" id="confirmPassword" required>
                 </div>
-                
+
                 <button type="submit">Register</button>
                 
                 <div class="register-link">
@@ -42,15 +50,29 @@
             
             const email = document.getElementById('regEmail').value;
             const password = document.getElementById('regPassword').value;
-            
-            if (password.length < 6) {
-                alert("Password must be at least 6 characters");
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Clear previous error messages
+            errorMessage.textContent = "";
+
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                errorMessage.textContent = "Please enter a valid email address.";
                 return;
             }
-            
+
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                errorMessage.textContent = "Passwords do not match!";
+                return;
+            }
+
+            // Save user data to localStorage (for learning purposes only)
             localStorage.setItem('userEmail', email);
             localStorage.setItem('userPassword', password);
-            
+
             alert("Registration successful! Please login.");
             window.location.href = 'login.html';
         });

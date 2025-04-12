@@ -15,22 +15,22 @@ body {
 }
 
 .auth-container {
-  backdrop-filter: blur(8px);
+  background-color: rgba(255, 255, 255, 0.9);
   padding: 2rem;
   border-radius: 8px;
   width: 100%;
   max-width: 400px;
   border-radius: white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
 
 /* Heading */
 .auth-content h2 {
   margin: 0 0 30px 0;
   text-align: center;
-  color: black;
-  font-size: 24px;
-  font-weight: 600;
+  color: #196633;
+  font-size: 32px;
+  font-weight: 700;
 }
 
 /* Form styling */
@@ -41,59 +41,76 @@ body {
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 14px;
-  color: black;
+  font-weight: 600;
+  color: #196633;
 }
 
 .auth-form input {
   width: 100%;
-  padding: 12px 15px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
+  padding: 12px 0;
+  border: none;
+  border-bottom: 2px solid black;
+  border-radius: 0;
+  font-size: 18px;
   box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .auth-form input:focus {
   outline: none;
-  border-color: #666;
+  border-bottom: 2px solid #196633;
 }
 
 .form-options {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  font-size: 14px;
+  margin-bottom: 25px;
+  font-size: 16px;
 }
 
 .auth-form button {
-  padding: 12px;
-  background: black;
+  padding: 16px;
+  background: #196633;
   color: #ffffff;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 20px; /* Larger font */
   font-weight: 600;
   margin-bottom: 20px;
   transition: background 0.3s;
 }
 
 .auth-form button:hover {
-  background: black;
+  background: #2b6269;
 }
 
 aside {
   margin: 0;
   padding: 0;
 }
+
+.form-group input,
+  #confirm-password {
+  border: none;
+  border-bottom: 2px solid black;
+  border-radius: 0;
+  background: #E8F0FE;
+  padding: 12px 0;
+  font-size: 18px;
+  box-sizing: border-box;
+}
+
+  .form-group input:focus,
+  #confirm-password:focus {
+      outline: none;
+      border-bottom: 2px solid #196633;
+  }
 
  /* Floating decoration elements */
  .floating {
@@ -102,9 +119,9 @@ aside {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  z-index: 0;
+  z-index: -1;
   overflow: hidden;     
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
 }
 
 .floating:nth-child(1) {
@@ -112,7 +129,7 @@ aside {
   height: 150px;
   top: 10%;
   left: 10%;
-  background-image: url('https://ibb.co/S4RLy1mv');
+  background-image: url('https://i.ibb.co/5gB74zjc/One-Dollar-US-Coin-stock-photo-Image-of-object-circulation-11158664.jpg');
   animation: float 8s ease-in-out infinite;
 }
 
@@ -121,7 +138,7 @@ aside {
   height: 200px;
   bottom: 15%;
   right: 10%;
-  background-image: url('https://ibb.co/Gfy4V0Z5');
+  background-image: url('https://i.ibb.co/spndF2TV/1942-S-Mercury-Dime-XF-Walmart-com.jpg');
   animation: float 10s ease-in-out infinite;
 }
 
@@ -130,7 +147,7 @@ aside {
   height: 100px;
   top: 60%;
   left: 25%;
-  background-image: url('https://ibb.co/VcY7yxxr');
+  background-image: url('https://i.ibb.co/mV5Ls001/Malaysia-10-Sen-Agong-Coin-KM3-1967-1988-Copper-nickel.jpg');
   animation: float 7s ease-in-out infinite;
 }
 
@@ -151,12 +168,12 @@ aside {
 /* register CSS */
 .register-link {
   text-align: center;
-  font-size: 14px;
-  color: #666;
+  font-size: 18px;
+  color: #000;
 }
 
 .register-link a {
-  color: #333;
+  color: #196633;
   text-decoration: none;
   font-weight: 600;
 }
@@ -176,11 +193,19 @@ aside {
 }
 
 .form-group input {
-  width: 100%;
-  padding: 0.8rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
+  border: none;
+  border-bottom: 2px solid black;
+  border-radius: 0;
+  background: transparent;
+  padding: 12px 0;
+  font-size: 18px;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.form-group input:focus {
+  outline: none;
+  border-bottom: 2px solid #196633;
 }
 
 #logoutBtn:hover {
