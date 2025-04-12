@@ -95,6 +95,50 @@ aside {
   padding: 0;
 }
 
+ /* Floating decoration elements */
+ .floating {
+  position: absolute;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  overflow: hidden;     
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.floating:nth-child(1) {
+  width: 150px;
+  height: 150px;
+  top: 10%;
+  left: 10%;
+  background-image: url('https://ibb.co/S4RLy1mv');
+  animation: float 8s ease-in-out infinite;
+}
+
+.floating:nth-child(2) {
+  width: 200px;
+  height: 200px;
+  bottom: 15%;
+  right: 10%;
+  background-image: url('https://ibb.co/Gfy4V0Z5');
+  animation: float 10s ease-in-out infinite;
+}
+
+.floating:nth-child(3) {
+  width: 100px;
+  height: 100px;
+  top: 60%;
+  left: 25%;
+  background-image: url('https://ibb.co/VcY7yxxr');
+  animation: float 7s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+
 
 
 
