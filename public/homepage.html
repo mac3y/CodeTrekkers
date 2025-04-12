@@ -1,300 +1,329 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeTrekkers</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=KDH7zOWVcvjU&format=png&color=000000">
-    <style>
-        /* General Styles */
-        body {
-            font-family: 'Nunito', sans-serif;
-            font-weight: 300; /* Light weight */
-            margin: 0;
-            padding: 0;
-            background-color: #dfdfdf;
-            color: #333;
-            letter-spacing: 0.1em;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeTrekkers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=KDH7zOWVcvjU&format=png&color=000000">
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 300; /* Light weight */
+      margin: 0;
+      padding: 0;
+      background-color: #dfdfdf;
+      color: #333;
+      letter-spacing: 0.1em;
+    }
 
-        /* Header Styles */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #4CAF50;
-            color: white;
-            padding: 15px 20px;
-        }
+    /* Header Styles */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 20px;
+    }
 
-        header h1 {
-            margin: 0;
-            font-size: 1.5em;
-        }
+    header h1 {
+      margin: 0;
+      font-size: 1.5em;
+    }
 
-        nav {
-            display: flex;
-            gap: 15px;
-        }
+    nav {
+     display: flex;
+     gap: 15px;
+    }
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-        }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
 
-        nav a:hover {
-            text-decoration: underline;
-        }
+    nav a:hover {
+      text-decoration: underline;
+    }
 
-        /* Hero Section */
-        #hero-background-image {
+    /* Hero Section */
+    #hero-background-image {
    		background-image: url('https://media.istockphoto.com/id/1404349414/photo/world-map-topographic-map-dark-ocean-color.jpg?b=1&s=612x612&w=0&k=20&c=Fwt0oZn1nR5h-v_eh8RGBCUvnRXHgMFxccBp5etCH1I=');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      padding: 40px 0; /* Add padding so the content doesn't touch the top */
+    }
         
-        padding: 40px 0; /* Add padding so the content doesn't touch the top */
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.6);
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-content {
+      flex: 1;
+      padding-right: 20px;
+    }
+
+    .hero-content h2 {
+      margin-top: 0;
+      color: #4CAF50;
+    }
+
+    .hero-content p {
+      line-height: 1.6;
+    }
+
+    .hero-image img {
+      max-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Features Section */
+    .features {
+      max-width: 1200px;
+      margin: 20px auto;
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .card {
+      background-color: rgba(255, 255, 255, 0.6);
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: center;
+    }
+
+    .card h3 {
+      color: #4CAF50;
+      margin-bottom: 15px;
+    }
+
+    .card img {
+      width: 70px;
+      height: 70px;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      line-height: 1.6;
+    }
+
+    /* Footer Styles */
+    footer {
+      text-align: center;
+      padding: 15px 0;
+      background-color: #4CAF50;
+      color: white;
+      margin-top: 20px;
+    }
+        
+    .editorial {
+      display: block;
+      width: 100%;
+      height: 100px;
+      max-height: 60px;
+      margin: 0;
+      z-index:2;
+      bottom:0;
+      position:relative;
+      left:0px;
+      float:left;
+    }
+
+    .parallax1 > use {
+      animation: move-forever1 10s linear infinite;
+      &:nth-child(1) {
+        animation-delay: -2s;
+      }
+    }
+
+    .parallax2 > use {
+      animation: move-forever2 8s linear infinite;
+      &:nth-child(1) {
+        animation-delay: -2s;
+      }
+    }
+
+    .parallax3 > use {
+      animation: move-forever3 6s linear infinite;
+      &:nth-child(1) {
+        animation-delay: -2s;
+      }
+    }
+
+    .parallax4 > use {
+      animation: move-forever4 4s linear infinite;
+      &:nth-child(1) {
+        animation-delay: -2s;
+      }
+    }
+
+    @keyframes move-forever1 {
+      0% {
+        transform: translate(85px, 0%);
+      }
+      100% {
+        transform: translate(-90px, 0%);
+      }
+    }
+
+    @keyframes move-forever2 {
+      0% {
+        transform: translate(-90px, 0%);
+      }
+      100% {
+        transform: translate(85px, 0%);
+      }
+    }
+
+    @keyframes move-forever3 {
+      0% {
+        transform: translate(85px, 0%);
+      }
+      100% {
+        transform: translate(-90px, 0%);
+      }
+    }
+
+    @keyframes move-forever4 {
+      0% {
+        transform: translate(-90px, 0%);
+      }
+      100% {
+        transform: translate(85px, 0%);
+      }
+    }
+
+    #section2{
+      padding-top:12px;
+    }
+
+    #logoutBtn {
+      padding: 8px 16px;
+      background-color: #196633;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    #logoutBtn:hover {
+      background-color: #6dc98c;
     }
     
-   
-        
-        .hero {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.6);
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .hero-content {
-            flex: 1;
-            padding-right: 20px;
-        }
-
-        .hero-content h2 {
-            margin-top: 0;
-            color: #4CAF50;
-        }
-
-        .hero-content p {
-            line-height: 1.6;
-        }
-
-        .hero-image img {
-            max-width: 100%;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Features Section */
-        .features {
-            max-width: 1200px;
-            margin: 20px auto;
-            display: grid;
-            gap: 20px;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        }
-
-        .card {
-            background-color: rgba(255, 255, 255, 0.6);
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            text-align: center;
-        }
-
-        .card h3 {
-            color: #4CAF50;
-            margin-bottom: 15px;
-        }
-
-        .card img {
-            width: 70px;
-            height: 70px;
-            margin-bottom: 10px;
-        }
-
-        .card p {
-            line-height: 1.6;
-        }
-
-        /* Footer Styles */
-        footer {
-            text-align: center;
-            padding: 15px 0;
-            background-color: #4CAF50;
-            color: white;
-            margin-top: 20px;
-        }
-        
-        .editorial {
-          display: block;
-          width: 100%;
-          height: 100px;
-          max-height: 60px;
-          margin: 0;
-          z-index:2;
-          bottom:0;
-          position:relative;
-          left:0px;
-          float:left;
-        }
-
-.parallax1 > use {
-  animation: move-forever1 10s linear infinite;
-  &:nth-child(1) {
-    animation-delay: -2s;
-  }
-}
-.parallax2 > use {
-  animation: move-forever2 8s linear infinite;
-  &:nth-child(1) {
-    animation-delay: -2s;
-  }
-}
-.parallax3 > use {
-  animation: move-forever3 6s linear infinite;
-  &:nth-child(1) {
-    animation-delay: -2s;
-  }
-}
-.parallax4 > use {
-  animation: move-forever4 4s linear infinite;
-  &:nth-child(1) {
-    animation-delay: -2s;
-  }
-}
-@keyframes move-forever1 {
-  0% {
-    transform: translate(85px, 0%);
-  }
-  100% {
-    transform: translate(-90px, 0%);
-  }
-}
-@keyframes move-forever2 {
-  0% {
-    transform: translate(-90px, 0%);
-  }
-  100% {
-    transform: translate(85px, 0%);
-  }
-}
-@keyframes move-forever3 {
-  0% {
-    transform: translate(85px, 0%);
-  }
-  100% {
-    transform: translate(-90px, 0%);
-  }
-}
-@keyframes move-forever4 {
-  0% {
-    transform: translate(-90px, 0%);
-  }
-  100% {
-    transform: translate(85px, 0%);
-  }
-}
-
-	#section2{
-    	padding-top:12px;
-    }
-    
-    </style>
+  </style>
 </head>
 <body>
 
-    <header>
-        <h1>CodeTrekkers</h1>
-        <nav>
-            <a href="#home">Home</a>
-            <a href="#features">Features</a>
-        </nav>
-    </header>
+  <header>
+    <h1>CodeTrekkers</h1>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#features">Features</a>
+        <button id="logoutBtn">Logout</button>
+      </nav>
+  </header>
 
 		
-        <section id="hero-background-image">
+  <section id="hero-background-image">
     <div class="hero">
-        <div class="hero-content">
-            <h1>Welcome to CodeTrekkers! 🌍</h1>
-  <p>We're all about fun, educational web tools that connect you to the world. From countries and cultures to currencies, we use tech to spark curiosity and boost learning.</p>
+      <div class="hero-content">
+        <h1>Welcome to CodeTrekkers! 🌍</h1>
+        <p>We're all about fun, educational web tools that connect you to the world. From countries and cultures to currencies, we use tech to spark curiosity and boost learning.</p>
 
-  <h2>What We Offer:</h2>
-  <ul>
-    <li><strong>Country Info Hub:</strong> Discover key facts on any country, geography, people, history, and more via our API.</li>
-    <li><strong>Flag Quiz:</strong> Test your flag knowledge with our fun, interactive quiz.</li>
-    <li><strong>Currency Converter:</strong> Check real-time exchange rates with ease—perfect for travelers and planners.</li>
-  </ul>
+        <h2>What We Offer:</h2>
+        <ul>
+          <li><strong>Country Info Hub:</strong> Discover key facts on any country, geography, people, history, and more via our API.</li>
+          <li><strong>Flag Quiz:</strong> Test your flag knowledge with our fun, interactive quiz.</li>
+          <li><strong>Currency Converter:</strong> Check real-time exchange rates with ease—perfect for travelers and planners.</li>
+        </ul>
 
-  <p>Learning with us is engaging and easy. Whether you're a traveler, trivia fan, or curious explorer, CodeTrekkers has you covered.</p>
-        </div>
-<div class="hero-image">
+        <p>Learning with us is engaging and easy. Whether you're a traveler, trivia fan, or curious explorer, CodeTrekkers has you covered.</p>
+      </div>
+      <div class="hero-image">
            
-        </div>
+      </div>
     </div>
     <svg class="editorial"
-     xmlns="http://www.w3.org/2000/svg"
-     xmlns:xlink="http://www.w3.org/1999/xlink"
-     viewBox="0 24 150 28 "
-     preserveAspectRatio="none">
- <defs>
- <path id="gentle-wave"
- d="M-160 44c30 0 
-    58-18 88-18s
-    58 18 88 18 
-    58-18 88-18 
-    58 18 88 18
-    v44h-352z" />
-  </defs>
-  <g class="parallax1">
-   <use xlink:href="#gentle-wave" x="50" y="3" fill="#024846"/>
-  </g>
-    <g class="parallax2">
-   <use xlink:href="#gentle-wave" x="50" y="0" fill="#35898b"/>
-    </g>
-      <g class="parallax3">
-   <use xlink:href="#gentle-wave" x="50" y="9" fill="#68a8a4"/>
-   </g>
-    <g class="parallax4">
-   <use xlink:href="#gentle-wave" x="50" y="6" fill="#76a19f"/>  
-  </g>
-</svg>
-</section>
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 24 150 28 "
+      preserveAspectRatio="none">
+      <defs>
+        <path id="gentle-wave"
+        d="M-160 44c30 0 
+            58-18 88-18s
+            58 18 88 18 
+            58-18 88-18 
+            58 18 88 18
+            v44h-352z" />
+      </defs>
+        <g class="parallax1">
+          <use xlink:href="#gentle-wave" x="50" y="3" fill="#024846"/>
+        </g>
+        <g class="parallax2">
+          <use xlink:href="#gentle-wave" x="50" y="0" fill="#35898b"/>
+        </g>
+        <g class="parallax3">
+          <use xlink:href="#gentle-wave" x="50" y="9" fill="#68a8a4"/>
+        </g>
+        <g class="parallax4">
+          <use xlink:href="#gentle-wave" x="50" y="6" fill="#76a19f"/>  
+        </g>
+    </svg>
+  </section>
 
 
 
-<section id="section2">
+  <section id="section2">
     <div class="features" id="features">
-        <div class="card">
+      <div class="card">
             
-            <img src="https://img.icons8.com/?size=100&id=2RaOTTz1VWQU&format=png&color=000000" alt="Country Info">
-            <a href="index.html"><h3>Country Information Hub</h3></a>
+        <img src="https://img.icons8.com/?size=100&id=2RaOTTz1VWQU&format=png&color=000000" alt="Country Info">
+          <a href="index.html"><h3>Country Information Hub</h3></a>
             
-            <p>Dive into a treasure trove of data about any country using our robust API.</p>
-        </div>
-        <div class="card">
+          <p>Dive into a treasure trove of data about any country using our robust API.</p>
+      </div>
+      <div class="card">
             
-            <img src="https://img.icons8.com/?size=100&id=osWiBOYLPXb2&format=png&color=000000" alt="Flag Quiz">
-            <a href="Quiz_Flag.html"><h3>Flag Quiz Challenge</h3></a>
-            <p>Test your knowledge of national flags with our interactive quiz.</p>
-        </div>
-        <div class="card">
+        <img src="https://img.icons8.com/?size=100&id=osWiBOYLPXb2&format=png&color=000000" alt="Flag Quiz">
+        <a href="Quiz_Flag.html"><h3>Flag Quiz Challenge</h3></a>
+        <p>Test your knowledge of national flags with our interactive quiz.</p>
+      </div>
+      <div class="card">
             
-            <img src="https://img.icons8.com/?size=100&id=68311&format=png&color=000000" alt="Currency Converter">
-            <a href="experiment.html"><h3>Currency Converter</h3></a>
-            <p>Stay updated with accurate exchange rates in just a click.</p>
-        </div>
+        <img src="https://img.icons8.com/?size=100&id=68311&format=png&color=000000" alt="Currency Converter">
+        <a href="experiment.html"><h3>Currency Converter</h3></a>
+        <p>Stay updated with accurate exchange rates in just a click.</p>
+      </div>
     </div>
+
+    <script>
+      const logoutBtn = document.getElementById('logoutBtn');
+      logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('currentUser');
+        window.location.href = 'login.html';
+      });
+    </script>
+
   </section>
     <footer>
-        <p>2025 CodeTrekkers. all rights reserved</p>
+      <p>2025 CodeTrekkers. all rights reserved</p>
     </footer>
 
 </body>

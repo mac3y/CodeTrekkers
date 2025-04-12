@@ -7,11 +7,12 @@
   </head>
   <body>
     <header>
-        <h1>CodeTreckkers</h1>
+        <h1>CodeTrekkers</h1>
         <nav>
         <a href="homepage.html">Home</a>
           <a href="index.html">Countries Info</a>
           <a href="Quiz_Flag.html">Flag Quiz</a>
+          <button id="logoutBtn">Logout</button>
         </nav>
       </header>
     <div class="wrapper">
@@ -27,6 +28,16 @@
       <button id="convert-button">Convert</button>
       <p id="result"></p>
     </div>
+
+    <script>
+      const logoutBtn = document.getElementById('logoutBtn');
+    
+      logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('currentUser');
+        window.location.href = 'login.html';
+      });
+    </script>
+
     <script src="converter.js"></script>
   </body>
 </html>

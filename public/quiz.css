@@ -117,6 +117,21 @@ body {
     text-align: right;
   }
 
+  #logoutBtn {
+    padding: 8px 16px;
+    background-color: #196633;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+
+  #logoutBtn:hover {
+    background-color: #6dc98c;
+  }
+
   .navbar {
     background-color: #0F0E47;
     color: white;

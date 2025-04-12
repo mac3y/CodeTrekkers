@@ -89,17 +89,17 @@ header nav a:hover {
   }
 
   aside button {
-      display: block;
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 5px;
-      background-color: inherit;
-      border: none;
-      text-align: left;
-      cursor: pointer;
-      font-size: 1em;
-      border-bottom: 1px solid #999;
-      box-sizing: border-box;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: inherit;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 1em;
+    border-bottom: 1px solid #999;
+    box-sizing: border-box;
   }
 
   aside button:hover {
@@ -112,9 +112,9 @@ header nav a:hover {
   }
 
   main img {
-      width: 50%;
-      height: auto;
-      margin-bottom: 20px;
+    width: 50%;
+    height: auto;
+    margin-bottom: 20px;
   }
 
   main h2 {
@@ -135,20 +135,18 @@ header nav a:hover {
   }
 
   #logoutBtn {
-    
-    margin: 10px;
-    top: 30px; 
-    right: 20px;
-    padding: 5px 15px;
-    background: #fff;
-    border: 1px solid #999;
+    padding: 8px 16px;
+    background-color: #196633;
+    color: white;
+    border: none;
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
+    transition: background-color 0.3s ease;
   }
 
   #logoutBtn:hover {
-    background: #f0f0f0;
+    background-color: #6dc98c;
   }
 
   .welcome-message, .error-message, .no-results {
@@ -167,7 +165,7 @@ header nav a:hover {
 </head>
 <body>
   <script>
-    const isAuth = sessionStorage.getItem('isAuthenticated') || 
+    const isAuth =sessionStorage.getItem('isAuthenticated') || 
                   localStorage.getItem('keepLoggedIn') ||
                   sessionStorage.getItem('isLoggedIn') || 
                   localStorage.getItem('rememberMe');
@@ -177,7 +175,7 @@ header nav a:hover {
   </script>
 
 <header>
-  <h1>CodeTreckkers</h1>
+  <h1>CodeTrekkers</h1>
   <nav>
     <a href="homepage.html">Home</a>
     <a href="Quiz_Flag.html">Flag Quiz</a>
