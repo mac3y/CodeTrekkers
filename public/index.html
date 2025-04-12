@@ -27,7 +27,7 @@
       background-color: #c9c9c9;
       overflow-y: auto;
       padding: 10px;
-      box-sizing: border-box; /* Add this */
+      box-sizing: border-box;
   }
 
   #filterControls {
@@ -62,7 +62,7 @@
       cursor: pointer;
       font-size: 1em;
       border-bottom: 1px solid #999;
-      box-sizing: border-box; /* Also good for buttons */
+      box-sizing: border-box;
   }
 
   aside button:hover {
@@ -75,7 +75,7 @@
   }
 
   main img {
-      width: 50%;      /* Make the flag take up 50% of the main container's width */
+      width: 50%;
       height: auto;
       margin-bottom: 20px;
   }
@@ -130,7 +130,6 @@
 </head>
 <body>
   <script>
-    //Authentication Check
     const isAuth = sessionStorage.getItem('isAuthenticated') || 
                   localStorage.getItem('keepLoggedIn') ||
                   sessionStorage.getItem('isLoggedIn') || 
@@ -181,7 +180,7 @@
           a.name.common.localeCompare(b.name.common)
         );
         populateContinentFilter();
-        filterCountries(); // Initial filtering to show all countries
+        filterCountries();
         if (allCountries.length > 0) {
           showCountryDetails(allCountries[0]);
         }
