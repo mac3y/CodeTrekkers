@@ -3,7 +3,8 @@ body {
     background-color: #FDFBD4;
     color: #0F0E47;
     text-align: center;
-    padding: 20px;
+    padding: 0;
+    margin: 0;
   }
   
   .quiz-container {
@@ -11,7 +12,7 @@ body {
     padding: 20px;
     border-radius: 20px;
     max-width: 500px;
-    margin: auto;
+    margin: 20px auto 0 auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   }
   
@@ -136,10 +137,11 @@ body {
     background-color: #0F0E47;
     color: white;
     padding: 10px 20px;
+    margin: 0%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 0 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
   
