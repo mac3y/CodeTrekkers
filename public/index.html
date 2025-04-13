@@ -10,6 +10,8 @@
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: whitesmoke;
+    height: 100vh; /* Ensure it takes the full viewport height */
+    overflow-y: auto;
     
   }
 
@@ -49,7 +51,8 @@ header nav a:hover {
 
   #content {
     display: flex;
-    height: 100vh; /* This ensures it takes the full viewport height */
+    height: 100vh;
+    /* overflow: hidden; */
 }
 
   
@@ -65,7 +68,7 @@ header nav a:hover {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    height: 100vh;
+    height: 100%;
   }
 
   #filterControls {
@@ -107,15 +110,22 @@ header nav a:hover {
     background-color: #ddd;
   }
 
+
+
   main {
-    flex-grow: 1;
-    padding: 30px;
+  flex-grow: 1;
+  padding: 20px;
+  overflow: auto; 
+  /* max-width: 100%;  */
+  box-sizing: border-box;
   }
 
-  main img {
-    width: 50%;
-    height: auto;
-    margin-bottom: 20px;
+  main img.country-flag {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  display: block;
+  margin: 0 0 0px 0;
   }
 
   main h2 {
@@ -131,9 +141,42 @@ header nav a:hover {
     text-decoration: underline;
   }
 
-  .info {
-    line-height: 1.6;
-  }
+  /* .info {
+    line-height: 1;
+  } */
+
+  #searchControls {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#searchControls label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+#searchBar {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+  .country-info {
+  max-width: 600px; /* Limit the width of the text content */
+  margin: 0 ;
+  text-align: left; /* Align text to the left */
+  line-height: 1.4; /* Improve readability */
+}
+
+.country-info h2 {
+  text-align: left; /* Center the country name */
+  margin-bottom: 20px;
+}
 
   #logoutBtn {
     padding: 8px 16px;
@@ -192,11 +235,17 @@ header nav a:hover {
         <select id="continentFilter">
           <option value="">All Continents</option>
         </select>
+        
       </div>
       <div id="countryList"></div>
     </aside>
 
     <main id="countryDetails">
+      <div id="searchControls">
+        <label for="searchBar">Search for a Country:</label>
+        <input type="text" id="searchBar" placeholder="Enter country name">
+      </div>
+    
       <div class="welcome-message">
         <h2>Welcome to Country Viewer</h2>
         <p>Select a country from the list to view details</p>
@@ -209,6 +258,12 @@ header nav a:hover {
     const countryList = document.getElementById('countryList');
     const countryDetails = document.getElementById('countryDetails');
     const logoutBtn = document.getElementById('logoutBtn');
+    const searchBar = document.getElementById('searchBar');
+
+    searchBar.addEventListener('input', (event) => {
+      const query = event.target.value;
+      searchCountries(query);
+    });
 
     let allCountries = [];
     let uniqueContinents = [];
@@ -225,6 +280,8 @@ header nav a:hover {
         if (allCountries.length > 0) {
           showCountryDetails(allCountries[0]);
         }
+
+        
       } catch (error) {
         console.error('Error fetching countries:', error);
       }
@@ -261,6 +318,27 @@ header nav a:hover {
         `;
       }
     }
+
+  function searchCountries(query) {
+  const lowerQuery = query.toLowerCase();
+  const results = allCountries.filter(country =>
+    country.name.common.toLowerCase().includes(lowerQuery) ||
+    country.cca2?.toLowerCase() === lowerQuery ||  // 2-letter code
+    country.cca3?.toLowerCase() === lowerQuery     // 3-letter code
+  );
+  drawCountryList(results);
+
+  if (results.length > 0) {
+    showCountryDetails(results[0]);
+  } else {
+    countryDetails.innerHTML = `
+      <div class="no-results">
+        <h2>No Matching Countries</h2>
+        <p>Try a different name or code</p>
+      </div>
+    `;
+  }
+}
 
 
     function drawCountryList(countries) {
