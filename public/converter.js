@@ -184,7 +184,8 @@ const apiKey = "28498904bce6769134e2c0bd";
             currencySelectTo.innerHTML += option;
           });
 
-          
+          currencySelectFrom.value = "USD";
+          currencySelectTo.value = "TTD";
           
         } catch (error) {
           resultText.innerText = "Could not load currencies.";

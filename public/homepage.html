@@ -89,6 +89,29 @@
       border-radius: 8px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
+    
+      ul.custom-bullet {
+            list-style-type: none;
+        }
+        ul.custom-bullet li {
+            margin-left: 20px;
+            position: relative;
+            padding-left: 15px;
+            padding-bottom: 10px;
+        }
+        ul.custom-bullet li::before {
+            content: "";
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-image: url('https://img.icons8.com/?size=100&id=Xg4R2nPgPfPP&format=png&color=000000');
+            background-size: cover;
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            transform: translateY(-80%);
+        }
+
 
     /* Features Section */
     .features {
@@ -250,10 +273,10 @@
         <p>We're all about fun, educational web tools that connect you to the world. From countries and cultures to currencies, we use tech to spark curiosity and boost learning.</p>
 
         <h2>What We Offer:</h2>
-        <ul>
-          <li><strong>Country Info Hub:</strong> Discover key facts on any country, geography, people, history, and more via our API.</li>
-          <li><strong>Flag Quiz:</strong> Test your flag knowledge with our fun, interactive quiz.</li>
-          <li><strong>Currency Converter:</strong> Check real-time exchange rates with ease—perfect for travelers and planners.</li>
+        <ul class="custom-bullet">
+          <li class="star"><strong>Country Info Hub:</strong> Discover key facts on any country, geography, people, history, and more via our API.</li>
+          <li class="star"><strong>Flag Quiz:</strong> Test your flag knowledge with our fun, interactive quiz.</li>
+          <li class="star"><strong>Currency Converter:</strong> Check real-time exchange rates with ease—perfect for travelers and planners.</li>
         </ul>
 
         <p>Learning with us is engaging and easy. Whether you're a traveler, trivia fan, or curious explorer, CodeTrekkers has you covered.</p>
