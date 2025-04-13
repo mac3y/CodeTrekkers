@@ -12,47 +12,63 @@
     min-height: 100vh;
   }
 
+
   header {
-    background-color: #9999ff;
-    padding: 10px;
-    display: flex; /* Use flexbox for layout */
-    align-items: center; /* Align items vertically */
-    justify-content: space-between; /* Space between h1 and nav */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 20px;
   }
-  
+
   header h1 {
     margin: 0;
-    font-size: 24px;
-    color: white;
+    font-size: 1.5em;
   }
-  
-  header nav {
-    display: flex; /* Use flexbox for buttons */
-    align-items: center; /* Align buttons vertically */
-    gap: 15px; /* Add spacing between buttons */
+
+ 
+
+  nav {
+   display: flex;
+   gap: 15px;
+   align-items: center;
   }
-  
-  header nav a {
+
+  nav a {
+    /* color: white;
     text-decoration: none;
-    color: white;
-    background: #3333cc;
-    padding: 5px 10px;
-    border-radius: 4px;
+    font-weight: bold; */
+    display: inline-flex;
+    align-items: center;
+    height: 40px; /* Make sure all items have the same height */
+    padding: 0 12px;
+    font-size: 1em;
+    text-decoration: none;
     font-weight: bold;
+    color: white;
+    background-color: transparent;
+    border: none;
   }
-  
-  header nav a:hover {
-    background: #5555ff;
+
+  nav a:hover {
+    text-decoration: underline;
+  }
+
+  nav button {
+    align-items: center;
   }
   
   .wrapper {
     width: 90%;
-    max-width: 25em;
-    background-color: #ffffff;
+    max-width: 50em;
+    background-color: rgba(255, 255, 255, 0.6);
     margin: 5em auto;
     padding: 2em;
     border-radius: 0.8em;
   }
+
+
 
   .app-details {
     display: flex;
@@ -124,6 +140,7 @@
     border-radius: 0.3em;
     color: #ffffff;
     font-weight: 600;
+    align-items: center;
   }
   #result {
     font-size: 1.2em;
@@ -143,24 +160,46 @@
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s ease;
+    margin-top: -2px; 
   }
 
   #logoutBtn:hover {
     background-color: #6dc98c;
   }
 
-  nav {
-    background-color: #333;
-    padding: 10px;
+
+  .dropdowns {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+  }
+  
+  .dropdown {
+    display: flex;
+    flex-direction: column; /* Stack the heading and select vertically */
+    align-items: flex-start; /* Align items to the left */
+  }
+  
+  .dropdown h4 {
+    margin-bottom: 0.5em; /* Add spacing between the heading and select */
+    font-size: 1em;
+    color: #333;
+  }
+  
+  .dropdown select {
+    width: 100%;
+    padding: 0.6em;
+    font-size: 1em;
+    border-radius: 0.2em;
+    background-color: #9873fe;
+    color: #ffffff;
+  }
+
+  footer {
     text-align: center;
-  }
-  nav a {
-    color: white;
-    margin: 0 15px;
-    text-decoration: none;
-    font-weight: bold;
-  }
-  nav a:hover {
-    text-decoration: underline;
+      padding: 15px 0;
+      background-color: #4CAF50;
+      color: white;
+      margin-top: 20px; 
   }
   

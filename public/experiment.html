@@ -6,24 +6,30 @@
     <link rel="stylesheet" href="style_converter.css" />
   </head>
   <body>
-    <header>
+      <header>
         <h1>CodeTrekkers</h1>
-        <nav>
-        <a href="homepage.html">Home</a>
-          <a href="index.html">Countries Info</a>
-          <a href="Quiz_Flag.html">Flag Quiz</a>
-          <button id="logoutBtn">Logout</button>
-        </nav>
+          <nav>
+            <a href="homepage.html">Home</a>
+            <a href="index.html">Countries Info</a>
+            <a href="Quiz_Flag.html">Flag Quiz</a>
+            <button id="logoutBtn">Logout</button>
+          </nav>
       </header>
     <div class="wrapper">
       <div class="app-details">
         <h1 class="app-title">Currency Converter</h1>
       </div>
       <label for="amount">Amount:</label>
-      <input type="number" id="amount" value="100" />
+      <input type="number" id="amount" value="1" />
       <div class="dropdowns">
-        <select id="from-currency-select"></select>
-        <select id="to-currency-select"></select>
+        <div class="dropdown">
+          <h4>From</h4>
+          <select id="from-currency-select"></select>
+        </div>
+        <div class="dropdown">
+          <h4>To</h4>
+          <select id="to-currency-select"></select>
+        </div>
       </div>
       <button id="convert-button">Convert</button>
       <p id="result"></p>
@@ -39,6 +45,9 @@
     </script>
 
     <script src="converter.js"></script>
+    <footer>
+      <p>2025 CodeTrekkers. all rights reserved</p>
+    </footer>
   </body>
 </html>
 
