@@ -11,7 +11,7 @@
     font-family: Arial, sans-serif;
     background-color: whitesmoke;
     height: 100vh; /* Ensure it takes the full viewport height */
-    overflow-y: auto;
+    /* overflow-y: auto; */
     
   }
 
@@ -235,17 +235,15 @@ header nav a:hover {
         <select id="continentFilter">
           <option value="">All Continents</option>
         </select>
-        
+    
+        <!-- Add the search bar here -->
+        <label for="searchBar">Search for a Country:</label>
+        <input type="text" id="searchBar" placeholder="Enter country name">
       </div>
       <div id="countryList"></div>
     </aside>
 
     <main id="countryDetails">
-      <div id="searchControls">
-        <label for="searchBar">Search for a Country:</label>
-        <input type="text" id="searchBar" placeholder="Enter country name">
-      </div>
-    
       <div class="welcome-message">
         <h2>Welcome to Country Viewer</h2>
         <p>Select a country from the list to view details</p>
@@ -260,10 +258,11 @@ header nav a:hover {
     const logoutBtn = document.getElementById('logoutBtn');
     const searchBar = document.getElementById('searchBar');
 
-    searchBar.addEventListener('input', (event) => {
-      const query = event.target.value;
-      searchCountries(query);
-    });
+// Add an event listener to the search bar
+  searchBar.addEventListener('input', (event) => {
+    const query = event.target.value; // Get the user's input
+    searchCountries(query); // Call the search function with the input
+  });
 
     let allCountries = [];
     let uniqueContinents = [];
@@ -384,6 +383,9 @@ header nav a:hover {
     });
 
     window.onload = fetchCountries;
+
+
+
   </script>
 </body>
 </html>
