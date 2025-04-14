@@ -90,28 +90,72 @@
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     
-      ul.custom-bullet {
-            list-style-type: none;
-        }
-        ul.custom-bullet li {
-            margin-left: 20px;
-            position: relative;
-            padding-left: 15px;
-            padding-bottom: 10px;
-        }
-        ul.custom-bullet li::before {
-            content: "";
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            background-image: url('https://img.icons8.com/?size=100&id=Xg4R2nPgPfPP&format=png&color=000000');
-            background-size: cover;
-            position: absolute;
-            left: -20px;
-            top: 50%;
-            transform: translateY(-80%);
-        }
+    ul.custom-bullet {
+      list-style-type: none;
+    }
+    
+    ul.custom-bullet li {
+      margin-left: 20px;
+      position: relative;
+      padding-left: 15px;
+      padding-bottom: 10px;
+    }
+    
+    ul.custom-bullet li::before {
+      content: "";
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background-image: url('https://img.icons8.com/?size=100&id=Xg4R2nPgPfPP&format=png&color=000000');
+      background-size: cover;
+      position: absolute;
+      left: -20px;
+      top: 50%;
+      transform: translateY(-80%);
+    }
 
+    /* Comments Section */
+    #comments-section {
+      margin: 20px auto;
+      padding: 15px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      max-width: 1000px;
+    }
+
+    #comments-list .comment {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    #comment-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #comment-form textarea {     
+      width: 96%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: none;
+    }
+
+    #comment-form button {
+      align-self: flex-end;
+      padding: 8px 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #comment-form button:hover {
+      background-color: #45a049;
+    }
 
     /* Features Section */
     .features {
@@ -339,6 +383,34 @@
       </div>
     </div>
 
+    <section id="comments-section">
+      <h2>Comments</h2>
+      <form id="comment-form">
+        <textarea id="comment-text" placeholder="Write a comment..." required></textarea>
+        <button type="submit">Post Comment</button>
+      </form>
+      <div id="comments-list" style="display: none;"></div>
+    </section>
+
+    <script type="module">
+      import { addComment } from './data.js';
+        
+      const commentForm = document.getElementById('comment-form');
+      const commentText = document.getElementById('comment-text');
+    
+      commentForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const commentData = {
+          text: commentText.value,
+          username: 'Anonymous',
+          timestamp: Date.now(),
+        };
+        await addComment(commentData);
+        commentText.value = '';
+        alert('Comment submitted!');
+      });
+    </script>
+
     <script>
       const logoutBtn = document.getElementById('logoutBtn');
       logoutBtn.addEventListener('click', () => {
@@ -346,6 +418,8 @@
         window.location.href = 'login.html';
       });
     </script>
+
+    <script type="module" src="./auth.js"></script>
 
   </section>
     <footer>
