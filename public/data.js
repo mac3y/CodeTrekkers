@@ -6,7 +6,9 @@ import {
   addDoc, 
   getDocs, 
   deleteDoc, 
-  doc 
+  doc,
+  query,
+  orderBy
 } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
 import firebaseConfig from "./firebaseConfig.js";
 
@@ -62,33 +64,51 @@ async function getCurrencyRates(renderFun) {
   }
 }
 
-async function getComments(renderFun) {
-    const commentsRef = collection(db, 'comments');
-    const querySnapshot = await getDocs(commentsRef);
-    const comments = [];
-    querySnapshot.forEach((doc) => {
-      comments.push({ id: doc.id, ...doc.data() });
+async function getComments(cardType, renderFun) {
+  const commentsRef = collection(db, `comments-${cardType}`);
+  const q = query(commentsRef, orderBy("timestamp", "desc"));
+  const querySnapshot = await getDocs(q);
+  const comments = [];
+  querySnapshot.forEach((doc) => {
+    comments.push({ 
+      id: doc.id, 
+      ...doc.data(),
+      timestamp: doc.data().timestamp?.toDate() || new Date()
     });
-    renderFun(comments);
+  });
+  renderFun(comments);
 }
   
 async function addComment(commentData) {
-    try {
-      await addDoc(collection(db, "comments"), commentData);
-      console.log("Comment added successfully");
-    } catch (error) {
-      console.error("Error adding comment:", error);
-    }
+  try {
+    const { cardType, ...comment } = commentData;
+    await addDoc(collection(db, `comments-${cardType}`), {
+      ...comment,
+      timestamp: new Date()
+    });
+    console.log("Comment added successfully to", cardType);
+  } catch (error) {
+    console.error("Error adding comment:", error);
+  }
+  
+  await addDoc(collection(db, "comments-country-info"), {
+    text: "Test comment",
+    userId: "testUser123",
+    userEmail: "test@example.com",
+    timestamp: new Date()
+  });
 }
   
-async function deleteComment(commentId) {
-    try {
-      const commentRef = doc(db, 'comments', commentId);
-      await deleteDoc(commentRef);
-      console.log("Comment deleted successfully");
-    } catch (error) {
-      console.error("Error deleting comment:", error);
-    }
+async function deleteComment(cardType, commentId) {
+  try {
+    const commentRef = doc(db, `comments-${cardType}`, commentId);
+    await deleteDoc(commentRef);
+    console.log("Comment deleted successfully from", cardType);
+  } catch (error) {
+    console.error("Error deleting comment:", error);
+  }
 }
+
+console.log("Current user:", auth.currentUser);
   
 export { getCountries, getQuizzes, createQuiz, deleteQuiz, getCurrencyRates, getComments, addComment, deleteComment };

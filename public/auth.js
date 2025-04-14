@@ -14,6 +14,14 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth();
 
+const isAuth =sessionStorage.getItem('isAuthenticated') || 
+              localStorage.getItem('keepLoggedIn') ||
+              sessionStorage.getItem('isLoggedIn') || 
+              localStorage.getItem('rememberMe');
+if (!isAuth) {
+  window.location.href = 'login.html';
+}
+
 function setAuthListeners(onLogin, onLogout) {
   onAuthStateChanged(auth, user => {
     if (user) {

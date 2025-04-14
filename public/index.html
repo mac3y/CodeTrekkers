@@ -5,219 +5,202 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Country Viewer</title>
   <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=KDH7zOWVcvjU&format=png&color=000000">
+  <script type="module" src="./auth.js"></script>
   <style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: whitesmoke;
-    height: 100vh; /* Ensure it takes the full viewport height */
-    /* overflow-y: auto; */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: whitesmoke;
+      height: 100vh;
+      
+    }
+
+    header {
+      background-color: #9999ff;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+      color: white;
+    }
+
+    header nav {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    header nav a {
+      text-decoration: none;
+      color: white;
+      background: #3333cc;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    header nav a:hover {
+      background: #5555ff;
+    }
+
+
+    #content {
+      display: flex;
+      height: 100vh;
+    }
+
     
-  }
+    .parent-container {
+      margin: 0;
+      padding: 0;
+    }
 
-  header {
-  background-color: #9999ff;
-  padding: 10px;
-  display: flex; /* Use flexbox for layout */
-  align-items: center; /* Align items vertically */
-  justify-content: space-between; /* Space between h1 and nav */
-}
+    aside {
+      width: 250px;
+      background-color: #c9c9c9;
+      overflow-y: auto;
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      height: 100%;
+    }
 
-header h1 {
-  margin: 0;
-  font-size: 24px;
-  color: white;
-}
+    #filterControls {
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #999;
+    }
 
-header nav {
-  display: flex; /* Use flexbox for buttons */
-  align-items: center; /* Align buttons vertically */
-  gap: 15px; /* Add spacing between buttons */
-}
+    #filterControls label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
 
-header nav a {
-  text-decoration: none;
-  color: white;
-  background: #3333cc;
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-weight: bold;
-}
+    #continentFilter {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
 
-header nav a:hover {
-  background: #5555ff;
-}
+    aside button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 5px;
+      background-color: inherit;
+      border: none;
+      text-align: left;
+      cursor: pointer;
+      font-size: 1em;
+      border-bottom: 1px solid #999;
+      box-sizing: border-box;
+    }
 
+    aside button:hover {
+      background-color: #ddd;
+    }
 
-  #content {
-    display: flex;
-    height: 100vh;
-    /* overflow: hidden; */
-}
+    main {
+      flex-grow: 1;
+      padding: 20px;
+      overflow: auto; 
+      box-sizing: border-box;
+    }
 
-  
-.parent-container {
-  margin: 0;
-  padding: 0;
-}
+    main img.country-flag {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      display: block;
+      margin: 0 0 0px 0;
+    }
 
-  aside {
-    width: 250px;
-    background-color: #c9c9c9;
-    overflow-y: auto;
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    height: 100%;
-  }
+    main h2 {
+      margin-bottom: 10px;
+    }
 
-  #filterControls {
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #999;
-  }
+    main a {
+      color: #3333cc;
+      text-decoration: none;
+    }
 
-  #filterControls label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
+    main a:hover {
+      text-decoration: underline;
+    }
 
-  #continentFilter {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
+    #searchControls {
+      margin-bottom: 20px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    } 
 
-  aside button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 5px;
-    background-color: inherit;
-    border: none;
-    text-align: left;
-    cursor: pointer;
-    font-size: 1em;
-    border-bottom: 1px solid #999;
-    box-sizing: border-box;
-  }
+    #searchControls label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
 
-  aside button:hover {
-    background-color: #ddd;
-  }
+    #searchBar {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .country-info {
+      max-width: 600px; 
+      margin: 0 ;
+      text-align: left; 
+      line-height: 1.4;
+    }
 
+    .country-info h2 {
+      text-align: left;
+      margin-bottom: 20px;
+    }
 
+    #logoutBtn {
+      padding: 8px 16px;
+      background-color: #196633;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
 
-  main {
-  flex-grow: 1;
-  padding: 20px;
-  overflow: auto; 
-  /* max-width: 100%;  */
-  box-sizing: border-box;
-  }
+    #logoutBtn:hover {
+      background-color: #6dc98c;
+    }
 
-  main img.country-flag {
-  width: 100%;
-  max-width: 400px;
-  height: auto;
-  display: block;
-  margin: 0 0 0px 0;
-  }
+    .welcome-message, .error-message, .no-results {
+      background: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
 
-  main h2 {
-    margin-bottom: 10px;
-  }
+    .welcome-message h2, .error-message h2, .no-results h2 {
+      color: #333;
+      margin-top: 0;
+    } 
 
-  main a {
-    color: #3333cc;
-    text-decoration: none;
-  }
-
-  main a:hover {
-    text-decoration: underline;
-  }
-
-  /* .info {
-    line-height: 1;
-  } */
-
-  #searchControls {
-  margin-bottom: 20px;
-  padding: 10px;
-  background-color: #f9f9f9;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-#searchControls label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-#searchBar {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-  .country-info {
-  max-width: 600px; /* Limit the width of the text content */
-  margin: 0 ;
-  text-align: left; /* Align text to the left */
-  line-height: 1.4; /* Improve readability */
-}
-
-.country-info h2 {
-  text-align: left; /* Center the country name */
-  margin-bottom: 20px;
-}
-
-  #logoutBtn {
-    padding: 8px 16px;
-    background-color: #196633;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-  }
-
-  #logoutBtn:hover {
-    background-color: #6dc98c;
-  }
-
-  .welcome-message, .error-message, .no-results {
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-
-  .welcome-message h2, .error-message h2, .no-results h2 {
-    color: #333;
-    margin-top: 0;
-  } 
-
-</style>
+  </style>
 </head>
 <body>
-  <script>
-    const isAuth =sessionStorage.getItem('isAuthenticated') || 
-                  localStorage.getItem('keepLoggedIn') ||
-                  sessionStorage.getItem('isLoggedIn') || 
-                  localStorage.getItem('rememberMe');
-    if (!isAuth) {
-      window.location.href = 'login.html';
-    }
-  </script>
-
+ 
 <header>
   <h1>CodeTrekkers</h1>
   <nav>
@@ -236,7 +219,6 @@ header nav a:hover {
           <option value="">All Continents</option>
         </select>
     
-        <!-- Add the search bar here -->
         <label for="searchBar">Search for a Country:</label>
         <input type="text" id="searchBar" placeholder="Enter country name">
       </div>
@@ -258,11 +240,11 @@ header nav a:hover {
     const logoutBtn = document.getElementById('logoutBtn');
     const searchBar = document.getElementById('searchBar');
 
-// Add an event listener to the search bar
-  searchBar.addEventListener('input', (event) => {
-    const query = event.target.value; // Get the user's input
-    searchCountries(query); // Call the search function with the input
-  });
+
+    searchBar.addEventListener('input', (event) => {
+      const query = event.target.value; 
+      searchCountries(query);
+    });
 
     let allCountries = [];
     let uniqueContinents = [];
@@ -318,27 +300,26 @@ header nav a:hover {
       }
     }
 
-  function searchCountries(query) {
-  const lowerQuery = query.toLowerCase();
-  const results = allCountries.filter(country =>
-    country.name.common.toLowerCase().includes(lowerQuery) ||
-    country.cca2?.toLowerCase() === lowerQuery ||  // 2-letter code
-    country.cca3?.toLowerCase() === lowerQuery     // 3-letter code
-  );
-  drawCountryList(results);
+    function searchCountries(query) {
+      const lowerQuery = query.toLowerCase();
+      const results = allCountries.filter(country =>
+        country.name.common.toLowerCase().includes(lowerQuery) ||
+        country.cca2?.toLowerCase() === lowerQuery ||  
+        country.cca3?.toLowerCase() === lowerQuery     
+      );
+      drawCountryList(results);
 
-  if (results.length > 0) {
-    showCountryDetails(results[0]);
-  } else {
-    countryDetails.innerHTML = `
-      <div class="no-results">
-        <h2>No Matching Countries</h2>
-        <p>Try a different name or code</p>
-      </div>
-    `;
-  }
-}
-
+      if (results.length > 0) {
+        showCountryDetails(results[0]);
+      } else {
+        countryDetails.innerHTML = `
+          <div class="no-results">
+            <h2>No Matching Countries</h2>
+            <p>Try a different name or code</p>
+          </div>
+        `;
+      }
+    }
 
     function drawCountryList(countries) {
       countryList.innerHTML = '';
@@ -351,7 +332,6 @@ header nav a:hover {
       });
     }
 
-  
     function showCountryDetails(country) {
       const capital = country.capital?.[0] ?? 'N/A';
       const continent = country.continents?.join(', ') ?? 'Unknown';
@@ -382,21 +362,13 @@ header nav a:hover {
       window.location.href = 'login.html';
     });
 
-    <script type="module" src="./auth.js"></script>
-
-    window.onload = fetchCountries;
-
-
+    document.addEventListener('DOMContentLoaded', () => {
+      fetchCountries();
+    });
 
   </script>
+
+  <script type="module" src="./auth.js"></script>
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
