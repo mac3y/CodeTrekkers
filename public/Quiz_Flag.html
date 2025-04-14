@@ -15,7 +15,8 @@
       <a href="homepage.html">Home</a>
       <a href="index.html">Country Info</a>
       <a href="experiment.html">Currency Converter</a>
-      <button id="logoutBtn">Logout</button>
+      <button id="loginBtn" style="display: block;">Login</button>
+      <button id="logoutBtn" style="display: none;">Logout</button>
     </div>
   </nav>
 </header>
@@ -55,12 +56,34 @@
   </div>
 
   <script>
+    const loginBtn = document.getElementById('loginBtn');
     const logoutBtn = document.getElementById('logoutBtn');
-  
-    logoutBtn.addEventListener('click', () => {
-      localStorage.removeItem('currentUser');
+
+    function updateAuthButtons() {
+      const isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true';
+
+      if (isAuthenticated) {
+        loginBtn.style.display = 'none';
+        logoutBtn.style.display = 'block';
+      } else {
+        loginBtn.style.display = 'block';
+        logoutBtn.style.display = 'none';
+      }
+    }
+
+    loginBtn.addEventListener('click', () => {
+      sessionStorage.setItem('redirectAfterLogin', 'Quiz_Flag.html');
       window.location.href = 'login.html';
     });
+
+    logoutBtn.addEventListener('click', () => {
+      sessionStorage.removeItem('isAuthenticated');
+      sessionStorage.removeItem('redirectAfterLogin');
+      updateAuthButtons();
+      alert('You have been logged out.');
+    });
+
+    updateAuthButtons();
   </script>
 
   <script src="quiz.js"></script>

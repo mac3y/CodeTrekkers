@@ -11,16 +11,7 @@ import {
 import firebaseConfig from "./firebaseConfig.js";
 
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth();
-
-const isAuth =sessionStorage.getItem('isAuthenticated') || 
-              localStorage.getItem('keepLoggedIn') ||
-              sessionStorage.getItem('isLoggedIn') || 
-              localStorage.getItem('rememberMe');
-if (!isAuth) {
-  window.location.href = 'login.html';
-}
 
 function setAuthListeners(onLogin, onLogout) {
   onAuthStateChanged(auth, user => {
@@ -32,7 +23,6 @@ function setAuthListeners(onLogin, onLogout) {
   });
 }
 
-
 async function signIn() {
   try {
     await setPersistence(auth, browserLocalPersistence);
@@ -43,7 +33,6 @@ async function signIn() {
   }
 }
 
-
 async function logout() {
   try {
     await signOut(auth);
@@ -52,5 +41,9 @@ async function logout() {
     console.error('Error signing out:', error);
   }
 }
+
+onAuthStateChanged(auth, (user) => {
+  console.log("Auth state changed:", user);
+});
 
 export { auth, setAuthListeners, signIn, logout };

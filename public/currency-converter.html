@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Currency Converter</title>
+  <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=KDH7zOWVcvjU&format=png&color=000000">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=KDH7zOWVcvjU&format=png&color=000000">
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      font-family: "Nunito", sans-serif;
+      font-weight: bold;
+      letter-spacing: 2.5px;
+      border: none;
+      outline: none;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 300;
+      background-color: #f5ebdb;
+      min-height: 70vh;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 20px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.5em;
+    }
+
+    nav {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    nav a {
+      display: inline-flex;
+      align-items: center;
+      height: 40px; 
+      padding: 0 12px;
+      font-size: 1em;
+      text-decoration: none;
+      font-weight: bold;
+      color: white;
+      background-color: transparent;
+      border: none;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    nav button {
+      align-items: center;
+    }
+
+    .wrapper {
+      width: 90%;
+      max-width: 50em;
+      background-color: rgba(255, 255, 255, 0.5);
+      margin: 1em auto;
+      border-color: black;
+      padding: 1em;
+      border-radius: 16px;
+      text-align: center; 
+    }
+
+    .app-details {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      border-bottom: 0em;
+      padding: 1em;
+    }
+
+    .app-icon {
+      width: 9.37em;
+    }
+
+    .app-title {
+      font-size: 1.6em;
+      text-transform: uppercase;
+      margin-top: 1em;
+      margin-bottom: 1em;
+      color: #50565e;
+    }
+
+    label {
+      text-align: left;
+      display: block;
+      font-weight: 600;
+      color: #50565e;
+    }
+
+    input#amount {
+      font-weight: 400;
+      font-size: 1.2em;
+      display: block;
+      width: 100%;
+      border: 2px solid #50565e;
+      border-radius: 16px;
+      color: #50565e;
+      margin-bottom: 2em;
+      padding: 0.5em;
+    }
+
+    input#amount:focus {
+      color: #50565e;
+      border-color: #50565e;
+      
+    }
+
+    .dropdowns {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1em;
+      margin-bottom: 1em;
+    }
+
+    select {
+      width: 100%;
+      padding: 0.6em;
+      font-size: 1em;
+      border-radius: 0.2em;
+      appearance: none;
+      background-image: url("arrow-down.svg");
+      background-repeat: no-repeat;
+      background-position: right 15px top 50%, center;
+      background-size: 20px 20px;
+      background-color: #81a079;
+      color: #ffffff;
+    }
+    
+    option {
+      background-color: #f8f9fa;
+      color: #50565e;
+    }
+    
+
+    button#convert-button {
+      background-color: #81a079;
+      width: 50%;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      font-size: 1.5em;
+      display: block;
+      margin: 4px auto;
+      cursor: pointer;
+      border-radius: 16px;
+    }
+
+    #result {
+      font-size: 1.2em;
+      text-align: center;
+      margin-top: 1em;
+      color: #02002c;
+      background-color: #e8e5ff;
+      padding: 0.8em 0;
+      border-radius: 16px;
+    }
+
+    #logoutBtn {
+      padding: 8px 16px;
+      background-color: #196633;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+      margin-top: -2px;
+    }
+
+    #logoutBtn:hover {
+      background-color: #6dc98c;
+    }
+
+    #loginBtn {
+      padding: 8px 16px;
+      background-color: #196633;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+      margin-top: -2px;
+    }
+
+    #loginBtn:hover {
+      background-color: #6dc98c;
+    }
+
+    .dropdowns {
+      display: flex;
+      justify-content: space-between;
+      gap: 1em;
+    }
+
+    .dropdown {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start; 
+    }
+
+    .dropdown h4 {
+      margin-bottom: 0.5em;
+      font-size: 1em;
+      color: #50565e;
+    }
+
+    .dropdown select {
+      width: 100%;
+      padding: 0.6em;
+      font-size: 1em;
+      
+      border-radius: 16px;
+      background-color: #81a079;
+      color: #ffffff;
+    }
+    
+    
+    option:hover {
+  		background-color: #f1b74b;
+	  }
+    
+
+    footer {
+      text-align: center;
+        padding: 15px 0;
+        background-color: #4CAF50;
+        color: white;
+        margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CodeTrekkers</h1>
+    <nav>
+      <a href="homepage.html">Home</a>
+      <a href="index.html">Countries Info</a>
+      <a href="Quiz_Flag.html">Flag Quiz</a>
+      <button id="loginBtn" style="display: block;">Login</button>
+      <button id="logoutBtn" style="display: none;">Logout</button>
+    </nav>
+  </header>
+  <div class="wrapper">
+    <div class="app-details">
+      <img src="https://img.icons8.com/?size=100&id=68311&format=png&color=000000" alt="Currency Converter">
+      <h1 class="app-title">Currency Converter</h1>
+    </div>
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" value="1" />
+    <div class="dropdowns">
+      <div class="dropdown">
+        <h4>From</h4>
+        <select id="from-currency-select"></select>
+      </div>
+      <div class="dropdown">
+        <h4>To</h4>
+        <select id="to-currency-select"></select>
+      </div>
+    </div>
+    <button id="convert-button">Convert</button>
+    <p id="result"></p>
+  </div>
+
+  <script>
+
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('currentUser');
+      window.location.href = 'login.html';
+    });
+  </script>
+
+  <script>
+  const loginBtn = document.getElementById('loginBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  function updateAuthButtons() {
+    const isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true';
+
+    if (isAuthenticated) {
+      loginBtn.style.display = 'none';
+      logoutBtn.style.display = 'block';
+    } else {
+      loginBtn.style.display = 'block';
+      logoutBtn.style.display = 'none';
+    }
+  }
+
+  loginBtn.addEventListener('click', () => {
+    sessionStorage.setItem('redirectAfterLogin', 'currency-converter.html');
+    window.location.href = 'login.html';
+  });
+
+  logoutBtn.addEventListener('click', () => {
+    sessionStorage.removeItem('isAuthenticated');
+    sessionStorage.removeItem('redirectAfterLogin');
+    updateAuthButtons();
+    alert('You have been logged out.');
+  });
+
+  updateAuthButtons();
+</script>
+
+  
+  <footer>
+    <p>2025 CodeTrekkers. all rights reserved</p>
+  </footer>
+
+  <script>const apiKey = "28498904bce6769134e2c0bd";
+    const currencySelectFrom = document.getElementById("from-currency-select");
+    const currencySelectTo = document.getElementById("to-currency-select");
+    const resultText = document.getElementById("result");
+    const convertButton = document.getElementById("convert-button");
+
+    const currencyNames = {
+      USD: "United States Dollar",
+
+      AED: "United Arab Emirates Dirham",
+
+      AFN: "Afghan Afghani",
+
+      ALL: "Albanian Lek",
+
+      AMD: "Armenian Dram",
+
+      ANG: "Netherlands Antillean Guilder",
+
+      AOA: "Angolan Kwanza",
+
+      ARS: "Argentine Peso",
+
+      AUD: "Australian Dollar",
+
+      AWG: "Aruban Florin",
+
+      AZN: "Azerbaijani Manat",
+
+      BAM: "Bosnia-Herzegovina Convertible Mark",
+
+      BBD: "Barbadian Dollar",
+
+      BDT: "Bangladeshi Taka",
+
+      BGN: "Bulgarian Lev",
+
+      BHD: "Bahraini Dinar",
+
+      BIF: "Burundian Franc",
+
+      BMD: "Bermudian Dollar",
+
+      BND: "Brunei Dollar",
+
+      BOB: "Bolivian Boliviano",
+
+      BRL: "Brazilian Real",
+
+      BSD: "Bahamian Dollar",
+
+      BTN: "Bhutanese Ngultrum",
+
+      BWP: "Botswanan Pula",
+
+      BYN: "Belarusian Ruble",
+
+      BZD: "Belize Dollar",
+
+      CAD: "Canadian Dollar",
+
+      CDF: "Congolese Franc",
+
+      CHF: "Swiss Franc",
+
+      CLP: "Chilean Peso",
+
+      CNY: "Chinese Yuan",
+
+      COP: "Colombian Peso",
+
+      CRC: "Costa Rican Colón",
+
+      CUP: "Cuban Peso",
+
+      CVE: "Cape Verdean Escudo",
+
+      CZK: "Czech Koruna",
+
+      DJF: "Djiboutian Franc",
+
+      DKK: "Danish Krone",
+
+      DOP: "Dominican Peso",
+
+      DZD: "Algerian Dinar",
+
+      EGP: "Egyptian Pound",
+
+      ERN: "Eritrean Nakfa",
+
+      ETB: "Ethiopian Birr",
+
+      EUR: "Euro",
+
+      FJD: "Fijian Dollar",
+
+      FKP: "Falkland Islands Pound",
+
+      FOK: "Faroese Króna",
+
+      GBP: "British Pound Sterling",
+
+      GEL: "Georgian Lari",
+
+      GGP: "Guernsey Pound",
+
+      GHS: "Ghanaian Cedi",
+
+      GIP: "Gibraltar Pound",
+
+      GMD: "Gambian Dalasi",
+
+      GNF: "Guinean Franc",
+
+      GTQ: "Guatemalan Quetzal",
+
+      GYD: "Guyanaese Dollar",
+
+      HKD: "Hong Kong Dollar",
+
+      HNL: "Honduran Lempira",
+
+      HRK: "Croatian Kuna",
+
+      HTG: "Haitian Gourde",
+
+      HUF: "Hungarian Forint",
+
+      IDR: "Indonesian Rupiah",
+
+      ILS: "Israeli New Shekel",
+
+      IMP: "Isle of Man Pound",
+
+      INR: "Indian Rupee",
+
+      IQD: "Iraqi Dinar",
+
+      IRR: "Iranian Rial",
+
+      ISK: "Icelandic Króna",
+
+      JEP: "Jersey Pound",
+
+      JMD: "Jamaican Dollar",
+
+      JOD: "Jordanian Dinar",
+
+      JPY: "Japanese Yen",
+
+      KES: "Kenyan Shilling",
+
+      KGS: "Kyrgyzstani Som",
+
+      KHR: "Cambodian Riel",
+
+      KID: "Kiribati Dollar",
+
+      KMF: "Comorian Franc",
+
+      KRW: "South Korean Won",
+
+      KWD: "Kuwaiti Dinar",
+
+      KYD: "Cayman Islands Dollar",
+
+      KZT: "Kazakhstani Tenge",
+
+      LAK: "Laotian Kip",
+
+      LBP: "Lebanese Pound",
+
+      LKR: "Sri Lankan Rupee",
+
+      LRD: "Liberian Dollar",
+
+      LSL: "Lesotho Loti",
+
+      LYD: "Libyan Dinar",
+
+      MAD: "Moroccan Dirham",
+
+      MDL: "Moldovan Leu",
+
+      MGA: "Malagasy Ariary",
+
+      MKD: "Macedonian Denar",
+
+      MMK: "Myanmar Kyat",
+
+      MNT: "Mongolian Tögrög",
+
+      MOP: "Macanese Pataca",
+
+      MRU: "Mauritanian Ouguiya",
+
+      MUR: "Mauritian Rupee",
+
+      MVR: "Maldivian Rufiyaa",
+
+      MWK: "Malawian Kwacha",
+
+      MXN: "Mexican Peso",
+
+      MYR: "Malaysian Ringgit",
+
+      MZN: "Mozambican Metical",
+
+      NAD: "Namibian Dollar",
+
+      NGN: "Nigerian Naira",
+
+      NIO: "Nicaraguan Córdoba",
+
+      NOK: "Norwegian Krone",
+
+      NPR: "Nepalese Rupee",
+
+      NZD: "New Zealand Dollar",
+
+      OMR: "Omani Rial",
+
+      PAB: "Panamanian Balboa",
+
+      PEN: "Peruvian Sol",
+
+      PGK: "Papua New Guinean Kina",
+
+      PHP: "Philippine Peso",
+
+      PKR: "Pakistani Rupee",
+
+      PLN: "Polish Zloty",
+
+      PYG: "Paraguayan Guarani",
+
+      QAR: "Qatari Rial",
+
+      RON: "Romanian Leu",
+
+      RSD: "Serbian Dinar",
+
+      RUB: "Russian Ruble",
+
+      RWF: "Rwandan Franc",
+
+      SAR: "Saudi Riyal",
+
+      SBD: "Solomon Islands Dollar",
+
+      SCR: "Seychellois Rupee",
+
+      SDG: "Sudanese Pound",
+
+      SEK: "Swedish Krona",
+
+      SGD: "Singapore Dollar",
+
+      SHP: "Saint Helena Pound",
+
+      SLE: "Sierra Leonean Leone",
+
+      SLL: "Sierra Leonean Leone (Old)",
+
+      SOS: "Somali Shilling",
+
+      SRD: "Surinamese Dollar",
+
+      SSP: "South Sudanese Pound",
+
+      STN: "São Tomé and Príncipe Dobra",
+
+      SYP: "Syrian Pound",
+
+      SZL: "Swazi Lilangeni",
+
+      THB: "Thai Baht",
+
+      TJS: "Tajikistani Somoni",
+
+      TMT: "Turkmenistani Manat",
+
+      TND: "Tunisian Dinar",
+
+      TOP: "Tongan Paʻanga",
+
+      TRY: "Turkish Lira",
+
+      TTD: "Trinidad and Tobago Dollar",
+
+      TVD: "Tuvaluan Dollar",
+
+      TWD: "New Taiwan Dollar",
+
+      TZS: "Tanzanian Shilling",
+
+      UAH: "Ukrainian Hryvnia",
+
+      UGX: "Ugandan Shilling",
+
+      UYU: "Uruguayan Peso",
+
+      UZS: "Uzbekistani Som",
+
+      VES: "Venezuelan Bolívar Soberano",
+
+      VND: "Vietnamese Dong",
+
+      VUV: "Vanuatu Vatu",
+
+      WST: "Samoan Tala",
+
+      XAF: "Central African CFA Franc",
+
+      XCD: "East Caribbean Dollar",
+
+      XCG: "Crypto Gold",
+
+      XDR: "Special Drawing Rights",
+
+      XOF: "West African CFA Franc",
+
+      XPF: "CFP Franc",
+
+      YER: "Yemeni Rial",
+
+      ZAR: "South African Rand",
+
+      ZMW: "Zambian Kwacha",
+
+      ZWL: "Zimbabwean Dollar"
+
+      // Add more if needed
+
+    };
+
+
+    async function loadCurrencyOptions() {
+      try {
+        const res = await fetch(`https://v6.exchangerate-api.com/v6/${apiKey}/latest/USD`);
+        const data = await res.json();
+
+        const currencies = Object.keys(data.conversion_rates);
+        currencies.forEach((code) => {
+          const name = currencyNames[code] || code;
+          const option = `<option value="${code}">${code} - ${name}</option>`;
+            currencySelectFrom.innerHTML += option;
+            currencySelectTo.innerHTML += option;
+        });
+          currencySelectFrom.value = "USD";
+          currencySelectTo.value = "TTD";
+        } catch (error) {
+          resultText.innerText = "Could not load currencies.";
+        }
+      }
+
+      async function convertCurrency() {
+        const amount = parseFloat(document.getElementById("amount").value);
+        const from = currencySelectFrom.value;
+        const to = currencySelectTo.value;
+
+        if (isNaN(amount) || amount <= 0) {
+          resultText.innerText = "Enter a valid amount.";
+          return;
+        }
+        try {
+          const res = await fetch(`https://v6.exchangerate-api.com/v6/${apiKey}/latest/${from}`);
+          const data = await res.json();
+          const rate = data.conversion_rates[to];
+          const converted = amount * rate;
+          resultText.innerText = `${amount} ${from} = ${converted.toFixed(2)} ${to}`;
+        } catch (error) {
+          resultText.innerText = "Conversion failed.";
+        }
+      }
+
+    loadCurrencyOptions();
+
+    convertButton.addEventListener("click", convertCurrency);</script>
+
+  </body>
+</html>

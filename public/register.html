@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="style.css">
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Register</title>
+ <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Floating decoration elements -->
     <div class="floating"></div>
     <div class="floating"></div>
     <div class="floating"></div>
@@ -53,23 +52,19 @@
             const confirmPassword = document.getElementById('confirmPassword').value;
             const errorMessage = document.getElementById('errorMessage');
 
-            // Clear previous error messages
             errorMessage.textContent = "";
 
-            // Validate email format
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 errorMessage.textContent = "Please enter a valid email address.";
                 return;
             }
 
-            // Check if passwords match
             if (password !== confirmPassword) {
                 errorMessage.textContent = "Passwords do not match!";
                 return;
             }
 
-            // Save user data to localStorage (for learning purposes only)
             localStorage.setItem('userEmail', email);
             localStorage.setItem('userPassword', password);
 

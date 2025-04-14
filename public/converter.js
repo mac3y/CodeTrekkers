@@ -216,3 +216,32 @@ const apiKey = "28498904bce6769134e2c0bd";
 
       loadCurrencyOptions();
       convertButton.addEventListener("click", convertCurrency);
+
+      const loginBtn = document.getElementById('loginBtn');
+      const logoutBtn = document.getElementById('logoutBtn');
+
+      function updateAuthButtons() {
+        const isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true';
+
+        if (isAuthenticated) {
+          loginBtn.style.display = 'none';
+          logoutBtn.style.display = 'block';
+        } else {
+          loginBtn.style.display = 'block';
+          logoutBtn.style.display = 'none';
+        }
+      }
+
+      loginBtn.addEventListener('click', () => {
+        sessionStorage.setItem('redirectAfterLogin', 'currency-converter.html');
+        window.location.href = 'login.html';
+      });
+
+      logoutBtn.addEventListener('click', () => {
+        sessionStorage.removeItem('isAuthenticated');
+        sessionStorage.removeItem('redirectAfterLogin');
+        updateAuthButtons(); 
+        alert('You have been logged out.');
+      });
+
+      updateAuthButtons();

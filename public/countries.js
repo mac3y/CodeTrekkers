@@ -46,13 +46,42 @@ function filterByContinent(continent) {
 }
 
 document.getElementById('continent-select').addEventListener('change', function () {
-    const selectedContinent = this.value;
-  
-    if (selectedContinent === "") {
-      displayCountries(allCountries);
-    } else {
-      filterByContinent(selectedContinent);
-    }
-  });
+  const selectedContinent = this.value;
+
+  if (selectedContinent === "") {
+    displayCountries(allCountries);
+  } else {
+    filterByContinent(selectedContinent);
+  }
+});
 
 fetchCountries();
+
+const loginBtn = document.getElementById('loginBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+
+function updateAuthButtons() {
+  const isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true';
+
+  if (isAuthenticated) {
+    loginBtn.style.display = 'none';
+    logoutBtn.style.display = 'block';
+  } else {
+    loginBtn.style.display = 'block';
+    logoutBtn.style.display = 'none';
+  }
+}
+
+loginBtn.addEventListener('click', () => {
+  sessionStorage.setItem('redirectAfterLogin', 'country-viewer.html');
+  window.location.href = 'login.html';
+});
+
+logoutBtn.addEventListener('click', () => {
+  sessionStorage.removeItem('isAuthenticated');
+  sessionStorage.removeItem('redirectAfterLogin');
+  updateAuthButtons();
+  alert('You have been logged out.');
+});
+
+updateAuthButtons();

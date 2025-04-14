@@ -34,7 +34,6 @@ startBtn.addEventListener("click", () => {
 async function fetchCountries(continent) {
   const res = await fetch("https://restcountries.com/v3.1/all?fields=name,flags,region,subregion");
   const data = await res.json();
-  // countries = data.filter(c => c.name && c.flags && c.region === continent);
 
   if (continent === "All") {
     countries = data.filter(c => c.name && c.flags);
@@ -49,7 +48,6 @@ async function fetchCountries(continent) {
       c.name && c.flags && c.region === continent
     );
   }
-  
 
   if (countries.length === 0) {
     alert("No countries found for selected continent.");
@@ -82,7 +80,7 @@ function loadQuestion() {
   optionsEl.innerHTML = "";
   flagEl.style.display = "none";
 
-  const correct = questionPool.pop(); // grab and remove next question
+  const correct = questionPool.pop();
   if (!correct) {
     endQuiz();
     return;
@@ -91,7 +89,6 @@ function loadQuestion() {
   questionCount++;
   currentQuestion = { correct };
 
-  // pick 3 wrong options that are not the correct one
   const incorrect = countries.filter(c => c.name.common !== correct.name.common);
   shuffleArray(incorrect);
   const choices = [correct, ...incorrect.slice(0, 3)];
@@ -127,7 +124,6 @@ function checkAnswer(selectedName) {
     feedbackEl.innerText = `❌ Wrong! Correct answer: ${correctName}`;
   }
 
-  // ✅ Update score display after scoring
   currentScoreEl.innerText = `(Score: ${score})`;
 
   reviewLog.push({
@@ -158,7 +154,6 @@ function endQuiz() {
   nextBtn.style.display = "none";
   restartBtn.style.display = "inline-block";
 
-  // Create review table
   const table = document.createElement("table");
   table.style.margin = "20px auto";
   table.style.borderCollapse = "collapse";
@@ -196,3 +191,33 @@ restartBtn.addEventListener("click", () => {
   quizSection.style.display = "none";
   continentSelect.style.display = "block";
 });
+
+const loginBtn = document.getElementById('loginBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+
+function updateAuthButtons() {
+  const isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true';
+  console.log('Authentication state:', isAuthenticated);
+
+  if (isAuthenticated) {
+    loginBtn.style.display = 'none'; 
+    logoutBtn.style.display = 'block';
+  } else {
+    loginBtn.style.display = 'block';
+    logoutBtn.style.display = 'none';
+  }
+}
+
+loginBtn.addEventListener('click', () => {
+  sessionStorage.setItem('redirectAfterLogin', 'Quiz_Flag.html');
+  window.location.href = 'login.html';
+});
+
+logoutBtn.addEventListener('click', () => {
+  sessionStorage.removeItem('isAuthenticated');
+  sessionStorage.removeItem('redirectAfterLogin');
+  updateAuthButtons();
+  alert('You have been logged out.');
+});
+
+updateAuthButtons();

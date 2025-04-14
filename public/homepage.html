@@ -12,11 +12,11 @@
 
   <header>
     <h1>CodeTrekkers</h1>
-      <nav>
-        <a href="#home">Home</a>
-        <a href="#features">Features</a>
-        <button id="logoutBtn">Logout</button>
-      </nav>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#features">Features</a>
+      <button id="loginBtn">Login</button>
+    </nav>
   </header>
 
 		
@@ -75,7 +75,7 @@
       <div>
         <div class="card"> 
           <img src="https://img.icons8.com/?size=100&id=2RaOTTz1VWQU&format=png&color=000000" alt="Country Info">
-          <a href="index.html"><h3>Country Information Hub</h3></a>
+          <a href="country-viewer.html"><h3>Country Information Hub</h3></a>
           <p>Dive into a treasure trove of data about any country using our robust API.</p>
         </div>
         <div class="comment-box">
@@ -108,7 +108,7 @@
       <div>
         <div class="card">
           <img src="https://img.icons8.com/?size=100&id=68311&format=png&color=000000" alt="Currency Converter">
-          <a href="experiment.html"><h3>Currency Converter</h3></a>
+          <a href="currency-converter.html"><h3>Currency Converter</h3></a>
           <p>Stay updated with accurate exchange rates in just a click.</p>
         </div>
         
@@ -171,12 +171,14 @@
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const textarea = form.querySelector('textarea');
-        
+
         if (!auth.currentUser) {
-          alert('Please sign in to comment');
+          alert('You need to log in to leave a comment.');
+          sessionStorage.setItem('redirectAfterLogin', 'homepage.html');
+          window.location.href = 'login.html';
           return;
         }
-        
+
         try {
           await addComment({
             text: textarea.value,
@@ -196,13 +198,122 @@
     const logoutBtn = document.getElementById('logoutBtn');
     logoutBtn.addEventListener('click', () => {
       localStorage.removeItem('currentUser');
+      sessionStorage.removeItem('isAuthenticated');
+      sessionStorage.removeItem('redirectAfterLogin');
       window.location.href = 'login.html';
     });
   </script>
 
   <script type="module" src="./auth.js"></script>
 
-  </section>
+  <script type="module">
+    import { addComment, getComments, auth } from './data.js';
+
+    async function renderComments(cardType, container) {
+      try {
+        const comments = await getComments(cardType);
+        container.innerHTML = '';
+
+        comments.forEach(comment => {
+          const commentDiv = document.createElement('div');
+          commentDiv.className = 'comment';
+          commentDiv.innerHTML = `
+            <p><strong>${comment.email}:</strong> ${comment.text}</p>
+            <small>${comment.timestamp.toLocaleString()}</small>
+            ${auth.currentUser?.email === comment.email ? 
+              `<button class="delete-comment" data-card="${cardType}">Delete</button>` : ''}
+          `;
+          container.appendChild(commentDiv);
+        });
+
+        container.querySelectorAll('.delete-comment').forEach(button => {
+          button.addEventListener('click', async () => {
+            if (confirm('Are you sure you want to delete your comment?')) {
+              try {
+                await deleteComment(button.dataset.card);
+                await renderComments(cardType, container);
+              } catch (error) {
+                alert('Error deleting comment: ' + error.message);
+              }
+            }
+          });
+        });
+      } catch (error) {
+        console.error('Error loading comments:', error);
+      }
+    }
+
+    document.querySelectorAll('.card-comment-form').forEach(form => {
+      const cardType = form.dataset.card;
+      const commentsList = form.nextElementSibling;
+
+      renderComments(cardType, commentsList);
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const textarea = form.querySelector('textarea');
+
+        if (!auth.currentUser) {
+          alert('You need to log in to leave a comment.');
+          sessionStorage.setItem('redirectAfterLogin', 'homepage.html');
+          window.location.href = 'login.html';
+          return;
+        }
+
+        try{
+          await addComment({
+            text: textarea.value,
+            cardType: cardType
+          });
+          textarea.value = '';
+          await renderComments(cardType, commentsList);
+        } catch (error) {
+          alert('Error submitting comment: ' + error.message);
+        }
+      });
+    });
+
+    const loginBtn = document.getElementById('loginBtn');
+    loginBtn.addEventListener('click', () => {
+      sessionStorage.setItem('redirectAfterLogin', 'homepage.html');
+      window.location.href = 'login.html';
+    });
+  </script>
+
+  <script>
+  const loginBtn = document.getElementById('loginBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  // Check authentication state
+  function updateAuthButtons() {
+    const isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true';
+
+    if (isAuthenticated) {
+      loginBtn.style.display = 'none'; // Hide login button
+      logoutBtn.style.display = 'block'; // Show logout button
+    } else {
+      loginBtn.style.display = 'block'; // Show login button
+      logoutBtn.style.display = 'none'; // Hide logout button
+    }
+  }
+
+  // Login button logic
+  loginBtn.addEventListener('click', () => {
+    sessionStorage.setItem('redirectAfterLogin', 'homepage.html'); // Save the current page for redirection
+    window.location.href = 'login.html'; // Redirect to the login page
+  });
+
+  // Logout button logic
+  logoutBtn.addEventListener('click', () => {
+    sessionStorage.removeItem('isAuthenticated'); // Clear authentication state
+    sessionStorage.removeItem('redirectAfterLogin');
+    updateAuthButtons(); // Update button visibility
+    alert('You have been logged out.');
+  });
+
+  // Initialize button visibility on page load
+  updateAuthButtons();
+  </script>
 
   <footer>
     <p>2025 CodeTrekkers. all rights reserved</p>

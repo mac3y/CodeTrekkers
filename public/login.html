@@ -9,7 +9,6 @@
 </head>
 <body>
 
-  <!-- Floating decoration elements -->
   <div class="floating"></div>
   <div class="floating"></div>
   <div class="floating"></div>
@@ -40,7 +39,7 @@
   </div>
 
   <script>
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
       e.preventDefault();
       
       const email = document.getElementById('loginEmail').value.trim();
@@ -58,9 +57,11 @@
       }
 
       if (email.toLowerCase() === storedEmail?.toLowerCase() && password === storedPassword) {
-          sessionStorage.setItem('isAuthenticated', 'true');
+          sessionStorage.setItem('isAuthenticated', 'true'); // Set authentication state
           alert('Login successful!');
-          window.location.href = 'homepage.html';
+          const redirectUrl = sessionStorage.getItem('redirectAfterLogin') || 'homepage.html';
+          sessionStorage.removeItem('redirectAfterLogin');
+          window.location.href = redirectUrl; // Redirect to the saved page or homepage
       } else {
           errorMessage.textContent = "Invalid email or password!";
       }
