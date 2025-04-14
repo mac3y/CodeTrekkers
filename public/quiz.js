@@ -32,9 +32,24 @@ startBtn.addEventListener("click", () => {
 });
 
 async function fetchCountries(continent) {
-  const res = await fetch("https://restcountries.com/v3.1/all?fields=name,flags,region");
+  const res = await fetch("https://restcountries.com/v3.1/all?fields=name,flags,region,subregion");
   const data = await res.json();
-  countries = data.filter(c => c.name && c.flags && c.region === continent);
+  // countries = data.filter(c => c.name && c.flags && c.region === continent);
+
+  if (continent === "All") {
+    countries = data.filter(c => c.name && c.flags);
+  } else if (continent === "North America" || continent === "South America") {
+    countries = data.filter(c =>
+      c.name && c.flags &&
+      c.region === "Americas" &&
+      c.subregion === continent
+    );
+  } else {
+    countries = data.filter(c =>
+      c.name && c.flags && c.region === continent
+    );
+  }
+  
 
   if (countries.length === 0) {
     alert("No countries found for selected continent.");
@@ -53,8 +68,9 @@ function startQuiz() {
   questionPool = [...countries];
   shuffleArray(questionPool);
   scoreDisplay.innerText = "";
-  nextBtn.disabled = true;
   restartBtn.style.display = "none";
+  nextBtn.disabled = true;
+  nextBtn.style.display = "inline-block"; 
   loadQuestion();
 }
 
