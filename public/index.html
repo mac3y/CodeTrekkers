@@ -16,11 +16,12 @@
     }
 
     header {
-      background-color: #4CAF50;
-      padding: 10px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 20px;
     }
 
     header h1 {
@@ -140,7 +141,7 @@
     }
 
     main p {
-      line-height: 1.6; /* Adjust the value as needed */
+      line-height: 1.3; /* Adjust the value as needed */
       margin-bottom: 15px;
     }
 
@@ -169,7 +170,7 @@
       max-width: 600px; 
       margin: 0 ;
       text-align: left; 
-      line-height: 1.4;
+      line-height: 1.6;
     }
 
     .country-info h2 {
@@ -356,6 +357,8 @@
       const continent = country.continents?.join(', ') ?? 'Unknown';
       const population = country.population?.toLocaleString() ?? 'N/A';
       const languages = country.languages ? Object.values(country.languages).join(', ') : 'N/A';
+      const timezones = country.timezones?.join(', ') || 'N/A';
+
 
       countryDetails.innerHTML = `
         <img src="${country.flags.png}" alt="Flag of ${country.name.common}" class="country-flag">
@@ -368,6 +371,7 @@
           <p><strong>Subregion:</strong> ${country.subregion || 'Unknown'}</p>
           <p><strong>Population:</strong> ${population}</p>
           <p><strong>Languages:</strong> ${languages}</p>
+          <p><strong>Timezones:</strong> ${timezones}</p>
           <p><strong>Google Maps:</strong> <a href="${country.maps.googleMaps}" target="_blank">View Location</a></p>
         </div>
       `;
