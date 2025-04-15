@@ -1,17 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Country Viewer</title>
   <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=KDH7zOWVcvjU&format=png&color=000000">
-  <script type="module" src="./auth.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
+
   <style>
+    * {
+     font-family: 'Nunito', sans-serif;
+     font-weight: 300; 
+     letter-spacing: 0.1em;
+     box-sizing: border-box;
+     color: #50565e;
+    }
+  
+  
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: whitesmoke;
-      height: 100vh;
+      
+      
+      height: auto;
+      
       
     }
 
@@ -19,7 +30,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: #4CAF50;
+      background-color: #66bb6a;
       color: white;
       padding: 15px 20px;
     }
@@ -39,21 +50,21 @@
     header nav a {
       text-decoration: none;
       color: white;
-      background: #4CAF50;
+      background: #66bb6a;
       padding: 5px 10px;
       border-radius: 4px;
       font-weight: bold;
     }
 
     header nav a:hover {
-      text-decoration: underline;
-      text-decoration-color: white;
+      text-decoration: underline; /* Add underline */
+      text-decoration-color: white; /* Make the underline white */
     }
 
 
     #content {
       display: flex;
-      height: 100vh;
+      height: auto;
     }
 
     
@@ -64,17 +75,17 @@
 
     aside {
       width: 250px;
-      background-color: #c9c9c9;
-      overflow-y: auto;
+      background-color: #e3f2fd;
+      overflow-y:auto;
       padding: 0;
       margin: 0;
       box-sizing: border-box;
-      height: 100%;
+      height:270vh;
     }
 
     #filterControls {
-      margin-bottom: 10px;
-      padding-bottom: 10px;
+      
+      padding: 10px;
       border-bottom: 1px solid #999;
     }
 
@@ -96,8 +107,8 @@
     aside button {
       display: block;
       width: 100%;
-      padding: 10px;
-      margin-bottom: 5px;
+      padding: 15px;
+      margin: 0;
       background-color: inherit;
       border: none;
       text-align: left;
@@ -108,27 +119,78 @@
     }
 
     aside button:hover {
-      background-color: #ddd;
+      background-color: #b9d6f2;
+     
+    }
+    
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Adjust minmax width as needed */
+      gap: 10px;
+      margin-top: 20px;
     }
 
-    main {
+    .card {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 15px;
+      text-align: center;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .card strong {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .card ul {
+      list-style: none;
+      padding: 0;
+      margin: 5px 0;
+    }
+
+    .card ul li {
+      margin: 3px 0;
+      font-size: 0.9em;
+    }
+
+    .card img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 10px auto;
+    }
+
+	main {
+      background-color: #ffdab9;
       flex-grow: 1;
       padding: 20px;
-      overflow: auto; 
+      height: auto;
       box-sizing: border-box;
+      
     }
-
-    main img.country-flag {
+    
+	main img.country-flag {
     height: 150px;
     width: auto;
     max-width: 100%;
     object-fit: contain;
     display: block;
-    margin-bottom: 20px;
+    margin: 0 auto 20px auto;
+    
     }
-
+    
+    main .common-name {
+    text-align: center;
+    font-size: 24px; /* or your desired size */
+    margin-bottom: 20px; /* optional */
+}
     main h2 {
       margin-bottom: 10px;
+      text-align:center;
     }
 
     main a {
@@ -141,9 +203,10 @@
     }
 
     main p {
-      line-height: 1.3;
+      line-height: 1.6; /* Adjust the value as needed */
       margin-bottom: 15px;
     }
+    
 
     #searchControls {
       margin-bottom: 20px;
@@ -170,7 +233,7 @@
       max-width: 600px; 
       margin: 0 ;
       text-align: left; 
-      line-height: 1.6;
+      line-height: 1.4;
     }
 
     .country-info h2 {
@@ -193,21 +256,6 @@
       background-color: #6dc98c;
     }
 
-    #loginBtn {
-      padding: 8px 16px;
-      background-color: #196633;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
-    }
-
-    #loginBtn:hover {
-      background-color: #6dc98c;
-    }
-
     .welcome-message, .error-message, .no-results {
       background: white;
       padding: 20px;
@@ -227,214 +275,337 @@
       color: white;
       
     }
+    
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      width: 80%;
+    }
+
+    .card {
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Unique card sizes */
+    .card-1 {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+
+    .card-2 {
+      grid-column: span 1;
+      grid-row: span 2;
+    }
+
+    .card-3 {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+
+    .card-4 {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+
+    .card-5 {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+
+    .card-6 {
+      grid-column: span 3;
+      grid-row: span 1;
+    }
+
+    .card-7 {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+
+    .card-8 {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    .card-9 {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+
+    .card-10 {
+      grid-column: span 1;
+      grid-row: span 1;
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .profile {
+      text-align: center;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin: 15px;
+    }
+    .card-11 {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+    .card-11 {
+      grid-column: span 4;
+      grid-row: span 1;
+    }
+
+    .card-12{
+    grid-column: span 2;
+      grid-row: span 1;
+    }
+
+	.card ul {
+  line-height: 4;
+  padding-left: 10px; /* optional for indenting the list */
+}
 
   </style>
 </head>
 <body>
- 
+
 <header>
   <h1>CodeTrekkers</h1>
   <nav>
     <a href="homepage.html">Home</a>
     <a href="Quiz_Flag.html">Flag Quiz</a>
-    <a href="currency-converter.html">Currency Converter</a>
-    <button id="loginBtn" style="display: block;">Login</button>
-    <button id="logoutBtn" style="display: none;">Logout</button>
+    <a href="experiment.html">Currency Converter</a>
+    <button id="logoutBtn">Logout</button>
   </nav>
 </header>
 
-  <div id="content">
-    <aside>
-      <div id="filterControls">
-        <label for="continentFilter">Filter by Continent:</label>
-        <select id="continentFilter">
-          <option value="">All Continents</option>
-        </select>
-    
-        <label for="searchBar">Search for a Country:</label>
-        <input type="text" id="searchBar" placeholder="Enter country name">
-      </div>
-      <div id="countryList"></div>
-    </aside>
+<div id="content">
+  <aside>
+    <div id="filterControls">
+      <label for="continentFilter">Filter by Continent:</label>
+      <select id="continentFilter">
+        <option value="">All Continents</option>
+      </select>
 
-    <main id="countryDetails">
-      <div class="welcome-message">
-        <h2>Welcome to Country Viewer</h2>
-        <p>Select a country from the list to view details</p>
-      </div>
-    </main>
-  </div>
+      <label for="searchBar">Search for a Country:</label>
+      <input type="text" id="searchBar" placeholder="Enter country name">
+    </div>
+    <div id="countryList"></div>
+  </aside>
 
-  <footer>
-    <p>2025 CodeTrekkers. All rights reserved</p>
-  </footer>
+  <main id="countryDetails">
+    <div class="welcome-message">
+      <h2>Welcome to Country Viewer</h2>
+      <p>Select a country from the list to view details</p>
+    </div>
+  </main>
+</div>
 
-  <script>
-    const loginBtn = document.getElementById('loginBtn');
-    const logoutBtn = document.getElementById('logoutBtn');
+<footer>
+  <p>2025 CodeTrekkers. All rights reserved</p>
+</footer>
 
-    function updateAuthButtons() {
-      const isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true';
+<script>
+  const continentFilter = document.getElementById('continentFilter');
+  const countryList = document.getElementById('countryList');
+  const countryDetails = document.getElementById('countryDetails');
+  const logoutBtn = document.getElementById('logoutBtn');
+  const searchBar = document.getElementById('searchBar');
 
-      if (isAuthenticated) {
-        loginBtn.style.display = 'none';
-        logoutBtn.style.display = 'block'; 
-      } else {
-        loginBtn.style.display = 'block';
-        logoutBtn.style.display = 'none';
-      }
-    }
+  searchBar.addEventListener('input', (event) => {
+    const query = event.target.value;
+    searchCountries(query);
+  });
 
-    loginBtn.addEventListener('click', () => {
-      sessionStorage.setItem('redirectAfterLogin', 'country-viewer.html');
-      window.location.href = 'login.html';
-    });
+  let allCountries = [];
 
-    logoutBtn.addEventListener('click', () => {
-      sessionStorage.removeItem('isAuthenticated');
-      sessionStorage.removeItem('redirectAfterLogin');
-      updateAuthButtons();
-      alert('You have been logged out.');
-    });
-
-    updateAuthButtons();
-
-    const continentFilter = document.getElementById('continentFilter');
-    const countryList = document.getElementById('countryList');
-    const countryDetails = document.getElementById('countryDetails');
-    const searchBar = document.getElementById('searchBar');
-
-    searchBar.addEventListener('input', (event) => {
-      const query = event.target.value; 
-      searchCountries(query);
-    });
-
-    let allCountries = [];
-    let uniqueContinents = [];
-
-    async function fetchCountries() {
-      try {
-        const response = await fetch('https://restcountries.com/v3.1/all');
-        const data = await response.json();
-        allCountries = data.sort((a, b) =>
-          a.name.common.localeCompare(b.name.common)
-        );
-        populateContinentFilter();
-        filterCountries();
-        if (allCountries.length > 0) {
-          showCountryDetails(allCountries[0]);
-        }
-
-        
-      } catch (error) {
-        console.error('Error fetching countries:', error);
-      }
-    }
-
-    function populateContinentFilter() {
-      uniqueContinents = [...new Set(allCountries.flatMap(country => country.continents))].sort();
-      uniqueContinents.forEach(continent => {
-        const option = document.createElement('option');
-        option.value = continent;
-        option.textContent = continent;
-        continentFilter.appendChild(option);
-      });
-
-      continentFilter.addEventListener('change', filterCountries);
-    }
-
-    function filterCountries() {
-      const selectedContinent = continentFilter.value;
-      const filteredCountries = selectedContinent
-        ? allCountries.filter(country => country.continents?.includes(selectedContinent))
-        : allCountries;
-      drawCountryList(filteredCountries);
-      
-
-      if (filteredCountries.length > 0) {
-        showCountryDetails(filteredCountries[0]);
-      } else {
-        countryDetails.innerHTML = `
-          <div class="no-results">
-            <h2>No Countries Found</h2>
-            <p>Try adjusting your filters</p>
-          </div>
-        `;
-      }
-    }
-
-    function searchCountries(query) {
-      const lowerQuery = query.toLowerCase();
-      const results = allCountries.filter(country =>
-        country.name.common.toLowerCase().includes(lowerQuery) ||
-        country.cca2?.toLowerCase() === lowerQuery ||  
-        country.cca3?.toLowerCase() === lowerQuery     
+  async function fetchCountries() {
+    try {
+      const response = await fetch('https://restcountries.com/v3.1/all');
+      const data = await response.json();
+      allCountries = data.sort((a, b) =>
+        a.name.common.localeCompare(b.name.common)
       );
-      drawCountryList(results);
-
-      if (results.length > 0) {
-        showCountryDetails(results[0]);
-      } else {
-        countryDetails.innerHTML = `
-          <div class="no-results">
-            <h2>No Matching Countries</h2>
-            <p>Try a different name or code</p>
-          </div>
-        `;
+      populateContinentFilter();
+      filterCountries();
+      if (allCountries.length > 0) {
+        showCountryDetails(allCountries[0]);
       }
+    } catch (error) {
+      console.error('Error fetching countries:', error);
     }
+  }
 
-    function drawCountryList(countries) {
-      countryList.innerHTML = '';
-      countries.forEach(country => {
-        const btn = document.createElement('button');
-        btn.className = 'country-btn';
-        btn.textContent = country.name.common;
-        btn.onclick = () => showCountryDetails(country);
-        countryList.appendChild(btn);
-      });
-    }
+  function populateContinentFilter() {
+    const uniqueContinents = [...new Set(allCountries.flatMap(country => country.continents))].sort();
+    uniqueContinents.forEach(continent => {
+      const option = document.createElement('option');
+      option.value = continent;
+      option.textContent = continent;
+      continentFilter.appendChild(option);
+    });
 
-    function showCountryDetails(country) {
-      const capital = country.capital?.[0] ?? 'N/A';
-      const continent = country.continents?.join(', ') ?? 'Unknown';
-      const population = country.population?.toLocaleString() ?? 'N/A';
-      const languages = country.languages ? Object.values(country.languages).join(', ') : 'N/A';
-      const timezones = country.timezones?.join(', ') || 'N/A';
+    continentFilter.addEventListener('change', filterCountries);
+  }
 
+  function filterCountries() {
+    const selectedContinent = continentFilter.value;
+    const filtered = selectedContinent
+      ? allCountries.filter(c => c.continents?.includes(selectedContinent))
+      : allCountries;
+    drawCountryList(filtered);
 
+    if (filtered.length > 0) {
+      showCountryDetails(filtered[0]);
+    } else {
       countryDetails.innerHTML = `
-        <img src="${country.flags.png}" alt="Flag of ${country.name.common}" class="country-flag">
-        <div class="country-info">
-          <h2>${country.name.common}</h2>
-          <p><strong>Official Name:</strong> ${country.name.official || 'N/A'}</p>
-          <p><strong>Capital:</strong> ${capital}</p>
-          <p><strong>Continent:</strong> ${continent}</p>
-          <p><strong>Region:</strong> ${country.region || 'Unknown'}</p>
-          <p><strong>Subregion:</strong> ${country.subregion || 'Unknown'}</p>
-          <p><strong>Population:</strong> ${population}</p>
-          <p><strong>Languages:</strong> ${languages}</p>
-          <p><strong>Timezones:</strong> ${timezones}</p>
-          <p><strong>Google Maps:</strong> <a href="${country.maps.googleMaps}" target="_blank">View Location</a></p>
+        <div class="no-results">
+          <h2>No Countries Found</h2>
+          <p>Try adjusting your filters</p>
         </div>
       `;
     }
+  }
 
-    logoutBtn.addEventListener('click', function() {
-      sessionStorage.removeItem('isAuthenticated');
-      sessionStorage.removeItem('isLoggedIn');
-      localStorage.removeItem('keepLoggedIn');
-      localStorage.removeItem('rememberMe');
-      window.location.href = 'login.html';
+  function searchCountries(query) {
+    const lower = query.toLowerCase();
+    const results = allCountries.filter(c =>
+      c.name.common.toLowerCase().includes(lower) ||
+      c.cca2?.toLowerCase() === lower ||
+      c.cca3?.toLowerCase() === lower
+    );
+    drawCountryList(results);
+
+    if (results.length > 0) {
+      showCountryDetails(results[0]);
+    } else {
+      countryDetails.innerHTML = `
+        <div class="no-results">
+          <h2>No Matching Countries</h2>
+          <p>Try a different name or code</p>
+        </div>
+      `;
+    }
+  }
+
+  function drawCountryList(countries) {
+    countryList.innerHTML = '';
+    countries.forEach(country => {
+      const btn = document.createElement('button');
+      btn.className = 'country-btn';
+      btn.textContent = country.name.common;
+      btn.onclick = () => showCountryDetails(country);
+      countryList.appendChild(btn);
     });
+  }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      fetchCountries();
-    });
+  function showCountryDetails(country) {
+  const capital = country.capital?.[0] ?? 'N/A';
+  const continent = country.continents?.join(', ') ?? 'Unknown';
+  const population = country.population?.toLocaleString() ?? 'N/A';
+  const languages = country.languages ? Object.values(country.languages) : [];
+  const currencies = country.currencies
+    ? Object.values(country.currencies).map(curr => `${curr.name} (${curr.symbol || 'N/A'})`).join(', ')
+    : 'N/A';
+  const timezones = country.timezones?.join(', ') || 'N/A';
+  const region = country.region || 'Unknown';
+  const subregion = country.subregion || 'Unknown';
+  const carSide = country.car?.side || 'N/A';
+  const coatOfArms = country.coatOfArms?.png || '';
+  const googleMaps = country.maps?.googleMaps || '#';
 
-  </script>
+  let languagesList = '<ul>';
+  languages.forEach(lang => {
+    languagesList += `<li>${lang}</li>`;
+  });
+  languagesList += '</ul>';
 
-  <script type="module" src="./auth.js"></script>
+  countryDetails.innerHTML = `
+    <h2>Flag</h2>
+    <img src="${country.flags.png}" alt="Flag of ${country.name.common}" class="country-flag">
+    <p class="common-name">${country.name.common}</p>
+
+    <div class="grid-container">
+      <div class="card card-1" style="background-color: #fbf6f1;">
+        <img src="https://img.icons8.com/?size=100&id=bkc1KCM30k7y&format=png&color=000000" alt="Official-Name Icon" style="width: 100px; height: 100px;">
+        <strong>Official Name:</strong><br>${country.name.official || 'N/A'}
+      </div>
+
+      <div class="card card-2" style="background-color: #fbf6f1;">
+        <img src="https://img.icons8.com/?size=100&id=Bue55VcerxCp&format=png&color=000000" alt="Language Icon" style="width: 100px; height: 100px;">
+        <strong>Languages:</strong><br>${languagesList}
+      </div>
+
+      <div class="card card-3" style="background-color: #fbf6f1;">
+       <img src="https://img.icons8.com/?size=100&id=vQPtvVHx7BZM&format=png&color=000000" alt="Continent Icon" style="width: 100px; height: 100px;">
+        <strong>Continent:</strong><br>${continent}
+      </div>
+
+      <div class="card card-4" style="background-color: #fbf6f1;">
+        <img src="https://img.icons8.com/?size=100&id=BT2KtK9zoFIv&format=png&color=000000" alt="Population Icon" style="width: 100px; height: 100px;">
+        <strong>Population:</strong><br>${population}
+      </div>
+
+      <div class="card card-5" style="background-color: #fbf6f1;">
+      	<img src="https://img.icons8.com/?size=100&id=GRynNX4VpixX&format=png&color=000000" alt="Region Icon" style="width: 100px; height: 100px;">
+        <strong>Region:</strong><br>${region}
+      </div>
+
+      <div class="card card-8" style="background-color: #fbf6f1;">
+        <img src="https://img.icons8.com/?size=100&id=I2lKi8lyTaJD&format=png&color=000000" alt="Coat of Arms Icon" style="width: 100px; height: 100px;">
+        <strong>Coat of Arms:</strong><br>
+        ${coatOfArms ? `<img src="${coatOfArms}" alt="Coat of Arms of ${country.name.common}" style="max-width: 100px; height: auto;">` : 'N/A'}
+      </div>
+
+      <div class="card card-7" style="background-color: #fbf6f1;">
+        <img src="https://img.icons8.com/?size=100&id=If_QqvJXRP1Z&format=png&color=000000" alt="Currency Icon" style="width: 100px; height: 100px;">
+        <strong>Currency:</strong><br>${currencies}
+      </div>
+
+      <div class="card card-9" style="background-color: #fbf6f1;">
+      <img src="https://img.icons8.com/?size=100&id=19326&format=png&color=000000" alt="Subregion Icon" style="width: 100px; height: 100px;">
+        <strong>Subregion:</strong><br>${subregion}
+      </div>
+
+      <div class="card card-9" style="background-color: #fbf6f1;">
+        <img src="https://img.icons8.com/?size=100&id=15694&format=png&color=000000" alt="Timezone Icon" style="width: 100px; height: 100px;">
+        <strong>Timezone:</strong><br>${timezones}
+      </div>
+
+      <div class="card card-5" style="background-color: #fbf6f1;">
+      <img src="https://img.icons8.com/?size=100&id=104084&format=png&color=000000" alt="Capital Icon" style="width: 100px; height: 100px;">
+        <strong>Capital:</strong><br>${capital}
+      </div>
+
+      <div class="card card-12" style="background-color: #fbf6f1;">
+        <img src="https://img.icons8.com/?size=100&id=SCowvr0DAK58&format=png&color=000000" alt="Car Icon" style="width: 100px; height: 100px;">
+        <strong>Side they drive on:</strong><br>${carSide}
+      </div>
+
+      <div class="card card-4" style="background-color: #fbf6f1;">
+        <img src="https://img.icons8.com/?size=100&id=FqwL2jwJCq2o&format=png&color=000000" alt="Google Maps Icon" style="width: 100px; height: 100px;">
+        <strong>View on Google Maps:</strong><br><br>
+        <a href="${googleMaps}" target="_blank">View Location</a>
+      </div>
+    </div>
+  `;
+}
+
+
+  fetchCountries();
+</script>
 
 </body>
 </html>

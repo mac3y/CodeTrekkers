@@ -3,24 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>Flag Quiz</title>
-  <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=KDH7zOWVcvjU&format=png&color=000000">
   <link rel="stylesheet" href="quiz.css">
 </head>
-<header>
-  <nav class="navbar">
-    <div class="nav-left">
-      <strong>CodeTrekkers</strong>
-    </div>
-    <div class="nav-right">
-      <a href="homepage.html">Home</a>
-      <a href="index.html">Country Info</a>
-      <a href="experiment.html">Currency Converter</a>
-      <button id="loginBtn" style="display: block;">Login</button>
-      <button id="logoutBtn" style="display: none;">Logout</button>
-    </div>
-  </nav>
-</header>
-
+<nav class="navbar">
+  <div class="nav-left">
+    <strong>CodeTreckkers</strong>
+  </div>
+  <div class="nav-right">
+    <a href="index.html">Home</a>
+    <a href="country-info.html">Country Info</a>
+    <a href="currency-converter.html">Currency Converter</a>
+  </div>
+</nav>
 <body>
   <div class="quiz-container">
     <h1>Flag Quiz</h1>
@@ -29,12 +23,10 @@
       <p>Select a continent to begin:</p>
       <select id="continentDropdown">
         <option value="">-- Choose Continent --</option>
-        <option value="All">All Continents</option>
         <option value="Africa">Africa</option>
         <option value="Asia">Asia</option>
         <option value="Europe">Europe</option>
-        <option value="North America">North America</option>
-        <option value="South America">South America</option>
+        <option value="Americas">Americas</option>
         <option value="Oceania">Oceania</option>
       </select>
       <button id="startBtn">Start Quiz</button>
@@ -55,40 +47,7 @@
     </div>
   </div>
 
-  <script>
-    const loginBtn = document.getElementById('loginBtn');
-    const logoutBtn = document.getElementById('logoutBtn');
-
-    function updateAuthButtons() {
-      const isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true';
-
-      if (isAuthenticated) {
-        loginBtn.style.display = 'none';
-        logoutBtn.style.display = 'block';
-      } else {
-        loginBtn.style.display = 'block';
-        logoutBtn.style.display = 'none';
-      }
-    }
-
-    loginBtn.addEventListener('click', () => {
-      sessionStorage.setItem('redirectAfterLogin', 'Quiz_Flag.html');
-      window.location.href = 'login.html';
-    });
-
-    logoutBtn.addEventListener('click', () => {
-      sessionStorage.removeItem('isAuthenticated');
-      sessionStorage.removeItem('redirectAfterLogin');
-      updateAuthButtons();
-      alert('You have been logged out.');
-    });
-
-    updateAuthButtons();
-  </script>
-
   <script src="quiz.js"></script>
-
-  <script type="module" src="./auth.js"></script>
-  
 </body>
 </html>
+
