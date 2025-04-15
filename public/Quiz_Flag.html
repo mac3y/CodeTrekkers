@@ -8,7 +8,7 @@
   <title>Flag Quiz</title>
   <style>
       body {
-  font-family: Arial, sans-serif;
+  font-family: 'Nunito', sans-serif;
   background-color: #FDFBD4;
   color: #0F0E47;
   text-align: center;
@@ -17,25 +17,26 @@
 }
   
 .quiz-container {
-  background-color: #8686AC;
+  background-color: #f5ebdb;
   padding: 20px;
   border-radius: 20px;
   max-width: 500px;
-  margin: 20px auto 0 auto;
+  
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin: 125px auto 125px auto;
 }
   
 #flag {
   max-width: 200px;
   margin: 20px auto;
-  border: 1px solid #0F0E47;
+  border: 1px solid #4CAF50;
 }
   
 #options button {
   display: block;
   margin: 10px auto;
   padding: 10px;
-  background-color: #0F0E47;
+  background-color: #4CAF50;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -44,13 +45,13 @@
 }
   
 #options button:hover {
-  background-color: #1d1c63;
+  background-color: #4CAF50;
 }
   
 #nextBtn, #restartBtn {
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #0F0E47;
+  background-color: #4CAF50;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -129,7 +130,7 @@ th {
 
 #logoutBtn {
   padding: 8px 16px;
-  background-color: #1d1ace;
+  background-color: #4CAF50;
   color: white;
   border: none;
   border-radius: 4px;
@@ -139,12 +140,12 @@ th {
 }
 
 #logoutBtn:hover {
-  background-color: #8686AC;
+  background-color: #4CAF50;
 }
 
 #loginBtn {
   padding: 8px 16px;
-  background-color: #1d1ace;
+  background-color: #4CAF50;
   color: white;
   border: none;
   border-radius: 4px;
@@ -154,11 +155,11 @@ th {
 }
 
 #loginBtn:hover {
-  background-color: #8686AC;
+  background-color: #4CAF50;
 }
 
 .navbar {
-  background-color: #0F0E47;
+  background-color: #4CAF50;
   color: white;
   padding: 10px 20px;
   margin: 0%;
@@ -193,22 +194,28 @@ th {
   margin-left: 20px; 
 
 }
+
+
     
 
   </style>
 </head>
-<nav class="navbar">
-  <div class="nav-left">
-    <strong>CodeTreckkers</strong>
-  </div>
-  <div class="nav-right">
-    <a href="homepage.html">Home</a>
-    <a href="country-viewer.html">Country Info</a>
-    <a href="currency-converter.html">Currency Converter</a>
-    <button id="logoutBtn">Logout</button>
-  </div>
-</nav>
+
+
 <body>
+  <header>
+    <nav class="navbar">
+      <div class="nav-left">
+        <strong>CodeTreckkers</strong>
+      </div>
+      <div class="nav-right">
+        <a href="homepage.html">Home</a>
+        <a href="country-viewer.html">Country Info</a>
+        <a href="currency-converter.html">Currency Converter</a>
+        <button id="logoutBtn">Logout</button>
+      </div>
+    </nav>
+  </header>
   <div class="quiz-container">
     <h1>Flag Quiz</h1>
 
@@ -452,7 +459,7 @@ th {
     });
     </script>
     </div>
-    <footer style="text-align: center; padding: 10px; background-color: #0F0E47; color: white; margin-top: 20px;">
+    <footer style="text-align: center; padding: 10px; background-color: #4CAF50; color: white; margin-top: 20px;">
       <p>2025 CodeTreckkers. All rights reserved.</p>
     </footer>
 </body>
