@@ -17,6 +17,7 @@ header {
   background-color: #4CAF50;
   color: white;
   padding: 15px 20px;
+  letter-spacing: .1em;
 }
 
 header h1 {
@@ -317,6 +318,7 @@ footer {
   background-color: #4CAF50;
   color: white;
   margin-top: 20px;
+  letter-spacing: .1em;
 }
         
 .editorial {
