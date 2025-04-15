@@ -77,14 +77,6 @@
           <a href="country-viewer.html"><h3>Country Information Hub</h3></a>
           <p>Dive into a treasure trove of data about any country using our robust API.</p>
         </div>
-        <div class="comment-box">
-          <h4>Comments</h4>
-          <form class="card-comment-form" data-card="country-info">
-            <textarea placeholder="Write a comment..." required></textarea>
-            <button type="submit">Post Comment</button>
-          </form>
-          <div class="card-comments-list" data-card="country-info"></div>
-        </div>
       </div>
 
       <div class="card-container">
@@ -92,14 +84,6 @@
           <img src="https://img.icons8.com/?size=100&id=osWiBOYLPXb2&format=png&color=000000" alt="Flag Quiz">
           <a href="Quiz_Flag.html"><h3>Flag Quiz Challenge</h3></a>
           <p>Test your knowledge of national flags with our interactive quiz.</p>
-        </div>
-        <div class="comment-box">
-          <h4>Comments</h4>
-          <form class="card-comment-form" data-card="flag-quiz">
-            <textarea placeholder="Write a comment..." required></textarea>
-            <button type="submit">Post Comment</button>
-          </form>
-          <div class="card-comments-list" data-card="flag-quiz"></div>
         </div>
       </div>
 
@@ -109,52 +93,79 @@
           <a href="currency-converter.html"><h3>Currency Converter</h3></a>
           <p>Stay updated with accurate exchange rates in just a click.</p>
         </div>
-        <div class="comment-box">
-          <h4>Comments</h4>
-          <form class="card-comment-form" data-card="currency-converter">
-            <textarea placeholder="Write a comment..." required></textarea>
-            <button type="submit">Post Comment</button>
-          </form>
-          <div class="card-comments-list" data-card="currency-converter"></div>
-        </div>
       </div>
-      
     </div>
   </section>
 
+  <section id="comments-section">
+    <h4>Comments</h4>
+    <form id="global-comment-form">
+      <textarea id="global-comment-textarea" placeholder="Write a comment..." required></textarea>
+      <button type="submit">Post Comment</button>
+    </form>
+    <div id="global-comments-list"></div>
+  </section>
+
   <script type="module">
-    import { addComment, getComments, deleteComment, auth } from './data.js';
-    
-    async function renderComments(cardType, container) {
+    import { auth, onAuthStateChanged } from './auth.js';
+    import { addComment, getComments, deleteComment } from './data.js';
+
+    let isAuthenticated = false;
+
+    // Update UI based on authentication state
+    function updateUI() {
+      const loginBtn = document.getElementById('loginBtn');
+      const logoutBtn = document.getElementById('logoutBtn');
+      const textarea = document.getElementById('global-comment-textarea');
+      const submitButton = document.querySelector('#global-comment-form button');
+
+      loginBtn.style.display = isAuthenticated ? 'none' : 'block';
+      logoutBtn.style.display = isAuthenticated ? 'block' : 'none';
+
+      textarea.placeholder = isAuthenticated ? "Write a comment..." : "Please login to comment";
+      textarea.disabled = !isAuthenticated;
+      submitButton.disabled = !isAuthenticated;
+    }
+
+    // Monitor authentication state
+    onAuthStateChanged(auth, (user) => {
+      isAuthenticated = !!user;
+      updateUI();
+      renderComments();
+    });
+
+    // Render comments
+    async function renderComments() {
+      const container = document.getElementById('global-comments-list');
       try {
         container.innerHTML = '<p>Loading comments...</p>';
-       
-        const comments = await getComments(cardType);
-        
+        const comments = await getComments();
+
         if (comments.length === 0) {
           container.innerHTML = '<p>No comments yet. Be the first to comment!</p>';
           return;
         }
-        
+
         container.innerHTML = '';
         comments.forEach(comment => {
           const commentDiv = document.createElement('div');
           commentDiv.className = 'comment';
           commentDiv.innerHTML = `
-            <p><strong>${comment.email}:</strong> ${comment.text}</p>
-            <small>${comment.timestamp.toLocaleString()}</small>
-            ${auth.currentUser?.email === comment.email ? 
-              `<button class="delete-comment" data-id="${comment.id}" data-card="${cardType}">Delete</button>` : ''}
+            <p><strong>${comment.userEmail}:</strong> ${comment.text}</p>
+            <small>${new Date(comment.timestamp?.toDate()).toLocaleString()}</small>
+            ${isAuthenticated && auth.currentUser?.uid === comment.userId ? 
+              `<button class="delete-comment" data-id="${comment.id}">Delete</button>` : ''}
           `;
           container.appendChild(commentDiv);
         });
-        
+
+        // Add delete handlers
         container.querySelectorAll('.delete-comment').forEach(button => {
           button.addEventListener('click', async () => {
             if (confirm('Are you sure you want to delete your comment?')) {
               try {
-                await deleteComment(button.dataset.card, button.dataset.id);
-                await renderComments(cardType, container);
+                await deleteComment(button.dataset.id);
+                await renderComments();
               } catch (error) {
                 alert('Error deleting comment: ' + error.message);
               }
@@ -166,93 +177,105 @@
         container.innerHTML = '<p>Error loading comments. Please try again later.</p>';
       }
     }
-  
-    document.querySelectorAll('.card-comment-form').forEach(form => {
-      const cardType = form.dataset.card;
-      const commentsList = form.querySelector('.card-comments-list') || form.nextElementSibling;
-
-      renderComments(cardType, commentsList);
-  
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const textarea = form.querySelector('textarea');
-        const commentText = textarea.value.trim();
-
-        if (!commentText) {
-          alert('Please enter a comment before submitting.');
-          return;
+    
+    // Handle form submission
+    document.getElementById('global-comment-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const textarea = document.getElementById('global-comment-textarea');
+      const commentText = textarea.value.trim();
+    
+      if (!commentText) {
+        alert('Please enter a comment before submitting.');
+        return;
+      }
+    
+      if (!isAuthenticated) {
+        alert('You must be logged in to post a comment.');
+        return;
+      }
+    
+      try {
+        const submitButton = document.querySelector('#global-comment-form button');
+        submitButton.disabled = true;
+        submitButton.textContent = 'Posting...';
+    
+        await addComment({
+          text: commentText,
+          cardType: 'all-cards', // Use a single collection for all cards
+          userEmail: auth.currentUser.email,
+          userId: auth.currentUser.uid
+        });
+    
+        textarea.value = '';
+        await renderComments();
+      } catch (error) {
+        console.error('Error submitting comment:', error);
+        alert('Error submitting comment: ' + error.message);
+      } finally {
+        const submitButton = document.querySelector('#global-comment-form button');
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Post Comment';
         }
-  
-        if (!auth.currentUser) {
-          alert('You must be logged in to post a comment. Redirecting to login page...');
-          sessionStorage.setItem('redirectAfterLogin', window.location.href);
-          window.location.href = 'login.html';
-          return;
-        }
-  
-        try {
-          const submitButton = form.querySelector('button[type="submit"]');
-          const originalButtonText = submitButton.textContent;
-          submitButton.textContent = 'Posting...';
-          submitButton.disabled = true;
-  
-          await addComment({
-            text: commentText,
-            cardType: cardType
-          });
-  
-
-          textarea.value = '';
-          await renderComments(cardType, commentsList);
-        } catch (error) {
-          console.error('Error submitting comment:', error);
-          alert('Error submitting comment: ' + error.message);
-        } finally {
-          if (submitButton) {
-            submitButton.textContent = originalButtonText;
-            submitButton.disabled = false;
-          }
-        }
-      });
+      }
     });
-  
-    auth.onAuthStateChanged(() => {
-      document.querySelectorAll('.card-comment-form').forEach(form => {
-        const cardType = form.dataset.card;
-        const commentsList = form.querySelector('.card-comments-list') || form.nextElementSibling;
-        renderComments(cardType, commentsList);
-      });
+    
+    // Handle logout
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      try {
+        await auth.signOut();
+        sessionStorage.removeItem('isAuthenticated');
+        alert('You have been logged out successfully.');
+      } catch (error) {
+        console.error('Logout error:', error);
+        alert('Error during logout. Please try again.');
+      }
+    });
+    
+    // Handle login redirect
+    document.getElementById('loginBtn').addEventListener('click', () => {
+      sessionStorage.setItem('redirectAfterLogin', window.location.href);
+      window.location.href = 'login.html';
     });
   </script>
-
+  
   <script>
     const loginBtn = document.getElementById('loginBtn');
     const logoutBtn = document.getElementById('logoutBtn');
 
     function updateAuthButtons() {
-      const isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true';
+      const isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true' || 
+                            (typeof auth !== 'undefined' && auth.currentUser);
 
       if (isAuthenticated) {
         loginBtn.style.display = 'none';
         logoutBtn.style.display = 'block';
       } else {
         loginBtn.style.display = 'block';
-        logoutBtn.style.display = 'none'; 
+        logoutBtn.style.display = 'none';
       }
     }
 
     loginBtn.addEventListener('click', () => {
-      sessionStorage.setItem('redirectAfterLogin', 'homepage.html');
+      sessionStorage.setItem('redirectAfterLogin', window.location.href);
       window.location.href = 'login.html';
     });
 
-    logoutBtn.addEventListener('click', () => {
-      sessionStorage.removeItem('isAuthenticated');
-      sessionStorage.removeItem('redirectAfterLogin');
-      updateAuthButtons();
-      alert('You have been logged out.');
+    logoutBtn.addEventListener('click', async () => {
+      try {
+        if (typeof auth !== 'undefined') {
+          await auth.signOut();
+        }
+        sessionStorage.removeItem('isAuthenticated');
+        sessionStorage.removeItem('redirectAfterLogin');
+        updateAuthButtons();
+        alert('You have been logged out.');
+      } catch (error) {
+        console.error('Error during logout:', error);
+      }
     });
 
+    // Initialize auth buttons
     updateAuthButtons();
   </script>
 
