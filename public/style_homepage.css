@@ -14,7 +14,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #4CAF50;
+  background-color: #66bb6a;
   color: white;
   padding: 15px 20px;
   letter-spacing: .1em;
@@ -315,7 +315,7 @@ ul.custom-bullet li::before {
 footer {
   text-align: center;
   padding: 15px 0;
-  background-color: #4CAF50;
+  background-color: #66bb6a;
   color: white;
   margin-top: 20px;
   letter-spacing: .1em;

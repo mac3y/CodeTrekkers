@@ -7,195 +7,212 @@
   <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=KDH7zOWVcvjU&format=png&color=000000">
   <title>Flag Quiz</title>
   <style>
+  
+  		*{
+           font-family: 'Nunito', sans-serif;
+  		   font-weight: 300;
+           letter-spacing: 0.1em;
+        }
+        
+        
       body {
         font-family: 'Nunito', sans-serif;
-        background-color: #FDFBD4;
+        background-color: #f5ebdb;
         color: #0F0E47;
         text-align: center;
         padding: 0;
         margin: 0;
       }
   
-.quiz-container {
-  background-color: #f5ebdb;
-  padding: 20px;
-  border-radius: 20px;
-  max-width: 500px;
-  
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  margin: 125px auto 125px auto;
-}
-  
-#flag {
-  max-width: 200px;
-  margin: 20px auto;
-  border: 1px solid #4CAF50;
-}
-  
-#options button {
-  display: block;
-  margin: 10px auto;
-  padding: 10px;
-  background-color: #4CAF50;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  width: 80%;
-  cursor: pointer;
-}
-  
-#options button:hover {
-  background-color: #4CAF50;
-}
-  
-#nextBtn, #restartBtn {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #4CAF50;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-}
+      .quiz-container {
+        background-color: rgba(255, 255, 255, 0.5);
+        padding: 20px;
+        border-radius: 20px;
+        max-width: 500px;
 
-#continentSelect {
-  margin-bottom: 20px;
-}
-  
-#continentSelect select, #continentSelect button {
-  padding: 10px;
-  margin-top: 10px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: none;
-}
-  
-#continentSelect button {
-  background-color: #0F0E47;
-  color: white;
-  cursor: pointer;
-}
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        margin: 125px auto 125px auto;
+      }
 
-#continentSelect {
-  margin-bottom: 20px;
-}
-  
-#continentSelect select,
-#continentSelect button {
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: none;
-  margin-top: 10px;
-}
-  
-#continentSelect button {
-  background-color: #0F0E47;
-  color: white;
-  cursor: pointer;
-}
+     
 
-table, th, td {
-  border: 1px solid #0F0E47;
-  padding: 10px;
-  text-align: center;
-}
-  
-th {
-  background-color: #0F0E47;
-  color: white;
-}
+      #flag {
+        max-width: 200px;
+        margin: 20px auto;
+        border: 1px solid #4CAF50;
+      }
 
-#progress {
-  font-size: 18px;
-  margin-bottom: 15px;
-  font-weight: bold;
-}
+      #options button {
+        display: block;
+        margin: 10px auto;
+        padding: 10px;
+        background-color: #81a079;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        width: 80%;
+        cursor: pointer;
+      }
 
-#progressBar {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
-  font-weight: bold;
-  font-size: 16px;
-}
-  
-#progressBar .left {
-  text-align: left;
-}
-  
-#progressBar .right {
-  text-align: right;
-}
+      #options button:hover {
+        background-color: #81a079;
+      }
 
-#logoutBtn {
-  padding: 8px 16px;
-  background-color: #196633;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
+      #nextBtn, #restartBtn {
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #81a079;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+      }
 
-#logoutBtn:hover {
-  background-color: #4CAF50;
-}
+      #continentSelect {
+        margin-bottom: 20px;
+      }
 
-#loginBtn {
-  padding: 8px 16px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
+      #continentSelect select, #continentSelect button {
+        padding: 10px;
+        margin-top: 10px;
+        font-size: 16px;
+        border-radius: 10px;
+        border: none;
+      }
 
-#loginBtn:hover {
-  background-color: #4CAF50;
-}
+      #continentSelect button {
+        background-color: #81a079;
+        color: white;
+        cursor: pointer;
+      }
 
-.navbar {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 20px;
-  margin: 0%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 0 0 0 0;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-  
-.nav-left {
-  font-size: 20px;
-}
+      #continentSelect {
+        margin-bottom: 20px;
+      }
 
-.nav-right {
-  display: flex;
-  align-items: center;
-}
-  
-.nav-right a {
-  color: white;
-  margin-left: 20px;
-  text-decoration: none;
-  font-weight: bold;
-}
-  
-.nav-right a:hover {
-  text-decoration: underline;
-}
+      #continentSelect select,
+      #continentSelect button {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 10px;
+        border: none;
+        margin-top: 10px;
+      }
 
-.nav-right button {
-  margin-left: 20px; 
+      #continentSelect button {
+        background-color: #81a079;
+        color: white;
+        cursor: pointer;
+      }
 
-}
+      table, th, td {
+        border: 1px solid #81a079;
+        padding: 10px;
+        text-align: center;
+      }
 
+      th {
+        background-color: #81a079;
+        color: white;
+      }
 
+      #progress {
+        font-size: 18px;
+        margin-bottom: 15px;
+        font-weight: bold;
+      }
+
+      #progressBar {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      #progressBar .left {
+        text-align: left;
+      }
+
+      #progressBar .right {
+        text-align: right;
+      }
+
+      #logoutBtn {
+        padding: 8px 16px;
+        background-color: #196633;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+      }
+
+      #logoutBtn:hover {
+        background-color: #4CAF50;
+      }
+
+      #loginBtn {
+        padding: 8px 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+      }
+
+      #loginBtn:hover {
+        background-color: #4CAF50;
+      }
+
+      .navbar {
+        background-color: #66bb6a;
+        color: white;
+        padding: 10px 20px;
+        margin: 0%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 0 0 0 0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .nav-left {
+        font-size: 20px;
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+      }
+
+      .nav-right a {
+        color: white;
+        margin-left: 20px;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .nav-right a:hover {
+        text-decoration: underline;
+      }
+
+      .nav-right button {
+        margin-left: 20px; 
+
+      }
+
+       footer{
+          text-align: center; 	
+          padding: 15px 0; 
+          background-color: #66bb6a; 
+          color: white; 
+          margin-top: 20px;
+          letter-spacing: .1em;
+       }
     
 
   </style>
@@ -217,6 +234,7 @@ th {
     </nav>
   </header>
   <div class="quiz-container">
+  <img src="https://img.icons8.com/?size=100&id=osWiBOYLPXb2&format=png&color=000000" alt="Flag Quiz">
     <h1>Flag Quiz</h1>
 
     <div id="continentSelect">
@@ -459,7 +477,7 @@ th {
     });
     </script>
     </div>
-    <footer style="text-align: center; padding: 10px; background-color: #4CAF50; color: white; margin-top: 20px;">
+    <footer>
       <p>2025 CodeTreckkers. All rights reserved.</p>
     </footer>
 </body>
