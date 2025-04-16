@@ -43,8 +43,7 @@ nav a:hover {
 
 /* Hero Section */
 #hero-background-image {
-  /* background-image: url('https://media.istockphoto.com/id/1404349414/photo/world-map-topographic-map-dark-ocean-color.jpg?b=1&s=612x612&w=0&k=20&c=Fwt0oZn1nR5h-v_eh8RGBCUvnRXHgMFxccBp5etCH1I='); */
-  background-image: url('https://i.ibb.co/zWpwZ4sp/Free-Retro-Map-World-Background-Images-Retro-Background-Photo-Background-PNG-and-Vectors.jpg');
+  background-image: url('https://media.istockphoto.com/id/1404349414/photo/world-map-topographic-map-dark-ocean-color.jpg?b=1&s=612x612&w=0&k=20&c=Fwt0oZn1nR5h-v_eh8RGBCUvnRXHgMFxccBp5etCH1I=');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
