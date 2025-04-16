@@ -13,9 +13,9 @@
   <header>
     <h1>CodeTrekkers</h1>
     <nav>
-      <a href="homepage.html">Home</a>
+      <a href="index.html">Home</a>
       <a href="#features">Features</a>
-      <button id="loginBtn" style="display: block;">Login</button>
+      <button id="loginBtn">Login</button>
       <button id="logoutBtn" style="display: none;">Logout</button>
     </nav>
   </header>
@@ -107,12 +107,11 @@
   </section>
 
   <script type="module">
-    import { auth, onAuthStateChanged } from './auth.js';
+    import { auth, onAuthStateChanged, signOut } from './auth.js';
     import { addComment, getComments, deleteComment } from './data.js';
 
     let isAuthenticated = false;
 
-    // Update UI based on authentication state
     function updateUI() {
       const loginBtn = document.getElementById('loginBtn');
       const logoutBtn = document.getElementById('logoutBtn');
@@ -122,26 +121,35 @@
       loginBtn.style.display = isAuthenticated ? 'none' : 'block';
       logoutBtn.style.display = isAuthenticated ? 'block' : 'none';
 
-      textarea.disabled = false; // Always allow typing
-      submitButton.disabled = false; // Always allow clicking
-
       if (!isAuthenticated) {
+        textarea.disabled = true;
         textarea.placeholder = "Please login to comment";
         textarea.classList.add('disabled-comment');
+        submitButton.disabled = true;
       } else {
+        textarea.disabled = false;
         textarea.placeholder = "Write a comment...";
         textarea.classList.remove('disabled-comment');
+        submitButton.disabled = false;
       }
     }
 
-    // Monitor authentication state
+    // onAuthStateChanged(auth, (user) => {
+    //   try {
+    //     isAuthenticated = !!user;
+    //     updateUI();
+    //     renderComments();
+    //   } catch (error) {
+    //     console.error('Error handling auth state:', error);
+    //   }
+    // });
     onAuthStateChanged(auth, (user) => {
+      console.log("User status:", user);
       isAuthenticated = !!user;
       updateUI();
       renderComments();
     });
 
-    // Render comments
     async function renderComments() {
       const container = document.getElementById('global-comments-list');
       try {
@@ -166,7 +174,6 @@
           container.appendChild(commentDiv);
         });
 
-        // Add delete handlers
         container.querySelectorAll('.delete-comment').forEach(button => {
           button.addEventListener('click', async () => {
             if (confirm('Are you sure you want to delete your comment?')) {
@@ -185,7 +192,6 @@
       }
     }
     
-    // Handle form submission
     const form = document.getElementById('global-comment-form')
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -211,7 +217,7 @@
         await renderComments();
       } catch (error) {
         console.error('Error submitting comment:', error);
-        alert('Error submitting comment: ' + error.message);
+        alert('Failed to post comment. Please try again.');
       } finally {
         const submitButton = document.querySelector('#global-comment-form button');
         if (submitButton) {
@@ -221,7 +227,6 @@
       }
     });
     
-    // Handle logout
     document.getElementById('logoutBtn').addEventListener('click', async () => {
       try {
         await auth.signOut();
@@ -233,7 +238,7 @@
       }
     });
     
-    // Handle login redirect
+    
     document.getElementById('loginBtn').addEventListener('click', () => {
       sessionStorage.setItem('redirectAfterLogin', window.location.href);
       window.location.href = 'login.html';

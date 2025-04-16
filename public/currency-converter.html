@@ -258,7 +258,7 @@
       <a href="index.html">Home</a>
       <a href="country-viewer.html">Countries Info</a>
       <a href="Quiz_Flag.html">Flag Quiz</a>
-      <button id="loginBtn" style="display: block;">Login</button>
+      <button id="loginBtn">Login</button>
       <button id="logoutBtn" style="display: none;">Logout</button>
     </nav>
   </header>
@@ -284,7 +284,6 @@
   </div>
 
   <script>
-
     logoutBtn.addEventListener('click', () => {
       localStorage.removeItem('currentUser');
       window.location.href = 'login.html';
@@ -292,35 +291,35 @@
   </script>
 
   <script>
-  const loginBtn = document.getElementById('loginBtn');
-  const logoutBtn = document.getElementById('logoutBtn');
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
 
-  function updateAuthButtons() {
-    const isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true';
+    function updateAuthButtons() {
+      const isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true';
 
-    if (isAuthenticated) {
-      loginBtn.style.display = 'none';
-      logoutBtn.style.display = 'block';
-    } else {
-      loginBtn.style.display = 'block';
-      logoutBtn.style.display = 'none';
+      if (isAuthenticated) {
+        loginBtn.style.display = 'none';
+        logoutBtn.style.display = 'block';
+      } else {
+        loginBtn.style.display = 'block';
+        logoutBtn.style.display = 'none';
+      }
     }
-  }
 
-  loginBtn.addEventListener('click', () => {
-    sessionStorage.setItem('redirectAfterLogin', 'currency-converter.html');
-    window.location.href = 'login.html';
-  });
+    loginBtn.addEventListener('click', () => {
+      sessionStorage.setItem('redirectAfterLogin', 'currency-converter.html');
+      window.location.href = 'currency-converter.html';
+    });
 
-  logoutBtn.addEventListener('click', () => {
-    sessionStorage.removeItem('isAuthenticated');
-    sessionStorage.removeItem('redirectAfterLogin');
+    logoutBtn.addEventListener('click', () => {
+      sessionStorage.removeItem('isAuthenticated');
+      sessionStorage.removeItem('redirectAfterLogin');
+      updateAuthButtons();
+      alert('You have been logged out.');
+    });
+
     updateAuthButtons();
-    alert('You have been logged out.');
-  });
-
-  updateAuthButtons();
-</script>
+  </script>
 
   
   <footer>

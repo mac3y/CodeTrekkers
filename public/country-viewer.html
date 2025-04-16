@@ -374,9 +374,9 @@
     }
 
 	.card ul {
-  line-height: 4;
-  padding-left: 10px; /* optional for indenting the list */
-}
+    line-height: 4;
+    padding-left: 10px; /* optional for indenting the list */
+  }
 
   </style>
 </head>
@@ -388,7 +388,8 @@
     <a href="index.html">Home</a>
     <a href="Quiz_Flag.html">Flag Quiz</a>
     <a href="currency-converter.html">Currency Converter</a>
-    <button id="logoutBtn">Logout</button>
+    <button id="loginBtn" style="display: block;">Login</button>
+    <button id="logoutBtn" style="display: none;">Logout</button>
   </nav>
 </header>
 
@@ -422,7 +423,7 @@
   const continentFilter = document.getElementById('continentFilter');
   const countryList = document.getElementById('countryList');
   const countryDetails = document.getElementById('countryDetails');
-  const logoutBtn = document.getElementById('logoutBtn');
+  // Removed duplicate declaration of logoutBtn
   const searchBar = document.getElementById('searchBar');
 
   searchBar.addEventListener('input', (event) => {
@@ -606,6 +607,42 @@
 
 
   fetchCountries();
+</script>
+
+<script>
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+  import firebaseConfig from "./firebaseConfig.js";
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const loginBtn = document.getElementById('loginBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  // Monitor authentication state
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is logged in
+      loginBtn.style.display = 'none';
+      logoutBtn.style.display = 'block';
+    } else {
+      // User is logged out
+      loginBtn.style.display = 'block';
+      logoutBtn.style.display = 'none';
+    }
+  });
+
+  // Logout functionality
+  logoutBtn.addEventListener('click', async () => {
+    try {
+      await signOut(auth);
+      alert('You have been logged out successfully.');
+    } catch (error) {
+      console.error('Logout error:', error);
+      alert('Error during logout. Please try again.');
+    }
+  });
 </script>
 
 </body>

@@ -12,7 +12,7 @@ import {
 import firebaseConfig from "./firebaseConfig.js";
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth();
+const auth = getAuth(app);
 
 // Set persistence first thing
 (async function initAuth() {
@@ -31,6 +31,22 @@ function monitorAuthState(callback) {
     callback(user);
   });
 }
+
+// Monitor authentication state
+onAuthStateChanged(auth, (user) => {
+  const loginBtn = document.getElementById('loginBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  if (user) {
+    // User is logged in
+    loginBtn.style.display = 'none';
+    logoutBtn.style.display = 'block';
+  } else {
+    // User is logged out
+    loginBtn.style.display = 'block';
+    logoutBtn.style.display = 'none';
+  }
+});
 
 async function login(email, password) {
   try {
@@ -53,6 +69,17 @@ async function logout() {
     throw error;
   }
 }
+
+// Logout functionality
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+  try {
+    await signOut(auth);
+    alert('You have been logged out successfully.');
+  } catch (error) {
+    console.error('Logout error:', error);
+    alert('Error during logout. Please try again.');
+  }
+});
 
 export { 
   auth, 

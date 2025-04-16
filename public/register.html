@@ -43,33 +43,41 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('regEmail').value;
-            const password = document.getElementById('regPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const errorMessage = document.getElementById('errorMessage');
-
-            errorMessage.textContent = "";
-
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                errorMessage.textContent = "Please enter a valid email address.";
-                return;
-            }
-
-            if (password !== confirmPassword) {
-                errorMessage.textContent = "Passwords do not match!";
-                return;
-            }
-
-            localStorage.setItem('userEmail', email);
-            localStorage.setItem('userPassword', password);
-
+    <script type="module">
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+        import { auth } from '../.firebase/firebaseConfig.js';
+    
+        const registerForm = document.getElementById('registerForm');
+        const errorMessage = document.getElementById('errorMessage');
+    
+        registerForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+    
+          const email = document.getElementById('regEmail').value.trim();
+          const password = document.getElementById('regPassword').value.trim();
+          const confirmPassword = document.getElementById('confirmPassword').value.trim();
+    
+          errorMessage.textContent = "";
+    
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(email)) {
+            errorMessage.textContent = "Please enter a valid email address.";
+            return;
+          }
+    
+          if (password !== confirmPassword) {
+            errorMessage.textContent = "Passwords do not match!";
+            return;
+          }
+    
+          try {
+            await createUserWithEmailAndPassword(auth, email, password);
             alert("Registration successful! Please login.");
             window.location.href = 'login.html';
+          } catch (error) {
+            console.error("Registration error:", error.message);
+            errorMessage.textContent = "Error during registration. Please try again.";
+          }
         });
     </script>
 </body>
