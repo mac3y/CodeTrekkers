@@ -1,89 +1,248 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeTrekkers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=KDH7zOWVcvjU&format=png&color=000000">
+  <link rel="stylesheet" href="style_homepage.css">
+</head>
+<body>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/11.6.0/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/11.6.0/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/11.6.0/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/11.6.0/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/11.6.0/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/11.6.0/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/11.6.0/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/11.6.0/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/11.6.0/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/11.6.0/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+  <header>
+    <h1>CodeTrekkers</h1>
+    <nav>
+      <a href="homepage.html">Home</a>
+      <a href="#features">Features</a>
+      <button id="loginBtn" style="display: block;">Login</button>
+      <button id="logoutBtn" style="display: none;">Logout</button>
+    </nav>
+  </header>
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+    
+  <section id="hero-background-image">
+    <div class="hero">
+      <div class="hero-content">
+        <h1>Welcome to CodeTrekkers! 🌍</h1>
+        <p>We're all about fun, educational web tools that connect you to the world. From countries and cultures to currencies, we use tech to spark curiosity and boost learning.</p>
+
+        <h2>What We Offer:</h2>
+        <ul class="custom-bullet">
+          <li class="star"><strong>Country Info Hub:</strong> Discover key facts on any country, geography, people, history, and more via our API.</li>
+          <li class="star"><strong>Flag Quiz:</strong> Test your flag knowledge with our fun, interactive quiz.</li>
+          <li class="star"><strong>Currency Converter:</strong> Check real-time exchange rates with ease—perfect for travelers and planners.</li>
+        </ul>
+
+        <p>Learning with us is engaging and easy. Whether you're a traveler, trivia fan, or curious explorer, CodeTrekkers has you covered.</p>
+      </div>
+      <div class="hero-image">
+      </div>
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+    <svg class="editorial"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 24 150 28 "
+      preserveAspectRatio="none">
+      <defs>
+        <path id="gentle-wave"
+        d="M-160 44c30 0 
+            58-18 88-18s
+            58 18 88 18 
+            58-18 88-18 
+            58 18 88 18
+            v44h-352z" />
+      </defs>
+        <g class="parallax1">
+          <use xlink:href="#gentle-wave" x="50" y="3" fill="#024846"/>
+        </g>
+        <g class="parallax2">
+          <use xlink:href="#gentle-wave" x="50" y="0" fill="#35898b"/>
+        </g>
+        <g class="parallax3">
+          <use xlink:href="#gentle-wave" x="50" y="9" fill="#68a8a4"/>
+        </g>
+        <g class="parallax4">
+          <use xlink:href="#gentle-wave" x="50" y="6" fill="#76a19f"/>  
+        </g>
+    </svg>
+  </section>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
 
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+  <section id="features">
+    <div class="features">
+      <div class="card-container">
+        <div class="card">
+          <img src="https://img.icons8.com/?size=100&id=2RaOTTz1VWQU&format=png&color=000000" alt="Country Info">
+          <a href="country-viewer.html"><h3>Country Information Hub</h3></a>
+          <p>Dive into a treasure trove of data about any country using our robust API.</p>
+        </div>
+      </div>
+
+      <div class="card-container">
+        <div class="card">
+          <img src="https://img.icons8.com/?size=100&id=osWiBOYLPXb2&format=png&color=000000" alt="Flag Quiz">
+          <a href="Quiz_Flag.html"><h3>Flag Quiz Challenge</h3></a>
+          <p>Test your knowledge of national flags with our interactive quiz.</p>
+        </div>
+      </div>
+
+      <div class="card-container">
+        <div class="card">
+          <img src="https://img.icons8.com/?size=100&id=68311&format=png&color=000000" alt="Currency Converter">
+          <a href="currency-converter.html"><h3>Currency Converter</h3></a>
+          <p>Stay updated with accurate exchange rates in just a click.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="comments-section">
+    <h4>Comments</h4>
+    <form id="global-comment-form">
+      <textarea id="global-comment-textarea" placeholder="Write a comment..." required></textarea>
+      <button type="submit">Post Comment</button>
+    </form>
+    <div id="global-comments-list"></div>
+  </section>
+
+  <script type="module">
+    import { auth, onAuthStateChanged } from './auth.js';
+    import { addComment, getComments, deleteComment } from './data.js';
+
+    let isAuthenticated = false;
+
+    // Update UI based on authentication state
+    function updateUI() {
+      const loginBtn = document.getElementById('loginBtn');
+      const logoutBtn = document.getElementById('logoutBtn');
+      const textarea = document.getElementById('global-comment-textarea');
+      const submitButton = document.querySelector('#global-comment-form button');
+
+      loginBtn.style.display = isAuthenticated ? 'none' : 'block';
+      logoutBtn.style.display = isAuthenticated ? 'block' : 'none';
+
+      textarea.disabled = false; // Always allow typing
+      submitButton.disabled = false; // Always allow clicking
+
+      if (!isAuthenticated) {
+        textarea.placeholder = "Please login to comment";
+        textarea.classList.add('disabled-comment');
+      } else {
+        textarea.placeholder = "Write a comment...";
+        textarea.classList.remove('disabled-comment');
+      }
+    }
+
+    // Monitor authentication state
+    onAuthStateChanged(auth, (user) => {
+      isAuthenticated = !!user;
+      updateUI();
+      renderComments();
+    });
+
+    // Render comments
+    async function renderComments() {
+      const container = document.getElementById('global-comments-list');
+      try {
+        container.innerHTML = '<p>Loading comments...</p>';
+        const comments = await getComments();
+
+        if (comments.length === 0) {
+          container.innerHTML = '<p>No comments yet. Be the first to comment!</p>';
+          return;
         }
-      });
-    </script>
-  </body>
+
+        container.innerHTML = '';
+        comments.forEach(comment => {
+          const commentDiv = document.createElement('div');
+          commentDiv.className = 'comment';
+          commentDiv.innerHTML = `
+            <p><strong>${comment.userEmail}:</strong> ${comment.text}</p>
+            <small>${comment.timestamp.toLocaleString()}</small>
+            ${isAuthenticated && auth.currentUser?.uid === comment.userId ? 
+              `<button class="delete-comment" data-id="${comment.id}">Delete</button>` : ''}
+          `;
+          container.appendChild(commentDiv);
+        });
+
+        // Add delete handlers
+        container.querySelectorAll('.delete-comment').forEach(button => {
+          button.addEventListener('click', async () => {
+            if (confirm('Are you sure you want to delete your comment?')) {
+              try {
+                await deleteComment(button.dataset.id);
+                await renderComments();
+              } catch (error) {
+                alert('Error deleting comment: ' + error.message);
+              }
+            }
+          });
+        });
+      } catch (error) {
+        console.error('Error loading comments:', error);
+        container.innerHTML = '<p>Error loading comments. Please try again later.</p>';
+      }
+    }
+    
+    // Handle form submission
+    const form = document.getElementById('global-comment-form')
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const textarea = document.getElementById('global-comment-textarea');
+    
+      if (!isAuthenticated) {
+        alert('You must be logged in to post a comment.');
+        return;
+      }
+    
+      try {
+        const submitButton = document.querySelector('#global-comment-form button');
+        submitButton.disabled = true;
+        submitButton.textContent = 'Posting...';
+    
+        await addComment({
+          text: textarea.value,
+          userEmail: auth.currentUser.email
+        });
+
+    
+        textarea.value = '';
+        await renderComments();
+      } catch (error) {
+        console.error('Error submitting comment:', error);
+        alert('Error submitting comment: ' + error.message);
+      } finally {
+        const submitButton = document.querySelector('#global-comment-form button');
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Post Comment';
+        }
+      }
+    });
+    
+    // Handle logout
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      try {
+        await auth.signOut();
+        sessionStorage.removeItem('isAuthenticated');
+        alert('You have been logged out successfully.');
+      } catch (error) {
+        console.error('Logout error:', error);
+        alert('Error during logout. Please try again.');
+      }
+    });
+    
+    // Handle login redirect
+    document.getElementById('loginBtn').addEventListener('click', () => {
+      sessionStorage.setItem('redirectAfterLogin', window.location.href);
+      window.location.href = 'login.html';
+    });
+  </script>
+
+  <footer>
+    <p>2025 CodeTrekkers. all rights reserved</p>
+  </footer>
+
+</body>
 </html>

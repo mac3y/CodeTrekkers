@@ -1,4 +1,4 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
 import { 
   getFirestore, 
   collection, 
@@ -73,26 +73,23 @@ async function getCurrencyRates(renderFun) {
   
 async function addComment({ text, userEmail }) {
   try {
-    if (!auth.currentUser) {
-      console.error("User not authenticated");
-      throw new Error("User not authenticated");
-    }
+    if (!auth.currentUser) throw new Error("User not authenticated");
 
     const commentData = {
       text,
+      userEmail,
+      userId: auth.currentUser.uid,
       timestamp: serverTimestamp()
     };
 
-    console.log("Saving comment to Firestore:", commentData); // Debug log
-    const commentRef = doc(db, `comments`, userEmail); // Use email as document ID
-    await setDoc(commentRef, commentData); // Use setDoc to specify the document ID
-    console.log("Comment saved with email as ID:", userEmail); // Debug log
-    return userEmail;
+    console.log("Adding comment:", commentData);
+    await addDoc(collection(db, "comments"), commentData);
   } catch (error) {
     console.error("Error adding comment:", error);
     throw error;
   }
 }
+
 
 async function getComments() {
   try {
@@ -112,32 +109,28 @@ async function getComments() {
 }
 
   
-async function deleteComment(userEmail) {
+async function deleteComment(commentId) {
   try {
-    if (!auth.currentUser) {
-      console.error("User not authenticated");
-      throw new Error("User not authenticated");
-    }
+    if (!auth.currentUser) throw new Error("User not authenticated");
 
-    if (auth.currentUser.email !== userEmail) {
-      throw new Error("User not authorized to delete this comment");
-    }
-
-    const commentRef = doc(db, `comments`, userEmail);
+    const commentRef = doc(db, "comments", commentId);
     const commentDoc = await getDoc(commentRef);
 
-    if (!commentDoc.exists()) {
-      throw new Error("Comment not found");
+    if (!commentDoc.exists()) throw new Error("Comment not found");
+
+    // Check if the comment belongs to the current user
+    if (auth.currentUser.uid !== commentDoc.data().userId) {
+      throw new Error("Not authorized to delete this comment");
     }
 
     await deleteDoc(commentRef);
-    console.log(`Comment by ${userEmail} deleted successfully`);
-    return true;
+    console.log("Comment deleted successfully");
   } catch (error) {
     console.error("Error deleting comment:", error);
     throw error;
   }
 }
+
 
 console.log("Current user:", auth.currentUser);
   
