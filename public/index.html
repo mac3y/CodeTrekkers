@@ -107,7 +107,7 @@
   </section>
 
   <script type="module">
-    import { auth, onAuthStateChanged, signOut } from './auth.js';
+    import { auth, monitorAuthState, login, logout } from './auth.js';
     import { addComment, getComments, deleteComment } from './data.js';
 
     let isAuthenticated = false;
@@ -143,12 +143,15 @@
     //     console.error('Error handling auth state:', error);
     //   }
     // });
-    onAuthStateChanged(auth, (user) => {
+    monitorAuthState(auth, (user) => {
       console.log("User status:", user);
       isAuthenticated = !!user;
       updateUI();
       renderComments();
     });
+
+    
+
 
     async function renderComments() {
       const container = document.getElementById('global-comments-list');
@@ -241,8 +244,10 @@
     
     document.getElementById('loginBtn').addEventListener('click', () => {
       sessionStorage.setItem('redirectAfterLogin', window.location.href);
-      window.location.href = 'login.html';
+      window.location.href = './auth/login.html';
     });
+
+    
   </script>
 
   <footer>
