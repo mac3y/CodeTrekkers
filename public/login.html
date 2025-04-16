@@ -1,81 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  <link rel="stylesheet" href="style.css">
-  <meta name="google" content="nopasswordreuse">
-</head>
-<body>
-
-  <div class="floating"></div>
-  <div class="floating"></div>
-  <div class="floating"></div>
-  
-  <div class="auth-container">
-    <div class="auth-content">
-      <h2>Login</h2>
-        <form id="loginForm" class="auth-form">
-          <div id="errorMessage" style="color: red; margin-bottom: 10px;"></div>
-          
-          <div class="form-group">
-            <label for="loginEmail">Email</label>
-            <input type="email" id="loginEmail" required autocomplete="username">
-          </div>
-                
-          <div class="form-group">
-            <label for="loginPassword">Password</label>
-            <input type="password" id="loginPassword" required autocomplete="current-password">
-          </div>
-                
-          <button type="submit">Login</button>
-                
-          <div class="register-link">
-            Don't have an account? <a href="register.html">Register</a>
-          </div>
-        </form>
-    </div>
-  </div>
-
-  <script>
-    document.getElementById('loginForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      
-      const email = document.getElementById('loginEmail').value.trim();
-      const password = document.getElementById('loginPassword').value.trim();
-      const errorMessage = document.getElementById('errorMessage');
-
-      errorMessage.textContent = "";
-
-      const storedEmail = localStorage.getItem('userEmail');
-      const storedPassword = localStorage.getItem('userPassword');
-
-      if (email === "" || password === "") {
-          errorMessage.textContent = "Email and password cannot be empty.";
-          return;
-      }
-
-      if (email.toLowerCase() === storedEmail?.toLowerCase() && password === storedPassword) {
-          sessionStorage.setItem('isAuthenticated', 'true'); // Set authentication state
-          alert('Login successful!');
-          const redirectUrl = sessionStorage.getItem('redirectAfterLogin') || 'homepage.html';
-          sessionStorage.removeItem('redirectAfterLogin');
-          window.location.href = redirectUrl; // Redirect to the saved page or homepage
-      } else {
-          errorMessage.textContent = "Invalid email or password!";
-      }
-    });
-  </script>
-</body>
-</html> -->
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -112,8 +34,12 @@
   </div>
 
   <script type="module">
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-    import { auth } from '../.firebase/firebaseConfig.js';
+    import { 
+      auth, 
+      signInWithEmailAndPassword,
+      setPersistence,
+      browserSessionPersistence,
+    }  from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
     const loginForm = document.getElementById('loginForm');
     const errorMessage = document.getElementById('errorMessage');
@@ -124,20 +50,56 @@
       const email = document.getElementById('loginEmail').value.trim();
       const password = document.getElementById('loginPassword').value.trim();
 
+      if (!email || !password) {
+        errorMessage.textContent = "Please enter both email and password.";
+        return;
+      }
+
+      // try {
+      //   await signInWithEmailAndPassword(auth, email, password);
+      //   sessionStorage.setItem('isAuthenticated', 'true');
+      //   alert("Login successful!");
+
+      //   const redirectUrl = sessionStorage.getItem('redirectAfterLogin') || 'currency-converter.html';
+      //   sessionStorage.removeItem('redirectAfterLogin');
+      //   window.location.href = redirectUrl;
+
+      // } catch (error) {
+      //   console.error("Login error:", error.message);
+      //   if (error.code === 'auth/wrong-password') {
+      //     errorMessage.textContent = "Incorrect password. Please try again.";
+      //   } else if (error.code === 'auth/user-not-found') {
+      //     errorMessage.textContent = "No user found with this email.";
+      //   } else {
+      //     errorMessage.textContent = "An error occurred. Please try again.";
+      //   }
+      // }
+
       try {
-        await signInWithEmailAndPassword(auth, email, password);
-        sessionStorage.setItem('isAuthenticated', 'true');
-        alert("Login successful!");
-
-        const redirectUrl = sessionStorage.getItem('redirectAfterLogin') || 'homepage.html';
-        sessionStorage.removeItem('redirectAfterLogin');
-        window.location.href = redirectUrl;
-
+        await setPersistence(auth, browserSessionPersistence);
+  
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        
+        if (userCredential.user) {
+          alert("Login successful!");
+          
+          const redirectUrl = sessionStorage.getItem('redirectAfterLogin') || 'currency-converter.html';
+          sessionStorage.removeItem('redirectAfterLogin');
+          
+          window.location.assign(redirectUrl);
+        }
       } catch (error) {
-        console.error("Login error:", error.message);
-        errorMessage.textContent = "Invalid email or password.";
+        console.error("Login error:", error);
+        if (error.code === 'auth/wrong-password') {
+          errorMessage.textContent = "Incorrect password. Please try again.";
+        } else if (error.code === 'auth/user-not-found') {
+          errorMessage.textContent = "No user found with this email.";
+        } else {
+          errorMessage.textContent = error.message || "Login failed. Please try again.";
+        }
       }
     });
+    
   </script>
 </body>
 </html>

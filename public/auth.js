@@ -12,9 +12,10 @@ import {
 import firebaseConfig from "./firebaseConfig.js";
 
 const app = initializeApp(firebaseConfig);
+
 const auth = getAuth(app);
 
-// Set persistence first thing
+
 (async function initAuth() {
   try {
     await setPersistence(auth, browserSessionPersistence);
@@ -23,6 +24,16 @@ const auth = getAuth(app);
     console.error("Error setting auth persistence:", error);
   }
 })();
+
+function setAuthListeners(onLogin, onLogout){
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      onLogin();
+    } else {
+      onLogout();
+    }
+  });
+}
 
 // Improved auth state management
 function monitorAuthState(callback) {
@@ -81,9 +92,4 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
   }
 });
 
-export { 
-  auth, 
-  monitorAuthState,
-  login,
-  logout
-};
+export { auth, monitorAuthState, login, logout, setAuthListeners };

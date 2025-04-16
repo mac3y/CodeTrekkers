@@ -11,17 +11,13 @@ import {
   serverTimestamp,
   getDoc,
   setDoc
-} 
-from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
-import { getAuth, onAuthStateChanged } 
+}  
 from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
 import firebaseConfig from "./firebaseConfig.js";
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const auth = getAuth(app);
 
-// Comment functions
 async function getCountries(renderFun) {
   const countriesRef = collection(db, 'countries');
   const querySnapshot = await getDocs(countriesRef);
@@ -134,4 +130,4 @@ async function deleteComment(commentId) {
 
 console.log("Current user:", auth.currentUser);
   
-export { getCountries, getQuizzes, createQuiz, deleteQuiz, getCurrencyRates, getComments, addComment, deleteComment, auth, onAuthStateChanged };
+export { getCountries, getQuizzes, createQuiz, deleteQuiz, getCurrencyRates, getComments, addComment, deleteComment };

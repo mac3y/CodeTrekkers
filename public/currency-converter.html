@@ -6,6 +6,20 @@
   <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=KDH7zOWVcvjU&format=png&color=000000">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
   <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=KDH7zOWVcvjU&format=png&color=000000">
+
+ <!-- <script>
+    // Before redirecting to login.html, set the redirect URL
+    sessionStorage.setItem('redirectAfterLogin', window.location.href);
+
+    // Redirect to login page
+    window.location.href = 'login.html';
+
+    // if (!sessionStorage.getItem('isAuthenticated')) {
+    //   sessionStorage.setItem('redirectAfterLogin', window.location.href);
+    //   window.location.href = 'login.html';
+    // }
+ </script> -->
+  
   <style>
     * {
       padding: 0;
@@ -283,45 +297,6 @@
     <p id="result"></p>
   </div>
 
-  <script>
-    logoutBtn.addEventListener('click', () => {
-      localStorage.removeItem('currentUser');
-      window.location.href = 'login.html';
-    });
-  </script>
-
-  <script>
-    const loginBtn = document.getElementById('loginBtn');
-    const logoutBtn = document.getElementById('logoutBtn');
-
-    function updateAuthButtons() {
-      const isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true';
-
-      if (isAuthenticated) {
-        loginBtn.style.display = 'none';
-        logoutBtn.style.display = 'block';
-      } else {
-        loginBtn.style.display = 'block';
-        logoutBtn.style.display = 'none';
-      }
-    }
-
-    loginBtn.addEventListener('click', () => {
-      sessionStorage.setItem('redirectAfterLogin', 'currency-converter.html');
-      window.location.href = 'currency-converter.html';
-    });
-
-    logoutBtn.addEventListener('click', () => {
-      sessionStorage.removeItem('isAuthenticated');
-      sessionStorage.removeItem('redirectAfterLogin');
-      updateAuthButtons();
-      alert('You have been logged out.');
-    });
-
-    updateAuthButtons();
-  </script>
-
-  
   <footer>
     <p>2025 CodeTrekkers. all rights reserved</p>
   </footer>
@@ -706,6 +681,66 @@
     loadCurrencyOptions();
 
     convertButton.addEventListener("click", convertCurrency);</script>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+      import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDobzEi69_6fx6VsttSEcJCNxTt1-HBEEU",
+        authDomain: "codetrekkerapp.firebaseapp.com",
+        projectId: "codetrekkerapp",
+        storageBucket: "codetrekkerapp.firebasestorage.app",
+        messagingSenderId: "846059095122",
+        appId: "1:846059095122:web:ccb769e315f60aac130b8b",
+        measurementId: "G-TNZYWKBQJE"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+      const loginBtn = document.getElementById('loginBtn');
+      const logoutBtn = document.getElementById('logoutBtn');
+
+      onAuthStateChanged(auth, (user) => {
+        console.log("User status changed:", user);
+        if (user) {
+          loginBtn.style.display = 'none';
+          logoutBtn.style.display = 'block';
+
+          // const redirectUrl = sessionStorage.getItem('redirectAfterLogin') || 'currency-converter.html';
+          // console.log("Redirecting to:", redirectUrl);
+          // if (redirectUrl) {
+          //   sessionStorage.removeItem('redirectAfterLogin');
+          //   window.location.href = redirectUrl;
+          // }
+        } else {
+          loginBtn.style.display = 'block';
+          logoutBtn.style.display = 'none';
+
+          // Only redirect to login if not already there
+          if (!window.location.pathname.includes('login.html')) {
+            sessionStorage.setItem('redirectAfterLogin', window.location.href);
+            window.location.href = 'login.html';
+          }
+        }
+      });
+
+      loginBtn.addEventListener('click', () => {
+        sessionStorage.setItem('redirectAfterLogin', window.location.href);
+        console.log("Redirecting to login page..."); 
+        window.location.href = 'login.html';
+      });
+
+      logoutBtn.addEventListener('click', () => {
+        signOut(auth).then(() => {
+          sessionStorage.removeItem('redirectAfterLogin');  
+          window.location.reload(); 
+        }).catch((error) => {
+          console.error("Sign out error:", error);
+        });
+      });
+    </script>
 
   </body>
 </html>
