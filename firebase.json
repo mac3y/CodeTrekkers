@@ -12,5 +12,8 @@
         "destination": "/homepage.html"
       }
     ]
+  },
+  "firestore": {
+    "rules": "public/firestore.rules"
   }
 }

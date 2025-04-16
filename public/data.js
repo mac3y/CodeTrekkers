@@ -10,6 +10,7 @@ import {
   orderBy,
   serverTimestamp,
   getDoc,
+  setDoc
 } 
 from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
 import { getAuth, onAuthStateChanged } 
@@ -69,25 +70,8 @@ async function getCurrencyRates(renderFun) {
     console.error("Error fetching currency rates:", error);
   }
 }
-
-async function getComments(cardType) {
-  try {
-    const commentsRef = collection(db, `comments-${cardType}`);
-    const q = query(commentsRef, orderBy("timestamp", "desc"));
-    const querySnapshot = await getDocs(q);
-    
-    return querySnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data(),
-      timestamp: doc.data().timestamp?.toDate() || new Date()
-    }));
-  } catch (error) {
-    console.error("Error getting comments:", error);
-    throw error;
-  }
-}
   
-async function addComment({ cardType, text, userEmail, userId }) {
+async function addComment({ text, userEmail }) {
   try {
     if (!auth.currentUser) {
       console.error("User not authenticated");
@@ -96,38 +80,58 @@ async function addComment({ cardType, text, userEmail, userId }) {
 
     const commentData = {
       text,
-      userEmail,
-      userId,
       timestamp: serverTimestamp()
     };
 
-    const docRef = await addDoc(collection(db, `comments-${cardType}`), commentData);
-    return docRef.id;
+    console.log("Saving comment to Firestore:", commentData); // Debug log
+    const commentRef = doc(db, `comments`, userEmail); // Use email as document ID
+    await setDoc(commentRef, commentData); // Use setDoc to specify the document ID
+    console.log("Comment saved with email as ID:", userEmail); // Debug log
+    return userEmail;
   } catch (error) {
     console.error("Error adding comment:", error);
     throw error;
   }
 }
 
+async function getComments() {
+  try {
+    const commentsRef = collection(db, `comments`);
+    const q = query(commentsRef, orderBy("timestamp", "desc"));
+    const querySnapshot = await getDocs(q);
+
+    return querySnapshot.docs.map(doc => ({
+      id: doc.id, // The document ID (user's email)
+      ...doc.data(),
+      timestamp: doc.data().timestamp?.toDate() || new Date()
+    }));
+  } catch (error) {
+    console.error("Error getting comments:", error);
+    throw error;
+  }
+}
+
   
-async function deleteComment(cardType, commentId) {
+async function deleteComment(userEmail) {
   try {
     if (!auth.currentUser) {
       console.error("User not authenticated");
       throw new Error("User not authenticated");
     }
 
-    const commentRef = doc(db, `comments-${cardType}`, commentId);
+    if (auth.currentUser.email !== userEmail) {
+      throw new Error("User not authorized to delete this comment");
+    }
+
+    const commentRef = doc(db, `comments`, userEmail);
     const commentDoc = await getDoc(commentRef);
 
     if (!commentDoc.exists()) {
       throw new Error("Comment not found");
     }
-    if (commentDoc.data().userId !== auth.currentUser.uid) {
-      throw new Error("User not authorized to delete this comment");
-    }
 
     await deleteDoc(commentRef);
+    console.log(`Comment by ${userEmail} deleted successfully`);
     return true;
   } catch (error) {
     console.error("Error deleting comment:", error);

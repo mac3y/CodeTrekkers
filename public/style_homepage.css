@@ -276,6 +276,13 @@ ul.custom-bullet li::before {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
+/* .disabled-comment {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  color: #aaa;
+} */
+
+
 .comment {
   padding: 10px;
   margin-bottom: 10px;

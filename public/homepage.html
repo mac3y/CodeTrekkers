@@ -122,9 +122,16 @@
       loginBtn.style.display = isAuthenticated ? 'none' : 'block';
       logoutBtn.style.display = isAuthenticated ? 'block' : 'none';
 
-      textarea.placeholder = isAuthenticated ? "Write a comment..." : "Please login to comment";
-      textarea.disabled = !isAuthenticated;
-      submitButton.disabled = !isAuthenticated;
+      textarea.disabled = false; // Always allow typing
+      submitButton.disabled = false; // Always allow clicking
+
+      if (!isAuthenticated) {
+        textarea.placeholder = "Please login to comment";
+        textarea.classList.add('disabled-comment');
+      } else {
+        textarea.placeholder = "Write a comment...";
+        textarea.classList.remove('disabled-comment');
+      }
     }
 
     // Monitor authentication state
@@ -201,9 +208,7 @@
     
         await addComment({
           text: commentText,
-          cardType: 'all-cards', // Use a single collection for all cards
-          userEmail: auth.currentUser.email,
-          userId: auth.currentUser.uid
+          userEmail: auth.currentUser.email
         });
     
         textarea.value = '';
@@ -237,46 +242,6 @@
       sessionStorage.setItem('redirectAfterLogin', window.location.href);
       window.location.href = 'login.html';
     });
-  </script>
-  
-  <script>
-    const loginBtn = document.getElementById('loginBtn');
-    const logoutBtn = document.getElementById('logoutBtn');
-
-    function updateAuthButtons() {
-      const isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true' || 
-                            (typeof auth !== 'undefined' && auth.currentUser);
-
-      if (isAuthenticated) {
-        loginBtn.style.display = 'none';
-        logoutBtn.style.display = 'block';
-      } else {
-        loginBtn.style.display = 'block';
-        logoutBtn.style.display = 'none';
-      }
-    }
-
-    loginBtn.addEventListener('click', () => {
-      sessionStorage.setItem('redirectAfterLogin', window.location.href);
-      window.location.href = 'login.html';
-    });
-
-    logoutBtn.addEventListener('click', async () => {
-      try {
-        if (typeof auth !== 'undefined') {
-          await auth.signOut();
-        }
-        sessionStorage.removeItem('isAuthenticated');
-        sessionStorage.removeItem('redirectAfterLogin');
-        updateAuthButtons();
-        alert('You have been logged out.');
-      } catch (error) {
-        console.error('Error during logout:', error);
-      }
-    });
-
-    // Initialize auth buttons
-    updateAuthButtons();
   </script>
 
   <footer>
