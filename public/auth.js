@@ -11,8 +11,21 @@ import {
 
 import { firebaseConfig } from "./firebaseConfig.js";
 
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  orderBy
+} from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
+
+
 
 
 (async function initAuth() {
@@ -104,4 +117,4 @@ async function logout() {
 
 document.addEventListener('DOMContentLoaded', initAuthUI);
 
-export { auth, monitorAuthState, login, logout, register , updateAuthUI};
+export { auth, monitorAuthState, login, logout, register , updateAuthUI, db};

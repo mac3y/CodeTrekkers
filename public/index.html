@@ -107,7 +107,8 @@
   </section>
 
   <script type="module">
-    import { auth, monitorAuthState, logout, updateAuthUI } from './auth.js';
+    import { auth, monitorAuthState, logout, updateAuthUI, db } from './auth.js';
+    import { collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
 
     const unsubscribe = monitorAuthState((user) => {
       console.log("Auth state changed:", user ? "Logged in" : "Logged out");
@@ -140,57 +141,75 @@
         alert('Error during logout. Please try again.');
       }
     });
-  
-    if (!localStorage.getItem('comments')) {
-      localStorage.setItem('comments', JSON.stringify([]));
-    }
-  
-    function getComments() {
-      return JSON.parse(localStorage.getItem('comments')) || [];
-    }
-  
-    function addComment(commentText) {
-      const comments = getComments();
-      comments.push({
-        text: commentText,
-        timestamp: new Date().toISOString()
-      });
-      localStorage.setItem('comments', JSON.stringify(comments));
-    }
-  
-    function renderComments() {
-      const container = document.getElementById('comments-list');
-      const comments = getComments();
-  
-      if (comments.length === 0) {
-        container.innerHTML = '<p class="no-comments">No comments yet. Be the first to comment!</p>';
+
+    let currentUser = null;
+
+    monitorAuthState((user) => {
+      currentUser = user;
+      renderComments();
+    });
+
+    async function addCommentToFirestore(commentText) {
+      if (!currentUser) {
+        alert("You must be logged in to comment.");
         return;
       }
-  
-      container.innerHTML = comments.map(comment => `
-        <div class="comment">
-          <p>${comment.text}</p>
-          <small>${new Date(comment.timestamp).toLocaleString()}</small>
-        </div>
-      `).join('');
+
+      try {
+        await addDoc(collection(db, "comments"), {
+          text: commentText,
+          user: currentUser.email,
+          timestamp: new Date()
+        });
+        renderComments();
+      } catch (error) {
+        console.error("Error adding comment:", error);
+      }
     }
- 
-    document.getElementById('comment-form').addEventListener('submit', (e) => {
+
+    async function renderComments() {
+      const container = document.getElementById('comments-list');
+      container.innerHTML = "<p>Loading comments...</p>";
+
+      try {
+        const q = query(collection(db, "comments"), orderBy("timestamp", "desc"));
+        const snapshot = await getDocs(q);
+        if (snapshot.empty) {
+          container.innerHTML = '<p class="no-comments">No comments yet. Be the first to comment!</p>';
+          return;
+        }
+
+        container.innerHTML = '';
+        snapshot.forEach(doc => {
+          const comment = doc.data();
+          const commentDiv = document.createElement('div');
+          commentDiv.classList.add('comment');
+          commentDiv.innerHTML = `
+            <p>${comment.text}</p>
+            <small>${comment.user} — ${new Date(comment.timestamp.toDate()).toLocaleString()}</small>
+          `;
+          container.appendChild(commentDiv);
+        });
+      } catch (error) {
+        console.error("Error loading comments:", error);
+        container.innerHTML = "<p>Failed to load comments.</p>";
+      }
+    }
+
+    document.getElementById('comment-form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const textarea = document.getElementById('comment-textarea');
       const commentText = textarea.value.trim();
-  
+
       if (!commentText) {
         alert('Please enter a comment');
         return;
       }
-  
-      addComment(commentText);
+
+      await addCommentToFirestore(commentText);
       textarea.value = '';
-      renderComments();
     });
-  
-    renderComments();
+
   </script>
 
   <footer>
