@@ -108,7 +108,6 @@
 
   <script type="module">
     import { auth, monitorAuthState, logout, updateAuthUI, db } from './auth.js';
-    // import { collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
     import { doc, collection, addDoc, setDoc, getDocs, query, orderBy, collectionGroup } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
 
     const unsubscribe = monitorAuthState((user) => {
@@ -147,7 +146,6 @@
 
     monitorAuthState((user) => {
       currentUser = user;
-      renderComments();
     });
 
 
@@ -156,105 +154,27 @@
         alert("You must be logged in to comment.");
         return;
       }
-
       const userEmail = currentUser.email;
-      const userDocRef = doc(db, "comments", userEmail); // Document ID = user's email
-      const userCommentsRef = collection(userDocRef, "userComments"); // Subcollection
+      const userDocRef = doc(db, "comments", userEmail);
+      const userCommentsRef = collection(userDocRef, "userComments");
 
       try {
+        const snapshot = await getDocs(userCommentsRef);
+
+        const nextCommentID = snapshot.size + 1;
+        
         await addDoc(userCommentsRef, {
+          commentID: `comment_${nextCommentID}`,
           text: commentText,
-          timestamp: new Date()
+          timestamp: new Date(),
         });
-        console.log("Comment added under:", userEmail);
-        renderComments(); // Update display
+
+        console.log(`Comment added as comment_${nextCommentID}`);
       } catch (error) {
         console.error("Error adding comment:", error);
       }
     }
 
-
-    async function renderComments() {
-      const container = document.getElementById('comments-list');
-      container.innerHTML = "<p>Loading comments...</p>";
-
-      try {
-        // Grabs all subcollection comments under 'userComments' from every user
-        const q = query(collectionGroup(db, "userComments"), orderBy("timestamp", "desc"));
-        const snapshot = await getDocs(q);
-
-        if (snapshot.empty) {
-          container.innerHTML = '<p class="no-comments">No comments yet. Be the first to comment!</p>';
-          return;
-        }
-
-        container.innerHTML = '';
-        snapshot.forEach(docSnap => {
-          const comment = docSnap.data();
-          const parentEmail = docSnap.ref.parent.parent.id; // Get user's email from document ID
-
-          const commentDiv = document.createElement('div');
-          commentDiv.classList.add('comment');
-          commentDiv.innerHTML = `
-            <p>${comment.text}</p>
-            <small>${parentEmail} — ${new Date(comment.timestamp.toDate()).toLocaleString()}</small>
-          `;
-          container.appendChild(commentDiv);
-        });
-      } catch (error) {
-        console.error("Error loading comments:", error);
-        container.innerHTML = "<p>Failed to load comments.</p>";
-      }
-    }
-
-    // async function addCommentToFirestore(commentText) {
-    //   if (!currentUser) {
-    //     alert("You must be logged in to comment.");
-    //     return;
-    //   }
-
-    //   try {
-    //     await addDoc(collection(db, "comments"), {
-    //       text: commentText,
-    //       user: currentUser.email,
-    //       timestamp: new Date()
-    //     });
-    //     renderComments();
-    //   } catch (error) {
-    //     console.error("Error adding comment:", error);
-    //   }
-    // }
-
-    // this function is commented out to avoid loading comments on index.html page.
-
-    // async function renderComments() {
-    //   const container = document.getElementById('comments-list');
-    //   container.innerHTML = "<p>Loading comments...</p>";
-
-    //   try {
-    //     const q = query(collection(db, "comments"), orderBy("timestamp", "desc"));
-    //     const snapshot = await getDocs(q);
-    //     if (snapshot.empty) {
-    //       container.innerHTML = '<p class="no-comments">No comments yet. Be the first to comment!</p>';
-    //       return;
-    //     }
-
-    //     container.innerHTML = '';
-    //     snapshot.forEach(doc => {
-    //       const comment = doc.data();
-    //       const commentDiv = document.createElement('div');
-    //       commentDiv.classList.add('comment');
-    //       commentDiv.innerHTML = `
-    //         <p>${comment.text}</p>
-    //         <small>${comment.user} — ${new Date(comment.timestamp.toDate()).toLocaleString()}</small>
-    //       `;
-    //       container.appendChild(commentDiv);
-    //     });
-    //   } catch (error) {
-    //     console.error("Error loading comments:", error);
-    //     container.innerHTML = "<p>Failed to load comments.</p>";
-    //   }
-    // }
 
     document.getElementById('comment-form').addEventListener('submit', async (e) => {
       e.preventDefault();
