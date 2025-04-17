@@ -56,4 +56,4 @@ async function logout() {
   }
 }
 
-export { auth, onAuthStateChanged, signOut };
+export { auth, onAuthStateChanged, signOut, register };

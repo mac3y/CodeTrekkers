@@ -35,11 +35,14 @@
 
   <script type="module">
     import { 
-      auth, 
+      getAuth, 
+      signOut, 
       signInWithEmailAndPassword,
-      setPersistence,
+      createUserWithEmailAndPassword,
+      setPersistence, 
       browserSessionPersistence,
-    }  from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+      onAuthStateChanged 
+    } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
     const loginForm = document.getElementById('loginForm');
     const errorMessage = document.getElementById('errorMessage');
@@ -55,29 +58,10 @@
         return;
       }
 
-      // try {
-      //   await signInWithEmailAndPassword(auth, email, password);
-      //   sessionStorage.setItem('isAuthenticated', 'true');
-      //   alert("Login successful!");
-
-      //   const redirectUrl = sessionStorage.getItem('redirectAfterLogin') || 'currency-converter.html';
-      //   sessionStorage.removeItem('redirectAfterLogin');
-      //   window.location.href = redirectUrl;
-
-      // } catch (error) {
-      //   console.error("Login error:", error.message);
-      //   if (error.code === 'auth/wrong-password') {
-      //     errorMessage.textContent = "Incorrect password. Please try again.";
-      //   } else if (error.code === 'auth/user-not-found') {
-      //     errorMessage.textContent = "No user found with this email.";
-      //   } else {
-      //     errorMessage.textContent = "An error occurred. Please try again.";
-      //   }
-      // }
-
       try {
-        await setPersistence(auth, browserSessionPersistence);
-  
+        const auth = getAuth(); // Initialize the auth instance
+        await setPersistence(auth, browserSessionPersistence); // Set session persistence
+
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         
         if (userCredential.user) {
@@ -90,6 +74,7 @@
         }
       } catch (error) {
         console.error("Login error:", error);
+        errorMessage.textContent = ""; // Clear previous error message
         if (error.code === 'auth/wrong-password') {
           errorMessage.textContent = "Incorrect password. Please try again.";
         } else if (error.code === 'auth/user-not-found') {
