@@ -34,14 +34,11 @@
   </div>
 
   <script type="module">
+    import { auth } from './firebaseConfig.js';
     import { 
-      getAuth, 
-      signOut, 
-      signInWithEmailAndPassword,
-      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword, 
       setPersistence, 
-      browserSessionPersistence,
-      onAuthStateChanged 
+      browserSessionPersistence 
     } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
     const loginForm = document.getElementById('loginForm');
@@ -59,17 +56,13 @@
       }
 
       try {
-        const auth = getAuth(); // Initialize the auth instance
-        await setPersistence(auth, browserSessionPersistence); // Set session persistence
-
+        await setPersistence(auth, browserSessionPersistence);
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        
+
         if (userCredential.user) {
           alert("Login successful!");
-          
           const redirectUrl = sessionStorage.getItem('redirectAfterLogin') || 'currency-converter.html';
           sessionStorage.removeItem('redirectAfterLogin');
-          
           window.location.assign(redirectUrl);
         }
       } catch (error) {
@@ -84,7 +77,6 @@
         }
       }
     });
-    
   </script>
 </body>
 </html>
