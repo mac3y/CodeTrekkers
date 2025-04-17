@@ -267,12 +267,64 @@
       <button id="restartBtn" style="display:none;">Restart</button>
     </div>
 
-    <script>
+    <!-- <script>
       const logoutBtn = document.getElementById('logoutBtn');
   
       logoutBtn.addEventListener('click', () => {
         localStorage.removeItem('currentUser');
         window.location.href = 'login.html';
+      });
+    </script> -->
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+      import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDobzEi69_6fx6VsttSEcJCNxTt1-HBEEU",
+        authDomain: "codetrekkerapp.firebaseapp.com",
+        projectId: "codetrekkerapp",
+        storageBucket: "codetrekkerapp.firebasestorage.app",
+        messagingSenderId: "846059095122",
+        appId: "1:846059095122:web:ccb769e315f60aac130b8b",
+        measurementId: "G-TNZYWKBQJE"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+      const loginBtn = document.getElementById('loginBtn');
+      const logoutBtn = document.getElementById('logoutBtn');
+
+      onAuthStateChanged(auth, (user) => {
+        console.log("User status changed:", user);
+        if (user) {
+          loginBtn.style.display = 'none';
+          logoutBtn.style.display = 'block';
+        } else {
+          loginBtn.style.display = 'block';
+          logoutBtn.style.display = 'none';
+
+          if (!window.location.pathname.includes('login.html')) {
+            sessionStorage.setItem('redirectAfterLogin', window.location.href);
+            window.location.href = 'login.html';
+          }
+        }
+      });
+
+      loginBtn.addEventListener('click', () => {
+        sessionStorage.setItem('redirectAfterLogin', window.location.href);
+        console.log("Redirecting to login page..."); 
+        window.location.href = 'login.html';
+      });
+
+      logoutBtn.addEventListener('click', () => {
+        signOut(auth).then(() => {
+          sessionStorage.removeItem('redirectAfterLogin');  
+          window.location.reload(); 
+        }).catch((error) => {
+          console.error("Sign out error:", error);
+        });
       });
     </script>
 
@@ -316,30 +368,30 @@
     });
     
     async function fetchCountries(continent) {
-  const res = await fetch("https://restcountries.com/v3.1/all?fields=name,flags,region,subregion");
-  const data = await res.json();
+      const res = await fetch("https://restcountries.com/v3.1/all?fields=name,flags,region,subregion");
+      const data = await res.json();
 
-  if (continent === "All") {
-    countries = data.filter(c => c.name && c.flags);
-  } else if (continent === "North America") {
-    countries = data.filter(c =>
-      ["Northern America", "Central America", "Caribbean"].includes(c.subregion)
-    );
-  } else if (continent === "South America") {
-    countries = data.filter(c => c.subregion === "South America");
-  } else {
-    countries = data.filter(c => c.region === continent);
-  }
+      if (continent === "All") {
+        countries = data.filter(c => c.name && c.flags);
+      } else if (continent === "North America") {
+        countries = data.filter(c =>
+          ["Northern America", "Central America", "Caribbean"].includes(c.subregion)
+        );
+      } else if (continent === "South America") {
+        countries = data.filter(c => c.subregion === "South America");
+      } else {
+        countries = data.filter(c => c.region === continent);
+      }
 
-  if (countries.length === 0) {
-    alert("No countries found for selected continent.");
-    return;
-  }
+      if (countries.length === 0) {
+        alert("No countries found for selected continent.");
+        return;
+      }
 
-  continentSelect.style.display = "none";
-  quizSection.style.display = "block";
-  startQuiz();
-}
+      continentSelect.style.display = "none";
+      quizSection.style.display = "block";
+      startQuiz();
+    }
     
     function startQuiz() {
       score = 0;
@@ -362,7 +414,7 @@
       optionsEl.innerHTML = "";
       flagEl.style.display = "none";
     
-      const correct = questionPool.pop(); // grab and remove next question
+      const correct = questionPool.pop();
       if (!correct) {
         endQuiz();
         return;
@@ -371,7 +423,6 @@
       questionCount++;
       currentQuestion = { correct };
     
-      // pick 3 wrong options that are not the correct one
       const incorrect = countries.filter(c => c.name.common !== correct.name.common);
       shuffleArray(incorrect);
       const choices = [correct, ...incorrect.slice(0, 3)];
@@ -407,7 +458,6 @@
         feedbackEl.innerText = `❌ Wrong! Correct answer: ${correctName}`;
       }
     
-      // ✅ Update score display after scoring
       currentScoreEl.innerText = `(Score: ${score})`;
     
       reviewLog.push({
@@ -438,7 +488,6 @@
       nextBtn.style.display = "none";
       restartBtn.style.display = "inline-block";
     
-      // Create review table
       const table = document.createElement("table");
       table.style.margin = "20px auto";
       table.style.borderCollapse = "collapse";

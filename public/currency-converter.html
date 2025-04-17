@@ -6,20 +6,6 @@
   <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=KDH7zOWVcvjU&format=png&color=000000">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
   <link rel="icon" type="image/x-icon" href="https://img.icons8.com/?size=100&id=KDH7zOWVcvjU&format=png&color=000000">
-
- <!-- <script>
-    // Before redirecting to login.html, set the redirect URL
-    sessionStorage.setItem('redirectAfterLogin', window.location.href);
-
-    // Redirect to login page
-    window.location.href = 'login.html';
-
-    // if (!sessionStorage.getItem('isAuthenticated')) {
-    //   sessionStorage.setItem('redirectAfterLogin', window.location.href);
-    //   window.location.href = 'login.html';
-    // }
- </script> -->
-  
   <style>
     * {
       padding: 0;
@@ -707,18 +693,10 @@
         if (user) {
           loginBtn.style.display = 'none';
           logoutBtn.style.display = 'block';
-
-          // const redirectUrl = sessionStorage.getItem('redirectAfterLogin') || 'currency-converter.html';
-          // console.log("Redirecting to:", redirectUrl);
-          // if (redirectUrl) {
-          //   sessionStorage.removeItem('redirectAfterLogin');
-          //   window.location.href = redirectUrl;
-          // }
         } else {
           loginBtn.style.display = 'block';
           logoutBtn.style.display = 'none';
 
-          // Only redirect to login if not already there
           if (!window.location.pathname.includes('login.html')) {
             sessionStorage.setItem('redirectAfterLogin', window.location.href);
             window.location.href = 'login.html';
