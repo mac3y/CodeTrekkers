@@ -44,41 +44,55 @@
     </div>
 
     <script type="module">
-        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-        import { auth } from './firebaseConfig.js';
-    
-        const registerForm = document.getElementById('registerForm');
-        const errorMessage = document.getElementById('errorMessage');
-    
-        registerForm.addEventListener('submit', async (e) => {
-          e.preventDefault();
-    
-          const email = document.getElementById('regEmail').value.trim();
-          const password = document.getElementById('regPassword').value.trim();
-          const confirmPassword = document.getElementById('confirmPassword').value.trim();
-    
-          errorMessage.textContent = "";
-    
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(email)) {
-            errorMessage.textContent = "Please enter a valid email address.";
-            return;
+      import { register } from './auth.js';  // Using the register function from auth service
+      
+      const registerForm = document.getElementById('registerForm');
+      const errorMessage = document.getElementById('errorMessage');
+  
+      registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+  
+        const email = document.getElementById('regEmail').value.trim();
+        const password = document.getElementById('regPassword').value.trim();
+        const confirmPassword = document.getElementById('confirmPassword').value.trim();
+  
+        // Clear previous errors
+        errorMessage.textContent = "";
+  
+        // Validation
+        if (password !== confirmPassword) {
+          errorMessage.textContent = "Passwords do not match!";
+          return;
+        }
+  
+        if (password.length < 6) {
+          errorMessage.textContent = "Password must be at least 6 characters";
+          return;
+        }
+  
+        try {
+          await register(email, password);
+          alert("Registration successful! Please login.");
+          window.location.href = 'login.html';
+        } catch (error) {
+          console.error("Registration error:", error);
+          
+          
+          switch (error.code) {
+            case 'auth/email-already-in-use':
+              errorMessage.textContent = "Email already in use. Please login instead.";
+              break;
+            case 'auth/invalid-email':
+              errorMessage.textContent = "Please enter a valid email address.";
+              break;
+            case 'auth/weak-password':
+              errorMessage.textContent = "Password should be at least 6 characters.";
+              break;
+            default:
+              errorMessage.textContent = "Registration failed. Please try again.";
           }
-    
-          if (password !== confirmPassword) {
-            errorMessage.textContent = "Passwords do not match!";
-            return;
-          }
-    
-          try {
-            await createUserWithEmailAndPassword(auth, email, password);
-            alert("Registration successful! Please login.");
-            window.location.href = 'login.html';
-          } catch (error) {
-            console.error("Registration error:", error.message);
-            errorMessage.textContent = "Error during registration. Please try again.";
-          }
-        });
+        }
+      });
     </script>
 </body>
 </html>

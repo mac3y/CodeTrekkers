@@ -99,155 +99,93 @@
 
   <section id="comments-section">
     <h4>Comments</h4>
-    <form id="global-comment-form">
-      <textarea id="global-comment-textarea" placeholder="Write a comment..." required></textarea>
+    <form id="comment-form">
+      <textarea id="comment-textarea" placeholder="Write a comment..." required></textarea>
       <button type="submit">Post Comment</button>
     </form>
-    <div id="global-comments-list"></div>
+    <div id="comments-list"></div>
   </section>
 
   <script type="module">
-    import { auth, monitorAuthState, login, logout } from './auth.js';
-    import { addComment, getComments, deleteComment } from './data.js';
-
+    export { auth, onAuthStateChanged, signOut } from './auth.js';
+  
+    if (!localStorage.getItem('comments')) {
+      localStorage.setItem('comments', JSON.stringify([]));
+    }
+  
+    function getComments() {
+      return JSON.parse(localStorage.getItem('comments')) || [];
+    }
+  
+    function addComment(commentText) {
+      const comments = getComments();
+      comments.push({
+        text: commentText,
+        timestamp: new Date().toISOString()
+      });
+      localStorage.setItem('comments', JSON.stringify(comments));
+    }
+  
+    function renderComments() {
+      const container = document.getElementById('comments-list');
+      const comments = getComments();
+  
+      if (comments.length === 0) {
+        container.innerHTML = '<p class="no-comments">No comments yet. Be the first to comment!</p>';
+        return;
+      }
+  
+      container.innerHTML = comments.map(comment => `
+        <div class="comment">
+          <p>${comment.text}</p>
+          <small>${new Date(comment.timestamp).toLocaleString()}</small>
+        </div>
+      `).join('');
+    }
+  
     let isAuthenticated = false;
-
+  
     function updateUI() {
       const loginBtn = document.getElementById('loginBtn');
       const logoutBtn = document.getElementById('logoutBtn');
-      const textarea = document.getElementById('global-comment-textarea');
-      const submitButton = document.querySelector('#global-comment-form button');
-
+  
       loginBtn.style.display = isAuthenticated ? 'none' : 'block';
       logoutBtn.style.display = isAuthenticated ? 'block' : 'none';
-
-      if (!isAuthenticated) {
-        textarea.disabled = true;
-        textarea.placeholder = "Please login to comment";
-        textarea.classList.add('disabled-comment');
-        submitButton.disabled = true;
-      } else {
-        textarea.disabled = false;
-        textarea.placeholder = "Write a comment...";
-        textarea.classList.remove('disabled-comment');
-        submitButton.disabled = false;
-      }
     }
-
-    // onAuthStateChanged(auth, (user) => {
-    //   try {
-    //     isAuthenticated = !!user;
-    //     updateUI();
-    //     renderComments();
-    //   } catch (error) {
-    //     console.error('Error handling auth state:', error);
-    //   }
-    // });
-    monitorAuthState(auth, (user) => {
-      console.log("User status:", user);
-      isAuthenticated = !!user;
-      updateUI();
-      renderComments();
-    });
-
-    
-
-
-    async function renderComments() {
-      const container = document.getElementById('global-comments-list');
-      try {
-        container.innerHTML = '<p>Loading comments...</p>';
-        const comments = await getComments();
-
-        if (comments.length === 0) {
-          container.innerHTML = '<p>No comments yet. Be the first to comment!</p>';
-          return;
-        }
-
-        container.innerHTML = '';
-        comments.forEach(comment => {
-          const commentDiv = document.createElement('div');
-          commentDiv.className = 'comment';
-          commentDiv.innerHTML = `
-            <p><strong>${comment.userEmail}:</strong> ${comment.text}</p>
-            <small>${comment.timestamp.toLocaleString()}</small>
-            ${isAuthenticated && auth.currentUser?.uid === comment.userId ? 
-              `<button class="delete-comment" data-id="${comment.id}">Delete</button>` : ''}
-          `;
-          container.appendChild(commentDiv);
-        });
-
-        container.querySelectorAll('.delete-comment').forEach(button => {
-          button.addEventListener('click', async () => {
-            if (confirm('Are you sure you want to delete your comment?')) {
-              try {
-                await deleteComment(button.dataset.id);
-                await renderComments();
-              } catch (error) {
-                alert('Error deleting comment: ' + error.message);
-              }
-            }
-          });
-        });
-      } catch (error) {
-        console.error('Error loading comments:', error);
-        container.innerHTML = '<p>Error loading comments. Please try again later.</p>';
-      }
-    }
-    
-    const form = document.getElementById('global-comment-form')
-    form.addEventListener('submit', async (e) => {
+  
+    document.getElementById('loginBtn').addEventListener('click', (e) => {
       e.preventDefault();
-      const textarea = document.getElementById('global-comment-textarea');
-    
-      if (!isAuthenticated) {
-        alert('You must be logged in to post a comment.');
-        return;
-      }
-    
-      try {
-        const submitButton = document.querySelector('#global-comment-form button');
-        submitButton.disabled = true;
-        submitButton.textContent = 'Posting...';
-    
-        await addComment({
-          text: textarea.value,
-          userEmail: auth.currentUser.email
-        });
-
-    
-        textarea.value = '';
-        await renderComments();
-      } catch (error) {
-        console.error('Error submitting comment:', error);
-        alert('Failed to post comment. Please try again.');
-      } finally {
-        const submitButton = document.querySelector('#global-comment-form button');
-        if (submitButton) {
-          submitButton.disabled = false;
-          submitButton.textContent = 'Post Comment';
-        }
-      }
+      sessionStorage.setItem('redirectAfterLogin', window.location.href);
+      window.location.href = 'login.html';
     });
-    
+  
     document.getElementById('logoutBtn').addEventListener('click', async () => {
       try {
-        await auth.signOut();
-        sessionStorage.removeItem('isAuthenticated');
+        await logout();
         alert('You have been logged out successfully.');
       } catch (error) {
         console.error('Logout error:', error);
         alert('Error during logout. Please try again.');
       }
     });
-    
-    
-    document.getElementById('loginBtn').addEventListener('click', () => {
-      sessionStorage.setItem('redirectAfterLogin', window.location.href);
-      window.location.href = './auth/login.html';
+ 
+    document.getElementById('comment-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const textarea = document.getElementById('comment-textarea');
+      const commentText = textarea.value.trim();
+  
+      if (!commentText) {
+        alert('Please enter a comment');
+        return;
+      }
+  
+      addComment(commentText);
+      textarea.value = '';
+      renderComments();
     });
-
-    
+  
+    renderComments();
+    updateUI();
   </script>
 
   <footer>

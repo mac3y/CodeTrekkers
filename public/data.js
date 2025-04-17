@@ -67,25 +67,19 @@ async function getCurrencyRates(renderFun) {
   }
 }
   
-async function addComment({ text, userEmail }) {
+async function addComment(commentText) {
   try {
-    if (!auth.currentUser) throw new Error("User not authenticated");
-
     const commentData = {
-      text,
-      userEmail,
-      userId: auth.currentUser.uid,
-      timestamp: serverTimestamp()
+      text: commentText,
+      timestamp: serverTimestamp(),
     };
 
-    console.log("Adding comment:", commentData);
     await addDoc(collection(db, "comments"), commentData);
+    console.log("Comment added successfully");
   } catch (error) {
     console.error("Error adding comment:", error);
-    throw error;
   }
 }
-
 
 async function getComments() {
   try {
@@ -127,7 +121,37 @@ async function deleteComment(commentId) {
   }
 }
 
+async function renderComments() {
+  const container = document.getElementById('global-comments-list');
+  container.innerHTML = ''; // Clear the container
+
+  try {
+    const commentsRef = collection(db, "comments");
+    const q = query(commentsRef, orderBy("timestamp", "desc"));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      container.innerHTML = '<p class="no-comments">No comments yet. Be the first to comment!</p>';
+      return;
+    }
+
+    querySnapshot.forEach((doc) => {
+      const comment = doc.data();
+      const commentElement = `
+        <div class="comment-card">
+          <div class="comment-body">${comment.text}</div>
+          <div class="comment-footer">
+            <span class="comment-time">${comment.timestamp?.toDate().toLocaleString() || "Just now"}</span>
+          </div>
+        </div>
+      `;
+      container.innerHTML += commentElement;
+    });
+  } catch (error) {
+    console.error("Error fetching comments:", error);
+  }
+}
 
 console.log("Current user:", auth.currentUser);
   
-export { getCountries, getQuizzes, createQuiz, deleteQuiz, getCurrencyRates, getComments, addComment, deleteComment };
+export { getCountries, getQuizzes, createQuiz, deleteQuiz, getCurrencyRates, getComments, addComment, deleteComment, renderComments };
