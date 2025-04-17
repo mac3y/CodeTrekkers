@@ -17,7 +17,7 @@ import {
   addDoc,
   getDocs,
   query,
-  orderBy
+  orderBy,
 } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
 
 
@@ -117,4 +117,4 @@ async function logout() {
 
 document.addEventListener('DOMContentLoaded', initAuthUI);
 
-export { auth, monitorAuthState, login, logout, register , updateAuthUI, db};
+export { auth, monitorAuthState, login, logout, register , updateAuthUI, db, collection, addDoc, getDocs, query, orderBy };
