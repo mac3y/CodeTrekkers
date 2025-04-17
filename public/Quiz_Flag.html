@@ -8,216 +8,212 @@
   <title>Flag Quiz</title>
   <style>
   
-  		*{
-           font-family: 'Nunito', sans-serif;
-  		   font-weight: 300;
-           letter-spacing: 0.1em;
-        }
+  	*{
+      font-family: 'Nunito', sans-serif;
+  		font-weight: 300;
+      letter-spacing: 0.1em;
+    }
         
         
-      body {
-        font-family: 'Nunito', sans-serif;
-        background-color: #f5ebdb;
-        color: #0F0E47;
-        text-align: center;
-        padding: 0;
-        margin: 0;
-      }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: #f5ebdb;
+      color: #0F0E47;
+      text-align: center;
+      padding: 0;
+      margin: 0;
+    }
   
-      .quiz-container {
-        background-color: rgba(255, 255, 255, 0.5);
-        padding: 20px;
-        border-radius: 20px;
-        max-width: 500px;
+    .quiz-container {
+      background-color: rgba(255, 255, 255, 0.5);
+      padding: 20px;
+      border-radius: 20px;
+      max-width: 500px;
 
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        margin: 125px auto 125px auto;
-      }
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      margin: 125px auto 125px auto;
+    }
 
      
 
-      #flag {
-        max-width: 200px;
-        margin: 20px auto;
-        border: 1px solid #4CAF50;
-      }
+    #flag {
+      max-width: 200px;
+      margin: 20px auto;
+      border: 1px solid #4CAF50;
+    }
 
-      #options button {
-        display: block;
-        margin: 10px auto;
-        padding: 10px;
-        background-color: #81a079;
-        color: #fff;
-        border: none;
-        border-radius: 10px;
-        width: 80%;
-        cursor: pointer;
-      }
+    #options button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      background-color: #81a079;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      width: 80%;
+      cursor: pointer;
+    }
 
-      #options button:hover {
-        background-color: #81a079;
-      }
+    #options button:hover {
+      background-color: #81a079;
+    }
 
-      #nextBtn, #restartBtn {
-        margin-top: 20px;
-        padding: 10px 20px;
-        background-color: #81a079;
-        color: #fff;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-      }
+    #nextBtn, #restartBtn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #81a079;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
 
-      #continentSelect {
-        margin-bottom: 20px;
-      }
+    #continentSelect {
+      margin-bottom: 20px;
+    }
 
-      #continentSelect select, #continentSelect button {
-        padding: 10px;
-        margin-top: 10px;
-        font-size: 16px;
-        border-radius: 10px;
-        border: none;
-      }
+    #continentSelect select, #continentSelect button {
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: none;
+    }
 
-      #continentSelect button {
-        background-color: #81a079;
-        color: white;
-        cursor: pointer;
-      }
+    #continentSelect button {
+      background-color: #81a079;
+      color: white;
+      cursor: pointer;
+    }
 
-      #continentSelect {
-        margin-bottom: 20px;
-      }
+    #continentSelect {
+      margin-bottom: 20px;
+    }
 
-      #continentSelect select,
-      #continentSelect button {
-        padding: 10px;
-        font-size: 16px;
-        border-radius: 10px;
-        border: none;
-        margin-top: 10px;
-      }
+    #continentSelect select,
+    #continentSelect button {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: none;
+      margin-top: 10px;
+    }
 
-      #continentSelect button {
-        background-color: #81a079;
-        color: white;
-        cursor: pointer;
-      }
+    #continentSelect button {
+      background-color: #81a079;
+      color: white;
+      cursor: pointer;
+    }
 
-      table, th, td {
-        border: 1px solid #81a079;
-        padding: 10px;
-        text-align: center;
-      }
+    table, th, td {
+      border: 1px solid #81a079;
+      padding: 10px;
+      text-align: center;
+    }
 
-      th {
-        background-color: #81a079;
-        color: white;
-      }
+    th {
+      background-color: #81a079;
+      color: white;
+    }
 
-      #progress {
-        font-size: 18px;
-        margin-bottom: 15px;
-        font-weight: bold;
-      }
+    #progress {
+      font-size: 18px;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
 
-      #progressBar {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 15px;
-        font-weight: bold;
-        font-size: 16px;
-      }
+    #progressBar {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      font-weight: bold;
+      font-size: 16px;
+    }
 
-      #progressBar .left {
-        text-align: left;
-      }
+    #progressBar .left {
+      text-align: left;
+    }
 
-      #progressBar .right {
-        text-align: right;
-      }
+    #progressBar .right {
+      text-align: right;
+    }
 
-      #logoutBtn {
-        padding: 8px 16px;
-        background-color: #196633;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
-      }
+    #loginBtn {
+      padding: 8px 16px;
+      background-color: #2f944d !important;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
 
-      #logoutBtn:hover {
-        background-color: #4CAF50;
-      }
+    #loginBtn:hover {
+      background-color: #0b9c10 !important;
+    }
 
-      #loginBtn {
-        padding: 8px 16px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
-      }
+    #logoutBtn {
+      padding: 8px 16px;
+      background-color: #2f944d !important;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
 
-      #loginBtn:hover {
-        background-color: #4CAF50;
-      }
+    #logoutBtn:hover {
+      background-color: #2c9118 !important;
+    }
 
-      .navbar {
-        background-color: #66bb6a;
-        color: white;
-        padding: 10px 20px;
-        margin: 0%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-radius: 0 0 0 0;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      }
+    .navbar {
+      background-color: #66bb6a;
+      color: white;
+      padding: 10px 20px;
+      margin: 0%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 0 0 0 0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
 
-      .nav-left {
-        font-size: 20px;
-      }
+    .nav-left {
+      font-size: 20px;
+    }
 
-      .nav-right {
-        display: flex;
-        align-items: center;
-      }
+    .nav-right {
+      display: flex;
+      align-items: center;
+    }
 
-      .nav-right a {
-        color: white;
-        margin-left: 20px;
-        text-decoration: none;
-        font-weight: bold;
-      }
+    .nav-right a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
 
-      .nav-right a:hover {
-        text-decoration: underline;
-      }
+    .nav-right a:hover {
+      text-decoration: underline;
+    }
 
-      .nav-right button {
-        margin-left: 20px; 
+    .nav-right button {
+      margin-left: 20px; 
+    }
 
-      }
-
-       footer{
-          text-align: center; 	
-          padding: 15px 0; 
-          background-color: #66bb6a; 
-          color: white; 
-          margin-top: 20px;
-          letter-spacing: .1em;
-       }
-    
-
+    footer{
+      text-align: center; 	
+      padding: 15px 0; 
+      background-color: #66bb6a; 
+      color: white; 
+      margin-top: 20px;
+      letter-spacing: .1em;
+    }
   </style>
 </head>
-
 
 <body>
   <header>
@@ -229,7 +225,7 @@
         <a href="index.html">Home</a>
         <a href="country-viewer.html">Country Info</a>
         <a href="currency-converter.html">Currency Converter</a>
-        <button id="loginBtn" style="display: block;">Login</button>
+        <button id="loginBtn">Login</button>
         <button id="logoutBtn" style="display: none;">Logout</button>
       </div>
     </nav>
@@ -270,57 +266,47 @@
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
       import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
-
+    
       const firebaseConfig = {
         apiKey: "AIzaSyDobzEi69_6fx6VsttSEcJCNxTt1-HBEEU",
         authDomain: "codetrekkerapp.firebaseapp.com",
         projectId: "codetrekkerapp",
-        storageBucket: "codetrekkerapp.firebasestorage.app",
+        storageBucket: "codetrekkerapp.appspot.com",
         messagingSenderId: "846059095122",
         appId: "1:846059095122:web:ccb769e315f60aac130b8b",
         measurementId: "G-TNZYWKBQJE"
       };
-
+    
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
-
+    
       const loginBtn = document.getElementById('loginBtn');
       const logoutBtn = document.getElementById('logoutBtn');
-
+    
       onAuthStateChanged(auth, (user) => {
-        console.log("User status changed:", user);
         if (user) {
           loginBtn.style.display = 'none';
           logoutBtn.style.display = 'block';
         } else {
           loginBtn.style.display = 'block';
           logoutBtn.style.display = 'none';
-
-          if (!window.location.pathname.includes('login.html')) {
-            sessionStorage.setItem('redirectAfterLogin', window.location.href);
-            window.location.href = 'login.html';
-          }
         }
       });
-
+    
       loginBtn.addEventListener('click', () => {
         sessionStorage.setItem('redirectAfterLogin', window.location.href);
-        console.log("Redirecting to login page..."); 
         window.location.href = 'login.html';
       });
-
+    
       logoutBtn.addEventListener('click', () => {
         signOut(auth).then(() => {
-          sessionStorage.removeItem('redirectAfterLogin');  
-          window.location.reload(); 
+          alert("You have been logged out.");
+          window.location.reload();
         }).catch((error) => {
-          console.error("Sign out error:", error);
+          console.error("Logout error:", error);
         });
       });
     </script>
-
-
-  <script type="module" src="./auth.js"></script>
 
   </div>
 
@@ -521,6 +507,7 @@
     <footer>
       <p>2025 CodeTreckkers. All rights reserved.</p>
     </footer>
+  </script>
 </body>
 </html>
 
