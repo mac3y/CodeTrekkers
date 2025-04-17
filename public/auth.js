@@ -9,7 +9,7 @@ import {
   onAuthStateChanged 
 } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
 
-import {firebaseConfig} from "./firebaseConfig.js";
+import { firebaseConfig } from "./firebaseConfig.js";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -24,9 +24,55 @@ const auth = getAuth(app);
   }
 })();
 
+
+function updateAuthUI(user) {
+  const loginBtn = document.getElementById('loginBtn');
+  const logoutBtn = document.getElementById('logoutBtn');
+  
+  if (loginBtn && logoutBtn) {
+    const isLoggedIn = !!user;
+    loginBtn.style.display = isLoggedIn ? 'none' : 'block';
+    logoutBtn.style.display = isLoggedIn ? 'block' : 'none';
+  }
+}
+
+function initAuthUI() {
+
+  updateAuthUI(auth.currentUser);
+
+  const loginBtn = document.getElementById('loginBtn');
+  if (loginBtn) {
+    loginBtn.addEventListener('click', () => {
+      sessionStorage.setItem('redirectAfterLogin', window.location.href);
+      window.location.href = 'login.html';
+    });
+  }
+  
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', async () => {
+      try {
+        await logout();
+        window.location.reload();
+      } catch (error) {
+        console.error('Logout error:', error);
+      }
+    });
+  }
+}
+
+
+function monitorAuthState(callback) {
+  return onAuthStateChanged(auth, (user) => {
+    console.log("Auth state changed:", user ? "Logged in" : "Logged out");
+    updateAuthUI(user);
+    if (callback) callback(user);
+  });
+}
+
+
 async function login(email, password) {
   try {
-    await setPersistence(auth, browserSessionPersistence);
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     return userCredential.user;
   } catch (error) {
@@ -56,4 +102,6 @@ async function logout() {
   }
 }
 
-export { auth, onAuthStateChanged, signOut, register };
+document.addEventListener('DOMContentLoaded', initAuthUI);
+
+export { auth, monitorAuthState, login, logout, register , updateAuthUI};

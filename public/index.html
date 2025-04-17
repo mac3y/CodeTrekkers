@@ -107,7 +107,39 @@
   </section>
 
   <script type="module">
-    export { auth, onAuthStateChanged, signOut } from './auth.js';
+    import { auth, monitorAuthState, logout, updateAuthUI } from './auth.js';
+
+    const unsubscribe = monitorAuthState((user) => {
+      console.log("Auth state changed:", user ? "Logged in" : "Logged out");
+      updateAuthUI(user);
+    });
+
+    function updateUI(user) {
+      const loginBtn = document.getElementById('loginBtn');
+      const logoutBtn = document.getElementById('logoutBtn');
+      const isAuthenticated = !!user; 
+
+      if (loginBtn && logoutBtn) {
+        loginBtn.style.display = isAuthenticated ? 'none' : 'block';
+        logoutBtn.style.display = isAuthenticated ? 'block' : 'none';
+      }
+    }
+  
+    document.getElementById('loginBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      sessionStorage.setItem('redirectAfterLogin', window.location.href);
+      window.location.href = 'login.html';
+    });
+  
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      try {
+        await logout();
+        alert('You have been logged out successfully.');
+      } catch (error) {
+        console.error('Logout error:', error);
+        alert('Error during logout. Please try again.');
+      }
+    });
   
     if (!localStorage.getItem('comments')) {
       localStorage.setItem('comments', JSON.stringify([]));
@@ -142,32 +174,6 @@
         </div>
       `).join('');
     }
-  
-    let isAuthenticated = false;
-  
-    function updateUI() {
-      const loginBtn = document.getElementById('loginBtn');
-      const logoutBtn = document.getElementById('logoutBtn');
-  
-      loginBtn.style.display = isAuthenticated ? 'none' : 'block';
-      logoutBtn.style.display = isAuthenticated ? 'block' : 'none';
-    }
-  
-    document.getElementById('loginBtn').addEventListener('click', (e) => {
-      e.preventDefault();
-      sessionStorage.setItem('redirectAfterLogin', window.location.href);
-      window.location.href = 'login.html';
-    });
-  
-    document.getElementById('logoutBtn').addEventListener('click', async () => {
-      try {
-        await logout();
-        alert('You have been logged out successfully.');
-      } catch (error) {
-        console.error('Logout error:', error);
-        alert('Error during logout. Please try again.');
-      }
-    });
  
     document.getElementById('comment-form').addEventListener('submit', (e) => {
       e.preventDefault();
@@ -185,7 +191,6 @@
     });
   
     renderComments();
-    updateUI();
   </script>
 
   <footer>
