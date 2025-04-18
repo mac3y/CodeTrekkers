@@ -9,91 +9,94 @@
 </head>
 <body>
 
-    <div class="floating"></div>
-    <div class="floating"></div>
-    <div class="floating"></div>
+  <div class="floating"></div>
+  <div class="floating"></div>
+  <div class="floating"></div>
 
-    <div class="auth-container">
-        <div class="auth-content">
-            <h2>Create Account</h2>
+  <div class="auth-container">
+    <div class="auth-content">
+      <h2>Create Account</h2>
             
-            <form id="registerForm" class="auth-form">
-                <div id="errorMessage" style="color: red; margin-bottom: 10px;"></div>
+      <form id="registerForm" class="auth-form">
+        <div id="errorMessage" style="color: red; margin-bottom: 10px;"></div>
                 
-                <div class="form-group">
-                    <label for="regEmail">Email</label>
-                    <input type="email" id="regEmail" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="regPassword">Password</label>
-                    <input type="password" id="regPassword" required minlength="6">
-                </div>
-                
-                <div class="form-group">
-                    <label for="confirmPassword">Confirm Password</label>
-                    <input type="password" id="confirmPassword" required>
-                </div>
-
-                <button type="submit">Register</button>
-                
-                <div class="register-link">
-                    Already have an account? <a href="login.html">Login</a>
-                </div>
-            </form>
+        <div class="form-group">
+          <label for="regEmail">Email</label>
+          <input type="email" id="regEmail" required>
         </div>
-    </div>
+                
+        <div class="form-group">
+          <label for="regPassword">Password</label>
+          <input type="password" id="regPassword" required minlength="6">
+        </div>
+                
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" required>
+        </div>
 
-    <script type="module">
-      import { register } from './auth.js';  // Using the register function from auth service
+        <button type="submit">Register</button>
+                
+        <div class="register-link">
+          Already have an account? <a href="login.html">Login</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module">
+    import { register } from './auth.js';
       
-      const registerForm = document.getElementById('registerForm');
-      const errorMessage = document.getElementById('errorMessage');
+    const registerForm = document.getElementById('registerForm');
+    const errorMessage = document.getElementById('errorMessage');
   
-      registerForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
   
-        const email = document.getElementById('regEmail').value.trim();
-        const password = document.getElementById('regPassword').value.trim();
-        const confirmPassword = document.getElementById('confirmPassword').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value.trim();
+      const confirmPassword = document.getElementById('confirmPassword').value.trim();
   
-        // Clear previous errors
-        errorMessage.textContent = "";
+      errorMessage.textContent = "";
   
-        // Validation
-        if (password !== confirmPassword) {
-          errorMessage.textContent = "Passwords do not match!";
-          return;
-        }
+      if (password !== confirmPassword) {
+        errorMessage.textContent = "Passwords do not match!";
+        return;
+      }
   
-        if (password.length < 6) {
-          errorMessage.textContent = "Password must be at least 6 characters";
-          return;
-        }
+      if (password.length < 6) {
+        errorMessage.textContent = "Password must be at least 6 characters";
+        return;
+      }
   
-        try {
-          await register(email, password);
-          alert("Registration successful! Please login.");
-          window.location.href = 'login.html';
-        } catch (error) {
-          console.error("Registration error:", error);
+      try {
+        await register(email, password);
+        alert("Registration successful! Please login.");
+        window.location.href = 'login.html';
+      } catch (error) {
+        console.error("Registration error:", error);
           
           
-          switch (error.code) {
-            case 'auth/email-already-in-use':
-              errorMessage.textContent = "Email already in use. Please login instead.";
-              break;
-            case 'auth/invalid-email':
-              errorMessage.textContent = "Please enter a valid email address.";
-              break;
-            case 'auth/weak-password':
-              errorMessage.textContent = "Password should be at least 6 characters.";
-              break;
-            default:
-              errorMessage.textContent = "Registration failed. Please try again.";
-          }
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            errorMessage.textContent = "Email already in use. Please login instead.";
+            break;
+          case 'auth/invalid-email':
+            errorMessage.textContent = "Please enter a valid email address.";
+            break;
+          case 'auth/weak-password':
+            errorMessage.textContent = "Password should be at least 6 characters.";
+            break;
+          default:
+            errorMessage.textContent = "Registration failed. Please try again.";
         }
-      });
-    </script>
+      }
+    });
+  </script>
+
+  <footer>
+    <p>2025 CodeTrekkers. all rights reserved</p>
+  </footer>
+  
 </body>
 </html>
